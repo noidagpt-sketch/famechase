@@ -160,29 +160,90 @@ const getIncomeEfficiencyScore = (
 };
 
 const getFollowerCount = (range: string): number => {
-  const rangeMap: { [key: string]: number } = {
-    "Less than 1K": 500,
-    "1K - 5K": 3000,
-    "5K - 10K": 7500,
-    "10K - 50K": 30000,
-    "50K - 100K": 75000,
-    "100K - 500K": 300000,
-    "500K+": 750000,
-  };
-  return rangeMap[range] || 500;
+  if (!range) return 500;
+  // Normalize dashes and spacing
+  const norm = range.replace(/[\u2013\u2014–—]/g, "-").trim();
+
+  // Handle Hindi "से कम" (less than)
+  if (/से कम|Less than/i.test(norm)) {
+    const m = norm.match(/(\d+(?:\.?\d+)?)([KkMm]?)/);
+    if (m) {
+      const n = parseNumberToken(m[1] + (m[2] || ""));
+      return Math.max(200, Math.round(n * 0.5));
+    }
+  }
+
+  // Handle "+" like "500K+"
+  if (/\+/.test(norm)) {
+    const m = norm.match(/(\d+(?:\.?\d+)?)([KkMm]?)/);
+    if (m) {
+      return parseNumberToken(m[1] + (m[2] || ""));
+    }
+  }
+
+  // Handle ranges like "1K - 5K" or "1K-5K"
+  const parts = norm.split("-").map((s) => s.trim());
+  if (parts.length === 2) {
+    const a = parseNumberToken(parts[0]);
+    const b = parseNumberToken(parts[1].replace(/\+$/, ""));
+    if (a && b) return Math.round((a + b) / 2);
+  }
+
+  // Fallback: extract first number
+  const m = norm.match(/(\d+(?:\.?\d+)?)([KkMm]?)/);
+  if (m) return parseNumberToken(m[1] + (m[2] || ""));
+  return 500;
 };
 
+function parseNumberToken(token: string): number {
+  const t = token.trim();
+  if (/Mm?$/.test(t)) {
+    const num = parseFloat(t.replace(/[^\d.]/g, ""));
+    return Math.round(num * 1_000_000);
+  }
+  if (/Kk?$/.test(t)) {
+    const num = parseFloat(t.replace(/[^\d.]/g, ""));
+    return Math.round(num * 1_000);
+  }
+  return parseInt(t.replace(/[^\d]/g, "")) || 0;
+}
+
 const getIncomeAmount = (income: string): number => {
-  const incomeMap: { [key: string]: number } = {
-    "₹0 (No income yet)": 0,
-    "₹1-5K": 3000,
-    "₹5K-15K": 10000,
-    "₹15K-30K": 22500,
-    "₹30K-50K": 40000,
-    "₹50K-1L": 75000,
-    "��1L+": 150000,
+  if (!income) return 0;
+  // Normalize
+  const norm = income
+    .replace(/[\u2013\u2014–—]/g, "-")
+    .replace(/\s/g, "")
+    .replace(/₹/g, "")
+    .toUpperCase();
+
+  // Handle explicit zero in EN/Hindi
+  if (/^0|\(NOINCOMEYET\)|अभीतककोईआयनहीं|अभीतककोईआयनहीं/.test(norm)) return 0;
+
+  // Convert L (lakh) to 100000, K to 1000
+  const toNumber = (s: string) => {
+    if (/L\+?$/.test(s)) return parseInt(s) * 100000 || 100000; // e.g., 1L+
+    if (/L$/.test(s)) return (parseInt(s) || 0) * 100000;
+    if (/K$/.test(s)) return (parseFloat(s) || 0) * 1000;
+    return parseInt(s) || 0;
   };
-  return incomeMap[income] || 0;
+
+  // Ranges like 1K-5K, 50K-1L
+  const m = norm.match(/(\d+(?:\.\d+)?[KL]?)-(\d+(?:\.\d+)?[KL+]?)/);
+  if (m) {
+    const a = toNumber(m[1]);
+    const b = toNumber(m[2].replace(/\+$/, ""));
+    if (a && b) return Math.round((a + b) / 2);
+  }
+
+  // Single like 1L+, 50K
+  const single = norm.match(/(\d+(?:\.\d+)?[KL]?)(\+?)/);
+  if (single) {
+    const val = toNumber(single[1]);
+    return val;
+  }
+
+  return 0;
 };
 
 // Platform-specific income multipliers (based on Indian creator economy)
@@ -366,7 +427,7 @@ const getGrowthTrajectory = (data: QuizData, fameScore: number): string => {
       } else if (challenge.includes("Algorithm changes killing reach")) {
         trajectory += ` ⚡ PLATFORM DIVERSIFICATION: Reduce algorithm risk by expanding to ${data.secondaryPlatforms.length === 0 ? "3 platforms" : 3 - data.secondaryPlatforms.length + " additional platforms"}. Current single-platform dependency is costing you 40-60% potential reach.`;
       } else if (challenge.includes("Not landing brand collaborations")) {
-        trajectory += ` 🤝 BRAND OUTREACH SYSTEM: Your ${data.followerCount} qualifies for ₹${Math.round(followerNum * 0.5)}-₹${Math.round(followerNum * 2)} per post rates. Create professional media kit, research 50 relevant brands, send 5 personalized pitches weekly. Target: Land first paid collaboration within 30 days.`;
+        trajectory += ` �� BRAND OUTREACH SYSTEM: Your ${data.followerCount} qualifies for ₹${Math.round(followerNum * 0.5)}-₹${Math.round(followerNum * 2)} per post rates. Create professional media kit, research 50 relevant brands, send 5 personalized pitches weekly. Target: Land first paid collaboration within 30 days.`;
       } else if (challenge.includes("Running out of content ideas")) {
         trajectory += ` 🎨 CONTENT STRATEGY: Your ${data.niche} niche has unlimited content potential. Batch create 15 posts weekly, repurpose content across ${data.secondaryPlatforms.length + 1} platforms, follow trending hashtags. Use the 40-30-20-10 formula: 40% education, 30% entertainment, 20% personal, 10% promotion.`;
       }
@@ -976,7 +1037,7 @@ const generatePersonalizedRecommendations = (data: QuizData): string[] => {
       `📲 APP REVIEWS (2X WEEKLY): Review Indian apps + international apps for Indian market. Contact app developers for paid reviews. Rate: ₹${Math.round(followerNum * 0.1)}-${Math.round(followerNum * 0.3)}/review`,
     );
     recommendations.push(
-      `🏆 TECH BUDGET SERIES (LAUNCH FRIDAY): 'Best Tech Under ₹5K/10K/20K' monthly series. Partner with brands for launch exclusives. Expected: Brand partnerships worth ₹10K-50K/month`,
+      `🏆 TECH BUDGET SERIES (LAUNCH FRIDAY): 'Best Tech Under ₹5K/10K/20K' monthly series. Partner with brands for launch exclusives. Expected: Brand partnerships worth ��10K-50K/month`,
     );
   }
 
@@ -2491,7 +2552,7 @@ export const analyzeQuizData = (data: QuizData): FameScoreAnalysis => {
   sixMonthProjection = Math.min(sixMonthProjection, realisticPotential);
 
   const formatIncome = (amount: number) => {
-    if (amount >= 100000) return `��${Math.round(amount / 1000)}K`;
+    if (amount >= 100000) return `₹${Math.round(amount / 1000)}K`;
     if (amount >= 1000) return `₹${Math.round(amount / 1000)}K`;
     return `₹${amount}`;
   };
