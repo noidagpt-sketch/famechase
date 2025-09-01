@@ -292,7 +292,7 @@ const languages = {
       postingFrequency: "आप कितनी बार कंटेंट पोस्ट करते हैं?",
       experience:
         "आप कितने समय से कंटेंट बना रहे हैं? (सभी स्तर चुनें जिनका आपने अनुभव किया है)",
-      monthlyIncome: "कंटेंट से आपकी वर्तमान मासिक आय क्या है?",
+      monthlyIncome: "कंटेंट से आपकी वर्तमान मासिक आय क्य�� है?",
       engagementRate: "आपका औसत एंगेजमेंट रेट क्या है?",
       biggestChallenge:
         "आपकी सबसे बड़ी चुनौती क्या है? 3 तक चुनें – हम सब इसमें एक साथ हैं! आपकी परेशानियों को समझना हमें बेहतर समाधान देने में मदद करता है।",
@@ -321,7 +321,7 @@ const languages = {
       ],
       niches: [
         "फैशन और ब्यूटी",
-        "टेक्नोलॉजी और AI",
+        "��ेक्नोलॉजी और AI",
         "खाना और खाना बनाना",
         "यात्रा और एडवेंचर",
         "फिटनेस और स्वास्थ्य",
@@ -445,7 +445,7 @@ const languages = {
     freeResources: {
       title: "🎉 क्विज़ पूरा! यहाँ हैं आपके मुफ्त क्रिएटर संसाधन",
       subtitle:
-        "अपनी क्रिएटर यात्रा शुरू करने के लिए इन शक्तिशाली टूल्स को डाउनलोड करें",
+        "अपनी क्रिएटर यात्रा ���ुरू करने के लिए इन शक्तिशाली टूल्स को डाउनलोड करें",
       mediaKit: {
         title: "प्रोफेशनल मीडिया किट टेम्प्लेट",
         description: "आकर्षक मीडिया किट बनाएं जो ब्रांड्स को पसंद आएंगे",
@@ -650,16 +650,53 @@ export default function Quiz() {
           quiz_data: finalQuizData,
         };
 
-        const { error } = await supabase.from("users").upsert([userData], {
-          onConflict: "email",
-          ignoreDuplicates: false,
-        });
+        const logError = (label: string, err: any) => {
+          // Log full error details for debugging
+          const detailed = JSON.stringify(
+            err,
+            Object.getOwnPropertyNames(err),
+          );
+          console.error(label, detailed);
+        };
 
-        if (error) {
-          console.error("Error saving user data to Supabase:", error);
-          // Continue anyway - don't block the user experience
-        } else {
-          console.log("User data saved to Supabase successfully");
+        try {
+          // Try upsert on unique email
+          const { error: upsertError } = await supabase
+            .from("users")
+            .upsert([userData], { onConflict: "email" })
+            .select();
+
+          if (upsertError) {
+            // If onConflict isn't available or no unique key, fallback to update/insert flow
+            logError("Supabase upsert error", upsertError);
+
+            // Attempt update by email
+            const { error: updateError } = await supabase
+              .from("users")
+              .update(userData)
+              .eq("email", userData.email)
+              .select();
+
+            if (updateError) {
+              logError("Supabase update fallback error", updateError);
+              // Attempt insert as last resort
+              const { error: insertError } = await supabase
+                .from("users")
+                .insert([userData])
+                .select();
+              if (insertError) {
+                logError("Supabase insert fallback error", insertError);
+              } else {
+                console.log("User created in Supabase (fallback insert)");
+              }
+            } else {
+              console.log("User updated in Supabase (fallback update)");
+            }
+          } else {
+            console.log("User saved to Supabase via upsert");
+          }
+        } catch (e) {
+          logError("Unexpected Supabase error", e);
         }
       }
 
@@ -772,7 +809,7 @@ ${language === "hindi" ? "प्रिय [ब्रांड ���ाम] �
 
 ${language === "hindi" ? `मैं ${userName} हूं, ${quizData.niche} में ���क कंटेंट क्रिएटर हूं जिसके ${quizData.primaryPlatform} पर ${quizData.followerCount} फॉलोअर्स हैं।` : `I'm ${userName}, a content creator in ${quizData.niche} with ${quizData.followerCount} followers on ${quizData.primaryPlatform}.`}
 
-${language === "hindi" ? "मुझे आपके ब्र��ंड के साथ काम कर��े में द���लच��्पी है क्योंकि:" : "I'd love to work with your brand because:"}
+${language === "hindi" ? "मुझ��� आपके ब्र��ंड के साथ काम कर��े में द���लच��्पी है क्योंकि:" : "I'd love to work with your brand because:"}
 ${language === "hindi" ? "- आपके उत्पाद मेरे दर्शक���ं के साथ पूरी तरह केल खाते हैं" : "- Your products align perfectly with my audience"}
 ${language === "hindi" ? `- मेरे दर्शक ${quizData.niche} में रुचि रखते हैं` : `- My audience is interested in ${quizData.niche}`}
 ${language === "hindi" ? "- मैं प्रामाणिक कं��ेंट बनाने म��ं विश����षज्�� हूं" : "- I specialize in creating authentic content"}
@@ -860,7 +897,7 @@ ${language === "hindi" ? "हमारे recent collaboration के results sh
 ${language === "hindi" ? "📊 PERFORMANCE METRICS:" : "📊 PERFORMANCE METRICS:"}
 ${language === "hindi" ? "• Post Reach: [number] impressions" : "• Post Reach: [number] impressions"}
 ${language === "hindi" ? "• Engagement Rate: [percentage]" : "• Engagement Rate: [percentage]"}
-${language === "hindi" ? "• Story Views: [number]" : "• Story Views: [number]"}
+${language === "hindi" ? "��� Story Views: [number]" : "• Story Views: [number]"}
 ${language === "hindi" ? "�� Website Clicks: [number]" : "• Website Clicks: [number]"}
 
 ${language === "hindi" ? "🎯 AUDIENCE FEEDBACK:" : "🎯 AUDIENCE FEEDBACK:"}
@@ -915,7 +952,7 @@ ${language === "hindi" ? "• Grateful और humble रहें" : "• Be gra
     } else if (type === "growthStrategy") {
       content =
         fontSizeIndicator +
-        `${language === "hindi" ? "90-���िन ���� ����रोथ रणनीति" : "90-DAY GROWTH STRATEGY"} - ${userName}
+        `${language === "hindi" ? "90-���िन ���� ����र��थ रणनीति" : "90-DAY GROWTH STRATEGY"} - ${userName}
 
 ${language === "hindi" ? "व्यक्तिगत विश्लेषण:" : "PERSONAL ANALYSIS:"}
 ${language === "hindi" ? "वर्तमान स्���िति:" : "Current Status:"} ${quizData.followerCount} on ${quizData.primaryPlatform}
@@ -934,7 +971,7 @@ ${language === "hindi" ? "- कम्युनि��ी एंगेजमे
 ${language === "hindi" ? "- एनालिटिक्स ट्रै�� करना शु���ू क������ं" : "- Start tracking analytics"}
 
 ${language === "hindi" ? "दिन 31-60: विकास औ��� अनुकूलन" : "DAYS 31-60: GROWTH & OPTIMIZATION"}
-${language === "hindi" ? `- ${quizData.primaryPlatform === "Instagram" ? "रील्स पर फोकस करे�� (60% कंटें��)" : "प्लेटफॉर्म-स्पेसिफ������ कंटेंट बढ़ाएं"}` : `- ${quizData.primaryPlatform === "Instagram" ? "Focus on Reels (60% content)" : "Increase platform-specific content"}`}
+${language === "hindi" ? `- ${quizData.primaryPlatform === "Instagram" ? "रील्स पर फोकस करे�� (60% कंटें��)" : "प्लेटफॉर्म-स्पेसिफ������ कंटेंट बढ़ा���ं"}` : `- ${quizData.primaryPlatform === "Instagram" ? "Focus on Reels (60% content)" : "Increase platform-specific content"}`}
 ${language === "hindi" ? "- ट��रेंडिंग ट���पि����्स पर कंटेंट बनाएं" : "- Create content on trending topics"}
 ${language === "hindi" ? "- अन्य क्रिए��र्स के साथ कोलैबोरेशन शुरू ���रें" : "- Start collaborations with other creators"}
 
