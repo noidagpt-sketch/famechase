@@ -276,7 +276,7 @@ const languages = {
       6: "अनुभव और आय",
       7: "सबसे बड़ी चुनौती",
       8: "लक्ष्य",
-      9: "सोशल लिंक्स",
+      9: "स��शल लिंक्स",
       10: "एंगेजमेंट रेट",
     },
     questions: {
@@ -292,7 +292,7 @@ const languages = {
       contentType: "आप कि�� प्रकार का कंटेंट बनाते हैं?",
       postingFrequency: "आप कितनी बार कंटेंट पोस्ट करते हैं?",
       experience:
-        "आप कितने समय से कंटेंट बना रहे हैं? (सभी स्तर चुनें जिनका आपने अनुभव किया है)",
+        "आप कितने समय से कंटेंट बना र���े हैं? (सभी स्तर चुनें जिनका आपने अनुभव किया है)",
       monthlyIncome: "कंटेंट से आपकी वर्तमान मासिक आय क्या है?",
       engagementRate: "आपका औसत एंगेजमेंट रेट क्या है?",
       biggestChallenge:
@@ -335,8 +335,8 @@ const languages = {
         "गेमिंग और ईस्पोर्ट्स",
         "संगीत और नृत्य",
         "शिक्षा और सीखना",
-        "खेल औ�� ���थलेटिक्स",
-        "प्रेरणा और स्व-सहायता",
+        "खेल और ���थलेटिक्स",
+        "प्रेरणा और स्व-स���ायता",
         "पेरेंटिंग और परिवार",
         "DIY और शिल्प",
         "आध्यात्म और माइंडफुलनेस",
@@ -425,7 +425,7 @@ const languages = {
       },
       emailTemplates: {
         title: "ब्रांड आउटरीच ईमेल टेम्प्लेट्स",
-        description: "ब्��ांड पार्टनरशिप के लिए 30+ सिद्ध ईमेल टेम्प्लेट्स",
+        description: "ब्रांड पार्टनरशिप के लिए 30+ सिद्ध ईमेल ���ेम्प्लेट्स",
       },
       growthGuide: {
         title: "90-दिन की ग्रोथ स्ट्रैटेजी गाइड",
@@ -448,7 +448,7 @@ export default function Quiz() {
     languages[language].options.platforms,
   );
 
-  const t = languages[language];
+  const t = sanitizeDeep(languages[language]);
   const totalSteps = 13;
 
   // Save language preference and update quiz data when language changes
