@@ -2095,7 +2095,7 @@ const calculateGrowthPotential = (
     potential += 8;
   } else if (
     data.postingFrequency === "Irregular" ||
-    data.postingFrequency === "अनिय���ित"
+    data.postingFrequency === "अनियमित"
   ) {
     potential -= 5; // Penalty for irregular posting
   }
@@ -2548,6 +2548,9 @@ export const analyzeQuizData = (data: QuizData): FameScoreAnalysis => {
     sixMonthProjection = Math.round(
       Math.min(currentIncome * (growthMultiplier + 0.3), realisticPotential),
     );
+
+    if (threeMonthProjection < currentIncome) threeMonthProjection = currentIncome;
+    if (sixMonthProjection < Math.round(currentIncome * 1.1)) sixMonthProjection = Math.round(currentIncome * 1.1);
   }
 
   // Ensure projections don't exceed realistic potential by too much
@@ -2556,6 +2559,11 @@ export const analyzeQuizData = (data: QuizData): FameScoreAnalysis => {
     realisticPotential * 0.8,
   );
   sixMonthProjection = Math.min(sixMonthProjection, realisticPotential);
+
+  if (currentIncome > 0) {
+    threeMonthProjection = Math.max(threeMonthProjection, currentIncome);
+    sixMonthProjection = Math.max(sixMonthProjection, Math.round(currentIncome * 1.1));
+  }
 
   const formatIncome = (amount: number) => {
     if (amount >= 100000) return `₹${Math.round(amount / 1000)}K`;
