@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { supabase, dbHelpers, User, Product, Purchase } from "../lib/supabase";
 import { paymentHelpers, PayUPaymentData, PAYU_CONFIG } from "../lib/payu";
+import { sanitizeDeep } from "@/lib/sanitize";
 import SupabaseConfigBanner from "../components/SupabaseConfigBanner";
 
 interface CustomerInfo {
@@ -403,7 +404,7 @@ export default function Shop() {
       backToShop: "Back to Shop",
     },
     hindi: {
-      title: "क्रिएटर टूल्स और सं��ाधन",
+      title: "क्रिएटर टूल्स और संसाधन",
       subtitle: "आपकी क्रिएटर यात्रा को तेज़ करने के लिए प्रोफेशनल टूल्स",
       premiumTools: "प्रीमियम क्रिएटर टूल्स",
       bestseller: "बेस्टसेलर",
@@ -659,12 +660,12 @@ export default function Shop() {
             </div>
             <h3 className="text-2xl font-bold text-gray-900 mb-4">
               {language === "hindi"
-                ? "❌ पहले अपनी ��्रोफाइल बनाएं!"
+                ? "❌ पहले अपनी प्रोफाइल बनाएं!"
                 : "❌ Complete Your Profile First!"}
             </h3>
             <p className="text-gray-600 mb-6">
               {language === "hindi"
-                ? "प्रीमियम टूल्स को खरीदने से पहले आपको अपनी क्रिएटर प्रोफाइल बनानी होगी। यह केवल 2 मिनट में हो जाएगा!"
+                ? "प्रीमियम टूल्स को खरीदने से पहले आप��ो अपनी क्रिएटर प्रोफाइल बनानी होगी। यह केवल 2 मिनट में हो जाएगा!"
                 : "Before purchasing premium tools, you need to complete your creator profile. It takes only 2 minutes!"}
             </p>
             <div className="space-y-3">
