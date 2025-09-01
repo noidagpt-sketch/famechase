@@ -36,6 +36,7 @@ export default function Shop() {
   const [promoCode, setPromoCode] = useState("");
   const [appliedDiscount, setAppliedDiscount] = useState(0);
   const [userPurchases, setUserPurchases] = useState<Purchase[]>([]);
+  const [supabaseOnline, setSupabaseOnline] = useState<boolean>(!!supabase);
   const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({
     name: "",
     email: "",
@@ -71,41 +72,51 @@ export default function Shop() {
         });
       }
 
-      // Check if Supabase is configured
+      // Check if Supabase is configured and reachable
       if (supabase) {
-        // Check authentication
-        const {
-          data: { user: authUser },
-        } = await supabase.auth.getUser();
+        let canUseSupabase = true;
+        try {
+          const { data: auth } = await supabase.auth.getUser();
+          const authUser = auth?.user || null;
 
-        // If user is authenticated, create/update user record
-        if (authUser && storedQuizData) {
-          const userData = JSON.parse(storedQuizData);
-          const { data: existingUser } = await dbHelpers.getUser(authUser.id);
+          if (authUser && storedQuizData) {
+            const userData = JSON.parse(storedQuizData);
 
-          if (!existingUser) {
-            // Create new user record
-            await dbHelpers.createUser({
-              id: authUser.id,
-              name: userData.name,
-              email: userData.email || authUser.email,
-              phone: userData.phone,
-              city: userData.city,
-              niche: userData.niche,
-              primary_platform: userData.primaryPlatform,
-              follower_count: userData.followerCount,
-              goals: userData.goals,
-              quiz_data: userData,
-            });
+            const { data: existingUser } = await dbHelpers.getUser(authUser.id);
+            if (!existingUser) {
+              await dbHelpers.createUser({
+                id: authUser.id,
+                name: userData.name,
+                email: userData.email || authUser.email,
+                phone: userData.phone,
+                city: userData.city,
+                niche: userData.niche,
+                primary_platform: userData.primaryPlatform,
+                follower_count: userData.followerCount,
+                goals: userData.goals,
+                quiz_data: userData,
+              });
+            }
+
+            setUser(existingUser || userData);
+
+            const { data: purchases } = await dbHelpers.getUserPurchases(
+              authUser.id,
+            );
+            setUserPurchases(purchases || []);
           }
+        } catch (e) {
+          console.warn("Supabase fetch failed; switching to local mode", e);
+          canUseSupabase = false;
+        }
+        setSupabaseOnline(canUseSupabase);
 
-          setUser(existingUser || userData);
-
-          // Load user's purchases
-          const { data: purchases } = await dbHelpers.getUserPurchases(
-            authUser.id,
-          );
-          setUserPurchases(purchases || []);
+        if (!canUseSupabase) {
+          const stored = localStorage.getItem("purchasedProducts");
+          if (stored) {
+            const localPurchases = JSON.parse(stored);
+            setUserPurchases(localPurchases);
+          }
         }
       } else {
         // Fallback to localStorage when Supabase is not configured
@@ -200,7 +211,7 @@ export default function Shop() {
 
       const finalAmount = calculateDiscountedPrice(product.price);
 
-      if (supabase) {
+      if (supabase && supabaseOnline) {
         // Create PayU payment directly without Edge Functions
         const { paymentHelpers } = await import("../lib/payu");
 
