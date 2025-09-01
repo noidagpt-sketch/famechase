@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { sanitizeDeep } from "@/lib/sanitize";
 import {
   Dialog,
   DialogContent,
@@ -334,7 +335,7 @@ const languages = {
         "गेमिंग और ईस्पोर्ट्स",
         "संगीत और नृत्य",
         "शिक्षा और सीखना",
-        "खेल और ���थलेटिक्स",
+        "खेल औ�� ���थलेटिक्स",
         "प्रेरणा और स्व-सहायता",
         "पेरेंटिंग और परिवार",
         "DIY और शिल्प",
@@ -424,7 +425,7 @@ const languages = {
       },
       emailTemplates: {
         title: "ब्रांड आउटरीच ईमेल टेम्प्लेट्स",
-        description: "ब्रांड पार्टनरशिप के लिए 30+ सिद्ध ईमेल टेम्प्लेट्स",
+        description: "ब्��ांड पार्टनरशिप के लिए 30+ सिद्ध ईमेल टेम्प्लेट्स",
       },
       growthGuide: {
         title: "90-दिन की ग्रोथ स्ट्रैटेजी गाइड",
