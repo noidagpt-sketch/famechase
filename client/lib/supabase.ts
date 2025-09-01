@@ -173,31 +173,53 @@ export const dbHelpers = {
 
   // Products
   async getProducts() {
+    const mapLocal = (configs: any[]) =>
+      configs.map((p) => ({
+        id: p.id,
+        name: p.name,
+        price: p.price,
+        original_price: p.originalPrice,
+        description: p.description,
+        features: p.features,
+        is_enabled: p.isEnabled,
+        category: p.category,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      }));
+
+    // If Supabase is not configured, return local configs
     if (!supabase) {
-      // Return mock data from the products.ts file when Supabase is not configured
       const { productConfigs } = await import("./products");
-      return {
-        data: productConfigs.map((p) => ({
-          id: p.id,
-          name: p.name,
-          price: p.price,
-          original_price: p.originalPrice,
-          description: p.description,
-          features: p.features,
-          is_enabled: p.isEnabled,
-          category: p.category,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        })),
-        error: null,
-      };
+      return { data: mapLocal(productConfigs), error: null };
     }
-    const { data, error } = await supabase
-      .from("products")
-      .select("*")
-      .eq("is_enabled", true)
-      .order("created_at", { ascending: false });
-    return { data, error };
+
+    // Try Supabase first
+    try {
+      const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .eq("is_enabled", true)
+        .order("created_at", { ascending: false });
+
+      // Fallback if error or empty
+      if (error || !data || data.length === 0) {
+        console.warn(
+          "Supabase products unavailable, falling back to local product configs",
+          error || "no data",
+        );
+        const { productConfigs } = await import("./products");
+        return { data: mapLocal(productConfigs), error: null };
+      }
+
+      return { data, error: null };
+    } catch (e) {
+      console.warn(
+        "Unexpected error fetching Supabase products, using local configs",
+        e,
+      );
+      const { productConfigs } = await import("./products");
+      return { data: mapLocal(productConfigs), error: null };
+    }
   },
 
   async getProduct(id: string) {
