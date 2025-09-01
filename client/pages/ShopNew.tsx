@@ -403,7 +403,7 @@ export default function Shop() {
       backToShop: "Back to Shop",
     },
     hindi: {
-      title: "क्रिएटर टूल्स और संसाधन",
+      title: "क्रिएटर टूल्स और सं��ाधन",
       subtitle: "आपकी क्रिएटर यात्रा को तेज़ करने के लिए प्रोफेशनल टूल्स",
       premiumTools: "प्रीमियम क्रिएटर टूल्स",
       bestseller: "बेस्टसेलर",
@@ -659,7 +659,7 @@ export default function Shop() {
             </div>
             <h3 className="text-2xl font-bold text-gray-900 mb-4">
               {language === "hindi"
-                ? "❌ पहले अपनी प्रोफाइल बनाएं!"
+                ? "❌ पहले अपनी ��्रोफाइल बनाएं!"
                 : "❌ Complete Your Profile First!"}
             </h3>
             <p className="text-gray-600 mb-6">
@@ -673,7 +673,7 @@ export default function Shop() {
                 className="w-full bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all inline-block"
               >
                 {language === "hindi"
-                  ? "🎯 अभी प्रोफाइल ��नाएं"
+                  ? "🎯 अभी प्रोफाइल बनाएं"
                   : "🎯 Create Profile Now"}
               </Link>
               <button
