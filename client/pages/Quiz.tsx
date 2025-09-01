@@ -287,7 +287,7 @@ const languages = {
       primaryPlatform: "आप मुख्यतः किस प्लेटफॉर्म पर कंटेंट बनाते हैं?",
       followerCount: "��पके प्राथमिक प्लेटफॉर्म पर कितने फॉलोअर्स हैं?",
       secondaryPlatforms:
-        "आप और कौन से प्लेटफॉर्म का उपयोग करते हैं? (कई विकल्प चुनें)",
+        "आप और ��ौन से प्लेटफॉर्म का उपयोग करते हैं? (कई विकल्प चुनें)",
       niche: "आपका कंटेंट किस विषय पर है?",
       contentType: "आप किस प्रकार का कंटेंट बना��े हैं?",
       postingFrequency: "आप कितनी बार कंटेंट पोस्ट करते हैं?",
@@ -327,7 +327,7 @@ const languages = {
         "खाना और खाना बनाना",
         "यात्रा और एडवेंचर",
         "फिटनेस और स्वास्थ्य",
-        "व्यक्तिगत वित्त और निवेश",
+        "व्यक्तिगत वित्त ��र निवेश",
         "मनोरंजन और कॉमेडी",
         "उद्यमिता और व्यापार",
         "जीवनशैली और कल्याण",
@@ -363,7 +363,7 @@ const languages = {
       ],
       frequencies: [
         "रोज़ाना",
-        "सप्ताह में 3-4 बार",
+        "सप्ताह ���ें 3-4 बार",
         "साप्ताहिक",
         "महीने में 2-3 बार",
         "मासिक",
@@ -418,7 +418,7 @@ const languages = {
     freeResources: {
       title: "🎉 क्विज़ पूरा! यहाँ हैं आपके मुफ्त क्रिएटर संसाधन",
       subtitle:
-        "अपनी क्रिएटर यात्रा शुरू करने के लिए इन शक्तिशाली टूल्स को डाउनलोड करें",
+        "अपनी क्रिएटर यात्रा शुरू करने के लिए इन शक्तिशाली टूल्स को डाउनलो�� करें",
       mediaKit: {
         title: "प्रोफेशनल मीडिया किट टेम्प्लेट",
         description: "आकर्षक मीडिया किट बनाएं जो ब्रांड्स को पसंद आएंगे",
@@ -791,7 +791,7 @@ export default function Quiz() {
         </div>
       </header>
 
-      <main ref={quizContentRef} className="container mx-auto px-2 md:px-4 py-2">
+      <main ref={quizContentRef} className="container mx-auto px-2 md:px-4 py-2 pb-24">
         <div className="max-w-xl mx-auto">
           <div className="text-center mb-4 md:mb-6">
             <h1 className="text-2xl md:text-4xl font-bold text-gray-900 mb-2 md:mb-4">{t.title}</h1>
@@ -1164,9 +1164,22 @@ export default function Quiz() {
                   </div>
                 )}
 
-                <div className="flex items-center justify-between mt-6">
-                  <button onClick={handleBack} className="px-4 py-2 rounded-lg border">Back</button>
-                  <button onClick={handleNext} className="px-4 py-2 rounded-lg bg-neon-green text-black font-semibold">{currentStep === totalSteps ? t.buttons.submit : "Next"}</button>
+                <div className="fixed left-0 right-0 bottom-0 z-40 bg-white/95 backdrop-blur border-t border-gray-200">
+                  <div className="container mx-auto max-w-xl px-3 md:px-4 py-3 md:py-4 flex items-center justify-between gap-3">
+                    <button
+                      onClick={handleBack}
+                      className="px-4 py-2 rounded-lg border text-sm md:text-base disabled:opacity-50"
+                      disabled={currentStep === 1}
+                    >
+                      Previous
+                    </button>
+                    <button
+                      onClick={currentStep === totalSteps ? handleSubmit : handleNext}
+                      className="px-5 py-2.5 rounded-lg bg-neon-green text-black font-semibold text-sm md:text-base"
+                    >
+                      {currentStep === totalSteps ? t.buttons.submit : "Next"}
+                    </button>
+                  </div>
                 </div>
               </>
             )}
