@@ -292,7 +292,7 @@ export default function Shop() {
     },
   };
 
-  const currentLang = t[language];
+  const currentLang = sanitizeDeep(t[language]);
 
   const handlePurchase = async (productId: string) => {
     setIsSubmitting(true);
@@ -738,7 +738,7 @@ export default function Shop() {
             </h3>
             <p className="text-gray-600 mb-6">
               {language === "hindi"
-                ? "प्रीमियम टूल्स को खरीदने से पहले आपको अपनी क���रिएटर प्रोफाइल बनान��� होगी। यह केवल 2 मिनट में हो जाएगा!"
+                ? "प्रीमियम टूल्स को खरीदने से पहले आपको अपनी क���रिएटर प्रोफाइल बनानी होगी। यह केवल 2 मिनट में ह��� जाएगा!"
                 : "Before purchasing premium tools, you need to complete your creator profile. It takes only 2 minutes!"}
             </p>
             <div className="space-y-3">
