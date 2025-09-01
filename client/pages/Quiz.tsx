@@ -285,7 +285,7 @@ const languages = {
       phone: "आपका फोन नंबर क्या है? (वैकल्पिक)",
       city: "आप किस शहर से हैं?",
       primaryPlatform: "आप मुख्यतः किस प्लेटफॉर्म पर कंटेंट बनाते हैं?",
-      followerCount: "आपके प्राथमिक प्लेटफॉर्म पर कितने फॉलोअर्स हैं?",
+      followerCount: "��पके प्राथमिक प्लेटफॉर्म पर कितने फॉलोअर्स हैं?",
       secondaryPlatforms:
         "आप और कौन से प्लेटफॉर्म का उपयोग करते हैं? (कई विकल्प चुनें)",
       niche: "आपका कंटेंट किस विषय पर है?",
@@ -897,11 +897,276 @@ export default function Quiz() {
                   </div>
                 )}
 
-                {/* Additional steps truncated for brevity in this UI-focused file */}
+                {/* Step 4: Content Niche */}
+                {currentStep === 4 && (
+                  <div className="space-y-4 md:space-y-6 flex-1 flex flex-col">
+                    <div className="text-center mb-4 md:mb-6">
+                      <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2">Your Content Niche 🎯</h2>
+                      <p className="text-sm md:text-base text-gray-600 px-2">What topics do you create content about?</p>
+                    </div>
+                    <div className="flex-1">
+                      <label className="block text-gray-900 font-semibold mb-3 text-base md:text-lg">{t.questions.niche}</label>
+                      <select
+                        value={quizData.niche}
+                        onChange={(e) => updateQuizData("niche", e.target.value)}
+                        className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-3 md:py-4 rounded-lg focus:border-soft-violet focus:outline-none transition-colors text-sm md:text-base"
+                      >
+                        <option value="">Select your niche</option>
+                        {t.options.niches.map((niche: string) => (
+                          <option key={niche} value={niche}>{niche}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                )}
+
+                {/* Step 5: Content Type */}
+                {currentStep === 5 && (
+                  <div className="space-y-4 md:space-y-6 flex-1 flex flex-col">
+                    <div className="text-center mb-4 md:mb-6">
+                      <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2">Content Format 🎥</h2>
+                      <p className="text-sm md:text-base text-gray-600 px-2">What type of content do you primarily create?</p>
+                    </div>
+                    <div className="flex-1">
+                      <label className="block text-gray-900 font-semibold mb-3 text-base md:text-lg">{t.questions.contentType}</label>
+                      <select
+                        value={quizData.contentType}
+                        onChange={(e) => updateQuizData("contentType", e.target.value)}
+                        className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-3 md:py-4 rounded-lg focus:border-electric-blue focus:outline-none transition-colors text-sm md:text-base"
+                      >
+                        <option value="">Select your content type</option>
+                        {t.options.contentTypes.map((type: string) => (
+                          <option key={type} value={type}>{type}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                )}
+
+                {/* Step 6: Posting Frequency */}
+                {currentStep === 6 && (
+                  <div className="space-y-4 md:space-y-6 flex-1 flex flex-col">
+                    <div className="text-center mb-4 md:mb-6">
+                      <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2">Posting Schedule ⏰</h2>
+                      <p className="text-sm md:text-base text-gray-600 px-2">How often do you share new content?</p>
+                    </div>
+                    <div className="flex-1">
+                      <label className="block text-gray-900 font-semibold mb-3 text-base md:text-lg">{t.questions.postingFrequency}</label>
+                      <select
+                        value={quizData.postingFrequency}
+                        onChange={(e) => updateQuizData("postingFrequency", e.target.value)}
+                        className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-3 md:py-4 rounded-lg focus:border-electric-blue focus:outline-none transition-colors text-sm md:text-base"
+                      >
+                        <option value="">Select your posting frequency</option>
+                        {t.options.frequencies.map((freq: string) => (
+                          <option key={freq} value={freq}>{freq}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                )}
+
+                {/* Step 7: Experience */}
+                {currentStep === 7 && (
+                  <div className="space-y-4 md:space-y-6 flex-1 flex flex-col">
+                    <div className="text-center mb-4 md:mb-6">
+                      <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2">Your Creator Journey 🚀</h2>
+                      <p className="text-sm md:text-base text-gray-600 px-2">How long have you been creating content?</p>
+                    </div>
+                    <div className="flex-1">
+                      <label className="block text-gray-900 font-semibold mb-3 text-base md:text-lg">{t.questions.experience}</label>
+                      <select
+                        value={quizData.experience[0] || ""}
+                        onChange={(e) => updateQuizData("experience", e.target.value ? [e.target.value] : [])}
+                        className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-3 md:py-4 rounded-lg focus:border-soft-violet focus:outline-none transition-colors text-sm md:text-base"
+                      >
+                        <option value="">Select your experience level</option>
+                        {t.options.experiences.map((exp: string) => (
+                          <option key={exp} value={exp}>{exp}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                )}
+
+                {/* Step 8: Monthly Income */}
+                {currentStep === 8 && (
+                  <div className="space-y-4 md:space-y-6 flex-1 flex flex-col">
+                    <div className="text-center mb-4 md:mb-6">
+                      <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2">Current Income 💰</h2>
+                      <p className="text-sm md:text-base text-gray-600 px-2">What's your current monthly income from content creation?</p>
+                    </div>
+                    <div className="flex-1">
+                      <label className="block text-gray-900 font-semibold mb-3 text-base md:text-lg">{t.questions.monthlyIncome}</label>
+                      <select
+                        value={quizData.monthlyIncome}
+                        onChange={(e) => updateQuizData("monthlyIncome", e.target.value)}
+                        className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-3 md:py-4 rounded-lg focus:border-soft-violet focus:outline-none transition-colors text-sm md:text-base"
+                      >
+                        <option value="">Select your monthly income</option>
+                        {t.options.incomes.map((income: string) => (
+                          <option key={income} value={income}>{income}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                )}
+
+                {/* Step 9: Biggest Challenge (max 3) */}
+                {currentStep === 9 && (
+                  <div className="space-y-6">
+                    <div className="text-center mb-2 md:mb-4">
+                      <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-red-500 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <Target className="w-6 h-6 md:w-8 md:h-8 text-white" />
+                      </div>
+                      <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">What's Your Biggest Struggle?</h2>
+                      <p className="text-sm md:text-base text-gray-600 px-2">Pick up to 3 challenges.</p>
+                    </div>
+                    <div className="grid grid-cols-1 gap-2">
+                      {t.options.challenges.map((challenge: string) => {
+                        const selected = quizData.biggestChallenge.includes(challenge);
+                        return (
+                          <button
+                            key={challenge}
+                            onClick={() => {
+                              const list = quizData.biggestChallenge;
+                              if (selected) {
+                                updateQuizData("biggestChallenge", list.filter((c: string) => c !== challenge));
+                              } else if (list.length < 3) {
+                                updateQuizData("biggestChallenge", [...list, challenge]);
+                              }
+                            }}
+                            className={`text-left p-3 rounded-lg border-2 text-sm md:text-base transition ${selected ? "border-neon-green bg-neon-green/10" : "border-gray-200 hover:border-gray-300"}`}
+                          >
+                            {challenge}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* Step 10: Goals (max 3) */}
+                {currentStep === 10 && (
+                  <div className="space-y-6">
+                    <div className="text-center mb-2 md:mb-4">
+                      <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">Your Main Goals 🎯</h2>
+                      <p className="text-sm md:text-base text-gray-600 px-2">Select up to 3 goals for the next 6 months.</p>
+                    </div>
+                    <div className="grid grid-cols-1 gap-2">
+                      {t.options.goals.map((goal: string) => {
+                        const selected = quizData.goals.includes(goal);
+                        return (
+                          <button
+                            key={goal}
+                            onClick={() => {
+                              const list = quizData.goals;
+                              if (selected) {
+                                updateQuizData("goals", list.filter((g: string) => g !== goal));
+                              } else if (list.length < 3) {
+                                updateQuizData("goals", [...list, goal]);
+                              }
+                            }}
+                            className={`text-left p-3 rounded-lg border-2 text-sm md:text-base transition ${selected ? "border-neon-green bg-neon-green/10" : "border-gray-200 hover:border-gray-300"}`}
+                          >
+                            {goal}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* Step 11: Social Links (optional) */}
+                {currentStep === 11 && (
+                  <div className="space-y-4">
+                    <div className="text-center mb-2 md:mb-4">
+                      <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">Social Profiles (Optional)</h2>
+                      <p className="text-sm md:text-base text-gray-600 px-2">Share your profile links.</p>
+                    </div>
+                    <div className="grid grid-cols-1 gap-3">
+                      {(["instagram","youtube","linkedin","website","twitter","tiktok"] as const).map((key) => (
+                        <div key={key}>
+                          <label className="block text-gray-900 font-medium text-sm mb-1 capitalize">{key}</label>
+                          <input
+                            type="text"
+                            value={(quizData.socialLinks as any)[key]}
+                            onChange={(e) => updateQuizData("socialLinks", { ...quizData.socialLinks, [key]: e.target.value })}
+                            className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-2 rounded-lg focus:border-electric-blue focus:outline-none text-sm"
+                            placeholder={`Enter your ${key} URL`}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Step 12: Engagement Rate */}
+                {currentStep === 12 && (
+                  <div className="space-y-4 md:space-y-6 flex-1 flex flex-col">
+                    <div className="text-center mb-4 md:mb-6">
+                      <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">Engagement Rate 💯</h2>
+                    </div>
+                    <div className="flex-1">
+                      <label className="block text-gray-900 font-semibold mb-3 text-base md:text-lg">{t.questions.engagementRate}</label>
+                      <select
+                        value={quizData.engagementRate}
+                        onChange={(e) => updateQuizData("engagementRate", e.target.value)}
+                        className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-3 md:py-4 rounded-lg focus:border-electric-blue focus:outline-none transition-colors text-sm md:text-base"
+                      >
+                        <option value="">Select your engagement rate</option>
+                        {t.options.engagementRates.map((er: string) => (
+                          <option key={er} value={er}>{er}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                )}
+
+                {/* Step 13: Contact Info */}
+                {currentStep === 13 && (
+                  <div className="space-y-4">
+                    <div className="text-center mb-2 md:mb-4">
+                      <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">Contact Information 📇</h2>
+                    </div>
+                    <div className="grid grid-cols-1 gap-3">
+                      <div>
+                        <label className="block text-gray-900 font-medium text-sm mb-1">{t.questions.name}</label>
+                        <input
+                          type="text"
+                          value={quizData.name}
+                          onChange={(e) => updateQuizData("name", e.target.value)}
+                          className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-2 rounded-lg focus:border-electric-blue focus:outline-none text-sm"
+                          placeholder="Your name"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-gray-900 font-medium text-sm mb-1">{t.questions.email}</label>
+                        <input
+                          type="email"
+                          value={quizData.email}
+                          onChange={(e) => updateQuizData("email", e.target.value)}
+                          className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-2 rounded-lg focus:border-electric-blue focus:outline-none text-sm"
+                          placeholder="your@email.com"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-gray-900 font-medium text-sm mb-1">{t.questions.city}</label>
+                        <input
+                          type="text"
+                          value={quizData.city}
+                          onChange={(e) => updateQuizData("city", e.target.value)}
+                          className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-2 rounded-lg focus:border-electric-blue focus:outline-none text-sm"
+                          placeholder="City"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 <div className="flex items-center justify-between mt-6">
                   <button onClick={handleBack} className="px-4 py-2 rounded-lg border">Back</button>
-                  <button onClick={handleNext} className="px-4 py-2 rounded-lg bg-neon-green text-black font-semibold">Next</button>
+                  <button onClick={handleNext} className="px-4 py-2 rounded-lg bg-neon-green text-black font-semibold">{currentStep === totalSteps ? t.buttons.submit : "Next"}</button>
                 </div>
               </>
             )}
