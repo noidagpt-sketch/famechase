@@ -2095,7 +2095,7 @@ const calculateGrowthPotential = (
     potential += 8;
   } else if (
     data.postingFrequency === "Irregular" ||
-    data.postingFrequency === "अनियमित"
+    data.postingFrequency === "अनिय���ित"
   ) {
     potential -= 5; // Penalty for irregular posting
   }
@@ -2501,7 +2501,7 @@ export const analyzeQuizData = (data: QuizData): FameScoreAnalysis => {
   }
 
   // Calculate realistic potential
-  const realisticPotential = Math.round(
+  let realisticPotential = Math.round(
     followerCount *
       baselinePerFollower *
       platformMultiplier *
@@ -2509,6 +2509,9 @@ export const analyzeQuizData = (data: QuizData): FameScoreAnalysis => {
       experienceMultiplier *
       engagementMultiplier,
   );
+  if (currentIncome > 0 && realisticPotential < Math.round(currentIncome * 1.1)) {
+    realisticPotential = Math.round(currentIncome * 1.1);
+  }
 
   let threeMonthProjection = currentIncome;
   let sixMonthProjection = currentIncome;
