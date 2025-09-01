@@ -266,7 +266,7 @@ const languages = {
   },
   hindi: {
     title: "क्रिएटर सक्सेस क्विज़",
-    subtitle: "3 मिनट में अपनी व्यक्तिगत ग्रोथ रणनीति पाएं",
+    subtitle: "3 मिनट में अपनी व्यक्तिगत ग्रो�� रणनीति पाएं",
     steps: {
       1: "बुनियादी जानकारी",
       2: "प्लेटफॉर्म और फॉलोअर्स",
@@ -298,7 +298,7 @@ const languages = {
       biggestChallenge:
         "आपकी सबसे बड़ी चुनौती क्या है? 3 तक चुनें – हम सब इसमें एक साथ हैं! आपकी परेशानियों को समझना हमें बेहतर समाधान देने में मदद करता है।",
       goals:
-        "आपके अगले 6 महीने के मुख्य लक्ष्य क्या हैं? (अधिकतम 3 चुनें)",
+        "आपके अगले 6 महीने के मुख्य लक���ष्य क्या हैं? (अधिकतम 3 चुनें)",
       socialLinks: "अपनी सोशल उपस्थिति साझा करें (वैकल्पिक)",
       bio: "अपने और अपने कंटेंट के बारे में कुछ और बताएं (वैकल्पिक)",
     },
@@ -328,7 +328,7 @@ const languages = {
         "यात्रा और एडवेंचर",
         "फिटनेस और स्वास्थ्य",
         "व्यक्तिगत वित्त और निवेश",
-        "मनोरंजन और कॉमेडी",
+        "मनोरंजन और कॉ���ेडी",
         "उद्यमिता और व्यापार",
         "जीवनशैली और कल्याण",
         "कला और डिज़ाइन",
@@ -420,7 +420,7 @@ const languages = {
       subtitle:
         "अपनी क्रिएटर यात्रा शुरू करने के लिए इन शक्तिशाली टूल्स को डाउनलोड करें",
       mediaKit: {
-        title: "प्रोफेशनल मीडिया किट टेम्प्लेट",
+        title: "प्रोफ���शनल मीडिया किट टेम्प्लेट",
         description: "आकर्षक मीडिया किट बनाएं जो ब्रांड्स को पसंद आएंगे",
       },
       emailTemplates: {
@@ -804,6 +804,7 @@ export default function Quiz() {
           </div>
 
           <div className="bg-white border-2 border-gray-100 rounded-2xl p-4 md:p-8 shadow-xl backdrop-blur-sm min-h-[70vh] flex flex-col justify-between">
+            <div className="text-xs md:text-sm text-gray-500 mb-2">Step {currentStep} of {totalSteps}</div>
             {isGenerating && (
               <div className="text-center py-12">
                 <div className="w-20 h-20 bg-gradient-to-r from-neon-green to-electric-blue rounded-full flex items-center justify-center mx-auto mb-6 animate-spin">
