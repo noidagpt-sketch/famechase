@@ -479,7 +479,7 @@ export default function Shop() {
               <Award className="w-5 h-5" />
               <span className="font-semibold">
                 {language === "hindi"
-                  ? "प्रीमियम क्रिएटर ���ूल्स"
+                  ? "प्रीमियम क्रिएटर टूल्स"
                   : "Premium Creator Tools"}
               </span>
             </div>
