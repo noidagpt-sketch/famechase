@@ -2493,8 +2493,11 @@ export const analyzeQuizData = (data: QuizData): FameScoreAnalysis => {
   } else if (data.primaryPlatform === "LinkedIn") {
     baselinePerFollower =
       followerCount < 10000 ? 1.0 : followerCount < 100000 ? 1.8 : 3.0;
+  } else if (data.primaryPlatform === "TikTok") {
+    baselinePerFollower =
+      followerCount < 10000 ? 0.7 : followerCount < 100000 ? 1.0 : 1.6;
   } else {
-    baselinePerFollower = 0.5; // Other platforms
+    baselinePerFollower = 0.6; // Other platforms
   }
 
   // Calculate realistic potential
