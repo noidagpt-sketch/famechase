@@ -274,7 +274,7 @@ const languages = {
       4: "कंटेंट प्रकार",
       5: "पोस्टिंग आवृत्ति",
       6: "अनुभव और आय",
-      7: "सबसे बड़�� चुनौती",
+      7: "सबसे बड़ी चुनौती",
       8: "लक्ष्य",
       9: "सोशल लिंक्स",
       10: "एंगेजमेंट रेट",
@@ -284,7 +284,7 @@ const languages = {
       email: "आपका ईमेल पता क्या है?",
       phone: "आपका फोन नंबर क्या है? (वैकल्पिक)",
       city: "आप किस शहर से हैं?",
-      primaryPlatform: "आप मुख्यतः किस प्लेटफॉर्म पर कंटेंट बनाते हैं?",
+      primaryPlatform: "आप मुख्यतः किस प्लेटफॉर्म पर कं��ेंट बनाते हैं?",
       followerCount: "��पके प्राथमिक प्लेटफॉर्म पर कितने फॉलोअर्स हैं?",
       secondaryPlatforms:
         "आप और ��ौन से प्लेटफॉर्म का उपयोग करते हैं? (कई विकल्प चुनें)",
@@ -335,7 +335,7 @@ const languages = {
         "गेमिंग और ईस्पोर्ट्स",
         "संगीत और नृत्य",
         "शिक्षा और सीखना",
-        "खेल और एथ���ेटिक्स",
+        "खेल और एथलेटिक्स",
         "प्रेरणा और स्व-सह��यता",
         "पेरेंटिंग और परिवार",
         "DIY और शिल्प",
@@ -425,11 +425,11 @@ const languages = {
       },
       emailTemplates: {
         title: "ब्रांड आउटरीच ईमेल टेम्प्लेट्स",
-        description: "ब्र��ंड पार्टनरशिप के लिए 30+ सिद्ध ईमेल टे��्प्लेट्स",
+        description: "ब्रांड पार्टनरशिप के लिए 30+ सिद्ध ईमेल टे��्प्लेट्स",
       },
       growthGuide: {
         title: "90-दिन की ग्रोथ स्ट्रैटेजी गाइड",
-        description: "अपनी फॉलोइंग बढ़ाने के लिए स्टेप-बाई-स्टेप रोडमैप",
+        description: "अपनी फॉलोइंग बढ़ाने के लिए स्टेप-बाई-स्टे�� रोडमैप",
       },
       downloadFree: "मुफ्त डाउनलोड करें",
     },
@@ -511,6 +511,44 @@ export default function Quiz() {
   const updateQuizData = (field: keyof QuizData, value: any) => {
     setQuizData((prev) => ({ ...prev, [field]: value }));
   };
+
+  // Challenge category selections (Step 9)
+  const [challengeSelections, setChallengeSelections] = useState<Record<string, string>>({});
+
+  const challengeGroups = (() => {
+    const groups: Record<string, string[]> = {
+      "Growth & Engagement": [],
+      "Brand & Identity": [],
+      "Monetization & Scaling": [],
+      "Creator Wellness": [],
+    };
+    const list = languages[language].options.challenges as string[];
+    list.forEach((c) => {
+      const parts = c.split(": ");
+      if (parts.length >= 2) {
+        const head = parts[0].replace(/^.*?\s/, "").trim(); // remove emoji
+        const item = parts.slice(1).join(": ");
+        if (groups[head]) groups[head].push(item);
+      }
+    });
+    return groups;
+  })();
+
+  useEffect(() => {
+    // Initialize selections from existing data if present
+    if (quizData.biggestChallenge && quizData.biggestChallenge.length) {
+      const next: Record<string, string> = {};
+      quizData.biggestChallenge.forEach((full) => {
+        const parts = full.split(": ");
+        if (parts.length >= 2) {
+          const head = parts[0].replace(/^.*?\s/, "").trim();
+          const item = parts.slice(1).join(": ");
+          if (challengeGroups[head]) next[head] = item;
+        }
+      });
+      setChallengeSelections(next);
+    }
+  }, [language]);
 
   const canProceed = () => {
     switch (currentStep) {
@@ -785,7 +823,7 @@ export default function Quiz() {
               className="bg-white border border-gray-300 text-gray-900 px-2 py-1 md:px-3 md:py-2 rounded-lg text-xs md:text-sm font-medium"
             >
               <option value="english">English</option>
-              <option value="hindi">ह���ंदी</option>
+              <option value="hindi">हिंदी</option>
             </select>
           </div>
         </div>
@@ -1012,65 +1050,81 @@ export default function Quiz() {
                   </div>
                 )}
 
-                {/* Step 9: Biggest Challenge (max 3) */}
+                {/* Step 9: Biggest Challenge (1 per head) */}
                 {currentStep === 9 && (
                   <div className="space-y-6">
                     <div className="text-center mb-2 md:mb-4">
                       <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-red-500 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-3">
                         <Target className="w-6 h-6 md:w-8 md:h-8 text-white" />
                       </div>
-                      <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">What's Your Biggest Struggle?</h2>
-                      <p className="text-sm md:text-base text-gray-600 px-2">Pick up to 3 challenges.</p>
+                      <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">Your Biggest Challenges</h2>
+                      <p className="text-sm md:text-base text-gray-600 px-2">Choose one from each category.</p>
                     </div>
-                    <div className="grid grid-cols-1 gap-2">
-                      {t.options.challenges.map((challenge: string) => {
-                        const selected = quizData.biggestChallenge.includes(challenge);
-                        return (
-                          <button
-                            key={challenge}
-                            onClick={() => {
-                              const list = quizData.biggestChallenge;
-                              if (selected) {
-                                updateQuizData("biggestChallenge", list.filter((c: string) => c !== challenge));
-                              } else if (list.length < 3) {
-                                updateQuizData("biggestChallenge", [...list, challenge]);
-                              }
+
+                    <div className="space-y-4">
+                      {Object.keys(challengeGroups).map((head) => (
+                        <div key={head} className="grid gap-2">
+                          <label className="block text-gray-900 font-semibold text-base">{head}</label>
+                          <select
+                            value={challengeSelections[head] || ""}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              const next = { ...challengeSelections, [head]: val };
+                              setChallengeSelections(next);
+                              const combined: string[] = Object.entries(next)
+                                .filter(([, v]) => v)
+                                .map(([h, v]) => {
+                                  const emoji = h.includes("Growth")
+                                    ? "🔄"
+                                    : h.includes("Brand")
+                                      ? "🧠"
+                                      : h.includes("Monetization")
+                                        ? "💔"
+                                        : "🥵";
+                                  return `${emoji} ${h}: ${v}`;
+                                });
+                              updateQuizData("biggestChallenge", combined);
                             }}
-                            className={`text-left p-3 rounded-lg border-2 text-sm md:text-base transition ${selected ? "border-neon-green bg-neon-green/10" : "border-gray-200 hover:border-gray-300"}`}
+                            className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-3 rounded-lg focus:border-orange-500 focus:outline-none"
                           >
-                            {challenge}
-                          </button>
-                        );
-                      })}
+                            <option value="">Select one</option>
+                            {challengeGroups[head].map((opt) => (
+                              <option key={opt} value={opt}>{opt}</option>
+                            ))}
+                          </select>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 )}
 
-                {/* Step 10: Goals (max 3) */}
+                {/* Step 10: Goals (max 3, scrollable) */}
                 {currentStep === 10 && (
                   <div className="space-y-6">
                     <div className="text-center mb-2 md:mb-4">
                       <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">Your Main Goals 🎯</h2>
                       <p className="text-sm md:text-base text-gray-600 px-2">Select up to 3 goals for the next 6 months.</p>
                     </div>
-                    <div className="grid grid-cols-1 gap-2">
+                    <div className="grid grid-cols-1 gap-2 max-h-72 overflow-y-auto pr-1">
                       {t.options.goals.map((goal: string) => {
                         const selected = quizData.goals.includes(goal);
                         return (
-                          <button
-                            key={goal}
-                            onClick={() => {
-                              const list = quizData.goals;
-                              if (selected) {
-                                updateQuizData("goals", list.filter((g: string) => g !== goal));
-                              } else if (list.length < 3) {
-                                updateQuizData("goals", [...list, goal]);
-                              }
-                            }}
-                            className={`text-left p-3 rounded-lg border-2 text-sm md:text-base transition ${selected ? "border-neon-green bg-neon-green/10" : "border-gray-200 hover:border-gray-300"}`}
-                          >
-                            {goal}
-                          </button>
+                          <label key={goal} className={`flex items-center gap-3 p-3 rounded-lg border-2 text-sm md:text-base transition ${selected ? "border-neon-green bg-neon-green/10" : "border-gray-200 hover:border-gray-300"}`}>
+                            <input
+                              type="checkbox"
+                              checked={selected}
+                              onChange={() => {
+                                const list = quizData.goals;
+                                if (selected) {
+                                  updateQuizData("goals", list.filter((g: string) => g !== goal));
+                                } else if (list.length < 3) {
+                                  updateQuizData("goals", [...list, goal]);
+                                }
+                              }}
+                              className="h-4 w-4"
+                            />
+                            <span>{goal}</span>
+                          </label>
                         );
                       })}
                     </div>
