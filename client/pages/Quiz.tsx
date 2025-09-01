@@ -492,7 +492,9 @@ export default function Quiz() {
       const sources = ["/api/platforms", "/platforms.json"];
       for (const url of sources) {
         try {
-          const res = await fetch(url, { headers: { Accept: "application/json" } });
+          const res = await fetch(url, {
+            headers: { Accept: "application/json" },
+          });
           if (!res.ok) continue;
           const contentType = res.headers.get("content-type") || "";
           let data: any = null;
