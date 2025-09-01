@@ -266,7 +266,7 @@ const languages = {
   },
   hindi: {
     title: "क्रिएटर सक्सेस क्विज़",
-    subtitle: "3 मिनट में अपनी व्यक्तिगत ग्रो�� रणनीति पाएं",
+    subtitle: "3 मिनट में अपनी व्यक्तिगत ग्रोथ रणनीति पाएं",
     steps: {
       1: "बुनियादी जानकारी",
       2: "प्लेटफॉर्म और फॉलोअर्स",
@@ -289,7 +289,7 @@ const languages = {
       secondaryPlatforms:
         "आप और कौन से प्लेटफॉर्म का उपयोग करते हैं? (कई विकल्प चुनें)",
       niche: "आपका कंटेंट किस विषय पर है?",
-      contentType: "आप किस प्रकार का कंटेंट बनाते हैं?",
+      contentType: "आप किस प्रकार का कंटेंट बना��े हैं?",
       postingFrequency: "आप कितनी बार कंटेंट पोस्ट करते हैं?",
       experience:
         "आप कितने समय से कंटेंट बना रहे हैं? (सभी स्तर चुनें जिनका आपने अनुभव किया है)",
@@ -298,9 +298,9 @@ const languages = {
       biggestChallenge:
         "आपकी सबसे बड़ी चुनौती क्या है? 3 तक चुनें – हम सब इसमें एक साथ हैं! आपकी परेशानियों को समझना हमें बेहतर समाधान देने में मदद करता है।",
       goals:
-        "आपके अगले 6 महीने के मुख्य लक���ष्य क्या हैं? (अधिकतम 3 चुनें)",
+        "आपके अगले 6 महीने के मुख्य लक्ष्य क्या हैं? (अधिकतम 3 चुनें)",
       socialLinks: "अपनी सोशल उपस्थिति साझा करें (वैकल्पिक)",
-      bio: "अपने और अपने कंटेंट के बारे में कुछ और बताएं (वैकल्पिक)",
+      bio: "अपने और अपने क��टेंट के बारे में कुछ और बताएं (वैकल्पिक)",
     },
     options: {
       platforms: [
@@ -328,7 +328,7 @@ const languages = {
         "यात्रा और एडवेंचर",
         "फिटनेस और स्वास्थ्य",
         "व्यक्तिगत वित्त और निवेश",
-        "मनोरंजन और कॉ���ेडी",
+        "मनोरंजन और कॉमेडी",
         "उद्यमिता और व्यापार",
         "जीवनशैली और कल्याण",
         "कला और डिज़ाइन",
@@ -420,7 +420,7 @@ const languages = {
       subtitle:
         "अपनी क्रिएटर यात्रा शुरू करने के लिए इन शक्तिशाली टूल्स को डाउनलोड करें",
       mediaKit: {
-        title: "प्रोफ���शनल मीडिया किट टेम्प्लेट",
+        title: "प्रोफेशनल मीडिया किट टेम्प्लेट",
         description: "आकर्षक मीडिया किट बनाएं जो ब्रांड्स को पसंद आएंगे",
       },
       emailTemplates: {
@@ -879,7 +879,7 @@ export default function Quiz() {
                     <div className="flex-1">
                       <label className="block text-gray-900 font-semibold mb-3 text-base md:text-lg">{t.questions.secondaryPlatforms}</label>
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                        {platforms.map((platform) => (
+                        {(platforms.length ? platforms : languages[language].options.platforms).map((platform) => (
                           <button
                             key={platform}
                             onClick={() => toggleSecondaryPlatform(platform)}
