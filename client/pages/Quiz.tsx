@@ -652,10 +652,7 @@ export default function Quiz() {
 
         const logError = (label: string, err: any) => {
           // Log full error details for debugging
-          const detailed = JSON.stringify(
-            err,
-            Object.getOwnPropertyNames(err),
-          );
+          const detailed = JSON.stringify(err, Object.getOwnPropertyNames(err));
           console.error(label, detailed);
         };
 
