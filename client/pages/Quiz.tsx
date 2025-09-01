@@ -274,7 +274,7 @@ const languages = {
       4: "कंटेंट प्रकार",
       5: "पोस्टिंग आवृत्ति",
       6: "अनुभव और आय",
-      7: "सबसे बड़ी चुनौती",
+      7: "सबसे बड़�� चुनौती",
       8: "लक्ष्य",
       9: "सोशल लिंक्स",
       10: "एंगेजमेंट रेट",
@@ -335,7 +335,7 @@ const languages = {
         "गेमिंग और ईस्पोर्ट्स",
         "संगीत और नृत्य",
         "शिक्षा और सीखना",
-        "खेल और एथलेटिक्स",
+        "खेल और एथ���ेटिक्स",
         "प्रेरणा और स्व-सह��यता",
         "पेरेंटिंग और परिवार",
         "DIY और शिल्प",
@@ -425,7 +425,7 @@ const languages = {
       },
       emailTemplates: {
         title: "ब्रांड आउटरीच ईमेल टेम्प्लेट्स",
-        description: "ब्रांड पार्टनरशिप के लिए 30+ सिद्ध ईमेल टे��्प्लेट्स",
+        description: "ब्र��ंड पार्टनरशिप के लिए 30+ सिद्ध ईमेल टे��्प्लेट्स",
       },
       growthGuide: {
         title: "90-दिन की ग्रोथ स्ट्रैटेजी गाइड",
@@ -531,7 +531,7 @@ export default function Quiz() {
       case 8:
         return quizData.monthlyIncome;
       case 9:
-        return quizData.biggestChallenge.length >= 1;
+        return Array.from(new Set(quizData.biggestChallenge)).length >= 4;
       case 10:
         return quizData.goals.length > 0;
       case 11:
@@ -785,7 +785,7 @@ export default function Quiz() {
               className="bg-white border border-gray-300 text-gray-900 px-2 py-1 md:px-3 md:py-2 rounded-lg text-xs md:text-sm font-medium"
             >
               <option value="english">English</option>
-              <option value="hindi">हिंदी</option>
+              <option value="hindi">ह���ंदी</option>
             </select>
           </div>
         </div>
