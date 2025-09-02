@@ -297,8 +297,7 @@ const languages = {
       engagementRate: "आपका औसत एंगेजमेंट रेट क्या है?",
       biggestChallenge:
         "आपकी सबसे बड़ी चुनौती क्या है? 3 तक चुनें – हम सब इसमें एक साथ हैं! आपकी परेशानियों को समझना हमें बेहतर समाधान देने में मदद करता है।",
-      goals:
-        "आपके अगले 6 महीने के मुख्य लक्ष्य क्या हैं? (अधिकतम 3 चुनें)",
+      goals: "आपके अगले 6 महीने के मुख्य लक्ष्य क्या हैं? (अधिकतम 3 चुनें)",
       socialLinks: "अपनी स��शल उपस्थिति साझा करें (वैकल्पिक)",
       bio: "अपने और अपने क��टेंट के बारे में कुछ और बताएं (वैकल्पिक)",
     },
@@ -465,7 +464,9 @@ export default function Quiz() {
       const sources = ["/api/platforms", "/platforms.json"];
       for (const url of sources) {
         try {
-          const res = await fetch(url, { headers: { Accept: "application/json" } });
+          const res = await fetch(url, {
+            headers: { Accept: "application/json" },
+          });
           if (!res.ok) continue;
           const contentType = res.headers.get("content-type") || "";
           let data: any = null;
@@ -513,7 +514,9 @@ export default function Quiz() {
   };
 
   // Challenge category selections (Step 9)
-  const [challengeSelections, setChallengeSelections] = useState<Record<string, string>>({});
+  const [challengeSelections, setChallengeSelections] = useState<
+    Record<string, string>
+  >({});
 
   const challengeGroups = (() => {
     const groups: Record<string, string[]> = {
@@ -588,7 +591,10 @@ export default function Quiz() {
       setCurrentStep(currentStep + 1);
       setTimeout(() => {
         if (quizContentRef.current) {
-          quizContentRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+          quizContentRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
         }
       }, 100);
     } else if (currentStep === totalSteps) {
@@ -604,7 +610,10 @@ export default function Quiz() {
       setCurrentStep(currentStep - 1);
       setTimeout(() => {
         if (quizContentRef.current) {
-          quizContentRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+          quizContentRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
         }
       }, 100);
     }
@@ -653,7 +662,8 @@ export default function Quiz() {
                 .from("users")
                 .insert([userData])
                 .select();
-              if (insertError) logError("Supabase insert fallback error", insertError);
+              if (insertError)
+                logError("Supabase insert fallback error", insertError);
             }
           }
         } catch (e) {
@@ -716,13 +726,18 @@ export default function Quiz() {
               FameChase<span className="text-neon-green">.com</span>
             </Link>
             <div className="flex items-center gap-4">
-              <Link to="/" className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
+              <Link
+                to="/"
+                className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
+              >
                 <Home className="w-4 h-4" />
                 Back to Home
               </Link>
               <select
                 value={language}
-                onChange={(e) => setLanguage(e.target.value as "english" | "hindi")}
+                onChange={(e) =>
+                  setLanguage(e.target.value as "english" | "hindi")
+                }
                 className="bg-white border border-gray-300 text-gray-900 px-3 py-2 rounded-lg text-sm font-medium"
               >
                 <option value="english">English</option>
@@ -737,47 +752,111 @@ export default function Quiz() {
             <div className="w-20 h-20 bg-gradient-to-r from-neon-green to-electric-blue rounded-full flex items-center justify-center mx-auto mb-6">
               <CheckCircle className="w-10 h-10 text-white" />
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{t.freeResources.title}</h1>
-            <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">{t.freeResources.subtitle}</p>
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              {t.freeResources.title}
+            </h1>
+            <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
+              {t.freeResources.subtitle}
+            </p>
 
             <div className="grid md:grid-cols-3 gap-8 mb-12">
               <div className="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-neon-green transition-colors relative">
-                <div className="absolute top-4 right-4 bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold">FREE STARTER</div>
+                <div className="absolute top-4 right-4 bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold">
+                  FREE STARTER
+                </div>
                 <div className="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-4">
                   <FileText className="w-8 h-8 text-blue-600" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Basic Media Kit Template</h3>
-                <p className="text-gray-600 mb-4">Simple media kit template with basic stats and contact info - perfect for getting started</p>
-                <div className="text-sm text-green-600 mb-4">✓ Professional template format<br />✓ Industry-standard rate suggestions<br />✓ Easy customization fields<br />✓ Multi-platform rate structure</div>
-                <button onClick={() => generateDownload("mediaKit", `${quizData.name || "Creator"}_Basic_Media_Kit_${language}.txt`)} className="w-full bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all">
+                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                  Basic Media Kit Template
+                </h3>
+                <p className="text-gray-600 mb-4">
+                  Simple media kit template with basic stats and contact info -
+                  perfect for getting started
+                </p>
+                <div className="text-sm text-green-600 mb-4">
+                  ✓ Professional template format
+                  <br />✓ Industry-standard rate suggestions
+                  <br />✓ Easy customization fields
+                  <br />✓ Multi-platform rate structure
+                </div>
+                <button
+                  onClick={() =>
+                    generateDownload(
+                      "mediaKit",
+                      `${quizData.name || "Creator"}_Basic_Media_Kit_${language}.txt`,
+                    )
+                  }
+                  className="w-full bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all"
+                >
                   <Download className="w-4 h-4 inline mr-2" />
                   {t.freeResources.downloadFree}
                 </button>
               </div>
 
               <div className="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-neon-green transition-colors relative">
-                <div className="absolute top-4 right-4 bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold">FREE STARTER</div>
+                <div className="absolute top-4 right-4 bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold">
+                  FREE STARTER
+                </div>
                 <div className="w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-4">
                   <Mail className="w-8 h-8 text-green-600" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Basic Email Templates (6)</h3>
-                <p className="text-gray-600 mb-4">Essential outreach templates to get you started with brand partnerships</p>
-                <div className="text-sm text-green-600 mb-4">✓ 6 proven email templates<br />✓ Professional follow-up sequences<br />✓ Ready-to-use pitch formats<br />✓ Brand outreach best practices</div>
-                <button onClick={() => generateDownload("emailTemplates", `Basic_Email_Templates_${language}.txt`)} className="w-full bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all">
+                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                  Basic Email Templates (6)
+                </h3>
+                <p className="text-gray-600 mb-4">
+                  Essential outreach templates to get you started with brand
+                  partnerships
+                </p>
+                <div className="text-sm text-green-600 mb-4">
+                  ✓ 6 proven email templates
+                  <br />✓ Professional follow-up sequences
+                  <br />✓ Ready-to-use pitch formats
+                  <br />✓ Brand outreach best practices
+                </div>
+                <button
+                  onClick={() =>
+                    generateDownload(
+                      "emailTemplates",
+                      `Basic_Email_Templates_${language}.txt`,
+                    )
+                  }
+                  className="w-full bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all"
+                >
                   <Download className="w-4 h-4 inline mr-2" />
                   {t.freeResources.downloadFree}
                 </button>
               </div>
 
               <div className="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-neon-green transition-colors relative">
-                <div className="absolute top-4 right-4 bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold">FREE STARTER</div>
+                <div className="absolute top-4 right-4 bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold">
+                  FREE STARTER
+                </div>
                 <div className="w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center mx-auto mb-4">
                   <Target className="w-8 h-8 text-purple-600" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Basic Growth Guide (30-Day)</h3>
-                <p className="text-gray-600 mb-4">Simple 30-day action plan to get you started on your growth journey</p>
-                <div className="text-sm text-green-600 mb-4">✓ Comprehensive 30-day action plan<br />✓ Proven growth strategies<br />✓ Daily actionable tasks<br />✓ Progress tracking templates</div>
-                <button onClick={() => generateDownload("growthStrategy", `Basic_Growth_Guide_${language}.txt`)} className="w-full bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all">
+                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                  Basic Growth Guide (30-Day)
+                </h3>
+                <p className="text-gray-600 mb-4">
+                  Simple 30-day action plan to get you started on your growth
+                  journey
+                </p>
+                <div className="text-sm text-green-600 mb-4">
+                  ✓ Comprehensive 30-day action plan
+                  <br />✓ Proven growth strategies
+                  <br />✓ Daily actionable tasks
+                  <br />✓ Progress tracking templates
+                </div>
+                <button
+                  onClick={() =>
+                    generateDownload(
+                      "growthStrategy",
+                      `Basic_Growth_Guide_${language}.txt`,
+                    )
+                  }
+                  className="w-full bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all"
+                >
                   <Download className="w-4 h-4 inline mr-2" />
                   {t.freeResources.downloadFree}
                 </button>
@@ -786,14 +865,19 @@ export default function Quiz() {
 
             <div className="bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-200 rounded-2xl p-8">
               <h2 className="text-lg font-bold text-gray-900 mb-4">
-                {language === "hindi" ? "अपना पूरा विश्लेषण चाहते हैं?" : "Want Your Complete Analysis?"}
+                {language === "hindi"
+                  ? "अपना पूरा विश्लेषण चाहते हैं?"
+                  : "Want Your Complete Analysis?"}
               </h2>
               <p className="text-gray-600 mb-6">
                 {language === "hindi"
                   ? "व्यक्तिगत SWOT विश्लेषण, ग्रोथ रणनीति, और प्रीमियम टूल्स के साथ अपनी क्रिएटर यात्रा को तेज़ी से आगे बढ़ाएं।"
                   : "Get personalized SWOT analysis, growth strategy, and premium tools to accelerate your creator journey."}
               </p>
-              <button onClick={handleSubmit} className="bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-4 px-8 rounded-xl text-lg hover:shadow-lg hover:scale-105 transition-all duration-300">
+              <button
+                onClick={handleSubmit}
+                className="bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-4 px-8 rounded-xl text-lg hover:shadow-lg hover:scale-105 transition-all duration-300"
+              >
                 <Sparkles className="w-5 h-5 inline mr-2" />
                 {t.buttons.submit}
               </button>
@@ -812,14 +896,19 @@ export default function Quiz() {
             FameChase<span className="text-neon-green">.com</span>
           </Link>
           <div className="flex items-center gap-2 md:gap-4">
-            <Link to="/" className="flex items-center gap-1 md:gap-2 text-gray-600 hover:text-gray-900 transition-colors text-sm md:text-base">
+            <Link
+              to="/"
+              className="flex items-center gap-1 md:gap-2 text-gray-600 hover:text-gray-900 transition-colors text-sm md:text-base"
+            >
               <Home className="w-3 h-3 md:w-4 md:h-4" />
               <span className="hidden sm:inline">Back to Home</span>
               <span className="sm:hidden">Home</span>
             </Link>
             <select
               value={language}
-              onChange={(e) => setLanguage(e.target.value as "english" | "hindi")}
+              onChange={(e) =>
+                setLanguage(e.target.value as "english" | "hindi")
+              }
               className="bg-white border border-gray-300 text-gray-900 px-2 py-1 md:px-3 md:py-2 rounded-lg text-xs md:text-sm font-medium"
             >
               <option value="english">English</option>
@@ -829,11 +918,18 @@ export default function Quiz() {
         </div>
       </header>
 
-      <main ref={quizContentRef} className="container mx-auto px-2 md:px-4 py-2 pb-36">
+      <main
+        ref={quizContentRef}
+        className="container mx-auto px-2 md:px-4 py-2 pb-36"
+      >
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-4 md:mb-6">
-            <h1 className="text-2xl md:text-4xl font-bold text-gray-900 mb-2 md:mb-4">{t.title}</h1>
-            <p className="text-sm md:text-lg text-gray-600 leading-relaxed px-2">{t.subtitle}</p>
+            <h1 className="text-2xl md:text-4xl font-bold text-gray-900 mb-2 md:mb-4">
+              {t.title}
+            </h1>
+            <p className="text-sm md:text-lg text-gray-600 leading-relaxed px-2">
+              {t.subtitle}
+            </p>
             <div className="flex justify-center gap-3 mt-3">
               <Sparkles className="w-4 h-4 md:w-6 md:h-6 text-neon-green animate-pulse" />
               <Star className="w-4 h-4 md:w-6 md:h-6 text-electric-blue animate-pulse" />
@@ -842,14 +938,21 @@ export default function Quiz() {
           </div>
 
           <div className="bg-white border-2 border-gray-100 rounded-2xl p-4 md:p-8 shadow-xl backdrop-blur-sm min-h-[70vh] flex flex-col justify-between">
-            <div className="text-xs md:text-sm text-gray-500 mb-2">Step {currentStep} of {totalSteps}</div>
+            <div className="text-xs md:text-sm text-gray-500 mb-2">
+              Step {currentStep} of {totalSteps}
+            </div>
             {isGenerating && (
               <div className="text-center py-12">
                 <div className="w-20 h-20 bg-gradient-to-r from-neon-green to-electric-blue rounded-full flex items-center justify-center mx-auto mb-6 animate-spin">
                   <Sparkles className="w-10 h-10 text-white" />
                 </div>
-                <h2 className="text-lg font-bold text-gray-900 mb-4">Generating Your Creator Analysis...</h2>
-                <p className="text-gray-600">Our AI is analyzing your responses and creating your personalized toolkit</p>
+                <h2 className="text-lg font-bold text-gray-900 mb-4">
+                  Generating Your Creator Analysis...
+                </h2>
+                <p className="text-gray-600">
+                  Our AI is analyzing your responses and creating your
+                  personalized toolkit
+                </p>
               </div>
             )}
 
@@ -861,19 +964,29 @@ export default function Quiz() {
                       <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-3">
                         <Globe className="w-6 h-6 md:w-8 md:h-8 text-white" />
                       </div>
-                      <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">Your Main Platform</h2>
-                      <p className="text-sm md:text-base text-gray-600 px-2">Where do you create and share your content?</p>
+                      <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">
+                        Your Main Platform
+                      </h2>
+                      <p className="text-sm md:text-base text-gray-600 px-2">
+                        Where do you create and share your content?
+                      </p>
                     </div>
                     <div className="flex-1">
-                      <label className="block text-gray-900 font-semibold mb-3 text-base md:text-lg">{t.questions.primaryPlatform}</label>
+                      <label className="block text-gray-900 font-semibold mb-3 text-base md:text-lg">
+                        {t.questions.primaryPlatform}
+                      </label>
                       <select
                         value={quizData.primaryPlatform}
-                        onChange={(e) => updateQuizData("primaryPlatform", e.target.value)}
+                        onChange={(e) =>
+                          updateQuizData("primaryPlatform", e.target.value)
+                        }
                         className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-3 md:py-4 rounded-lg focus:border-electric-blue focus:outline-none transition-colors text-sm md:text-base"
                       >
                         <option value="">Select your primary platform</option>
                         {platforms.map((platform) => (
-                          <option key={platform} value={platform}>{platform}</option>
+                          <option key={platform} value={platform}>
+                            {platform}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -886,19 +999,29 @@ export default function Quiz() {
                       <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-3">
                         <Star className="w-6 h-6 md:w-8 md:h-8 text-white" />
                       </div>
-                      <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">Your Audience Size</h2>
-                      <p className="text-sm md:text-base text-gray-600 px-2">How many followers do you currently have?</p>
+                      <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">
+                        Your Audience Size
+                      </h2>
+                      <p className="text-sm md:text-base text-gray-600 px-2">
+                        How many followers do you currently have?
+                      </p>
                     </div>
                     <div className="flex-1">
-                      <label className="block text-gray-900 font-semibold mb-3 text-base md:text-lg">{t.questions.followerCount}</label>
+                      <label className="block text-gray-900 font-semibold mb-3 text-base md:text-lg">
+                        {t.questions.followerCount}
+                      </label>
                       <select
                         value={quizData.followerCount}
-                        onChange={(e) => updateQuizData("followerCount", e.target.value)}
+                        onChange={(e) =>
+                          updateQuizData("followerCount", e.target.value)
+                        }
                         className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-3 md:py-4 rounded-lg focus:border-electric-blue focus:outline-none transition-colors text-sm md:text-base"
                       >
                         <option value="">Select your follower count</option>
                         {t.options.followerRanges.map((range) => (
-                          <option key={range} value={range}>{range}</option>
+                          <option key={range} value={range}>
+                            {range}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -911,13 +1034,22 @@ export default function Quiz() {
                       <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-3">
                         <Layout className="w-6 h-6 md:w-8 md:h-8 text-white" />
                       </div>
-                      <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">Other Platforms</h2>
-                      <p className="text-sm md:text-base text-gray-600 px-2">Which other platforms do you use?</p>
+                      <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">
+                        Other Platforms
+                      </h2>
+                      <p className="text-sm md:text-base text-gray-600 px-2">
+                        Which other platforms do you use?
+                      </p>
                     </div>
                     <div className="flex-1">
-                      <label className="block text-gray-900 font-semibold mb-3 text-base md:text-lg">{t.questions.secondaryPlatforms}</label>
+                      <label className="block text-gray-900 font-semibold mb-3 text-base md:text-lg">
+                        {t.questions.secondaryPlatforms}
+                      </label>
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                        {(platforms.length ? platforms : languages[language].options.platforms).map((platform) => (
+                        {(platforms.length
+                          ? platforms
+                          : languages[language].options.platforms
+                        ).map((platform) => (
                           <button
                             key={platform}
                             onClick={() => toggleSecondaryPlatform(platform)}
@@ -939,19 +1071,29 @@ export default function Quiz() {
                 {currentStep === 4 && (
                   <div className="space-y-4 md:space-y-6 flex-1 flex flex-col">
                     <div className="text-center mb-4 md:mb-6">
-                      <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2">Your Content Niche 🎯</h2>
-                      <p className="text-sm md:text-base text-gray-600 px-2">What topics do you create content about?</p>
+                      <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2">
+                        Your Content Niche 🎯
+                      </h2>
+                      <p className="text-sm md:text-base text-gray-600 px-2">
+                        What topics do you create content about?
+                      </p>
                     </div>
                     <div className="flex-1">
-                      <label className="block text-gray-900 font-semibold mb-3 text-base md:text-lg">{t.questions.niche}</label>
+                      <label className="block text-gray-900 font-semibold mb-3 text-base md:text-lg">
+                        {t.questions.niche}
+                      </label>
                       <select
                         value={quizData.niche}
-                        onChange={(e) => updateQuizData("niche", e.target.value)}
+                        onChange={(e) =>
+                          updateQuizData("niche", e.target.value)
+                        }
                         className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-3 md:py-4 rounded-lg focus:border-soft-violet focus:outline-none transition-colors text-sm md:text-base"
                       >
                         <option value="">Select your niche</option>
                         {t.options.niches.map((niche: string) => (
-                          <option key={niche} value={niche}>{niche}</option>
+                          <option key={niche} value={niche}>
+                            {niche}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -962,19 +1104,29 @@ export default function Quiz() {
                 {currentStep === 5 && (
                   <div className="space-y-4 md:space-y-6 flex-1 flex flex-col">
                     <div className="text-center mb-4 md:mb-6">
-                      <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2">Content Format 🎥</h2>
-                      <p className="text-sm md:text-base text-gray-600 px-2">What type of content do you primarily create?</p>
+                      <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2">
+                        Content Format 🎥
+                      </h2>
+                      <p className="text-sm md:text-base text-gray-600 px-2">
+                        What type of content do you primarily create?
+                      </p>
                     </div>
                     <div className="flex-1">
-                      <label className="block text-gray-900 font-semibold mb-3 text-base md:text-lg">{t.questions.contentType}</label>
+                      <label className="block text-gray-900 font-semibold mb-3 text-base md:text-lg">
+                        {t.questions.contentType}
+                      </label>
                       <select
                         value={quizData.contentType}
-                        onChange={(e) => updateQuizData("contentType", e.target.value)}
+                        onChange={(e) =>
+                          updateQuizData("contentType", e.target.value)
+                        }
                         className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-3 md:py-4 rounded-lg focus:border-electric-blue focus:outline-none transition-colors text-sm md:text-base"
                       >
                         <option value="">Select your content type</option>
                         {t.options.contentTypes.map((type: string) => (
-                          <option key={type} value={type}>{type}</option>
+                          <option key={type} value={type}>
+                            {type}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -985,19 +1137,29 @@ export default function Quiz() {
                 {currentStep === 6 && (
                   <div className="space-y-4 md:space-y-6 flex-1 flex flex-col">
                     <div className="text-center mb-4 md:mb-6">
-                      <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2">Posting Schedule ⏰</h2>
-                      <p className="text-sm md:text-base text-gray-600 px-2">How often do you share new content?</p>
+                      <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2">
+                        Posting Schedule ⏰
+                      </h2>
+                      <p className="text-sm md:text-base text-gray-600 px-2">
+                        How often do you share new content?
+                      </p>
                     </div>
                     <div className="flex-1">
-                      <label className="block text-gray-900 font-semibold mb-3 text-base md:text-lg">{t.questions.postingFrequency}</label>
+                      <label className="block text-gray-900 font-semibold mb-3 text-base md:text-lg">
+                        {t.questions.postingFrequency}
+                      </label>
                       <select
                         value={quizData.postingFrequency}
-                        onChange={(e) => updateQuizData("postingFrequency", e.target.value)}
+                        onChange={(e) =>
+                          updateQuizData("postingFrequency", e.target.value)
+                        }
                         className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-3 md:py-4 rounded-lg focus:border-electric-blue focus:outline-none transition-colors text-sm md:text-base"
                       >
                         <option value="">Select your posting frequency</option>
                         {t.options.frequencies.map((freq: string) => (
-                          <option key={freq} value={freq}>{freq}</option>
+                          <option key={freq} value={freq}>
+                            {freq}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -1008,19 +1170,32 @@ export default function Quiz() {
                 {currentStep === 7 && (
                   <div className="space-y-4 md:space-y-6 flex-1 flex flex-col">
                     <div className="text-center mb-4 md:mb-6">
-                      <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2">Your Creator Journey 🚀</h2>
-                      <p className="text-sm md:text-base text-gray-600 px-2">How long have you been creating content?</p>
+                      <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2">
+                        Your Creator Journey 🚀
+                      </h2>
+                      <p className="text-sm md:text-base text-gray-600 px-2">
+                        How long have you been creating content?
+                      </p>
                     </div>
                     <div className="flex-1">
-                      <label className="block text-gray-900 font-semibold mb-3 text-base md:text-lg">{t.questions.experience}</label>
+                      <label className="block text-gray-900 font-semibold mb-3 text-base md:text-lg">
+                        {t.questions.experience}
+                      </label>
                       <select
                         value={quizData.experience[0] || ""}
-                        onChange={(e) => updateQuizData("experience", e.target.value ? [e.target.value] : [])}
+                        onChange={(e) =>
+                          updateQuizData(
+                            "experience",
+                            e.target.value ? [e.target.value] : [],
+                          )
+                        }
                         className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-3 md:py-4 rounded-lg focus:border-soft-violet focus:outline-none transition-colors text-sm md:text-base"
                       >
                         <option value="">Select your experience level</option>
                         {t.options.experiences.map((exp: string) => (
-                          <option key={exp} value={exp}>{exp}</option>
+                          <option key={exp} value={exp}>
+                            {exp}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -1031,19 +1206,30 @@ export default function Quiz() {
                 {currentStep === 8 && (
                   <div className="space-y-4 md:space-y-6 flex-1 flex flex-col">
                     <div className="text-center mb-4 md:mb-6">
-                      <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2">Current Income 💰</h2>
-                      <p className="text-sm md:text-base text-gray-600 px-2">What's your current monthly income from content creation?</p>
+                      <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2">
+                        Current Income 💰
+                      </h2>
+                      <p className="text-sm md:text-base text-gray-600 px-2">
+                        What's your current monthly income from content
+                        creation?
+                      </p>
                     </div>
                     <div className="flex-1">
-                      <label className="block text-gray-900 font-semibold mb-3 text-base md:text-lg">{t.questions.monthlyIncome}</label>
+                      <label className="block text-gray-900 font-semibold mb-3 text-base md:text-lg">
+                        {t.questions.monthlyIncome}
+                      </label>
                       <select
                         value={quizData.monthlyIncome}
-                        onChange={(e) => updateQuizData("monthlyIncome", e.target.value)}
+                        onChange={(e) =>
+                          updateQuizData("monthlyIncome", e.target.value)
+                        }
                         className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-3 md:py-4 rounded-lg focus:border-soft-violet focus:outline-none transition-colors text-sm md:text-base"
                       >
                         <option value="">Select your monthly income</option>
                         {t.options.incomes.map((income: string) => (
-                          <option key={income} value={income}>{income}</option>
+                          <option key={income} value={income}>
+                            {income}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -1057,19 +1243,28 @@ export default function Quiz() {
                       <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-red-500 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-3">
                         <Target className="w-6 h-6 md:w-8 md:h-8 text-white" />
                       </div>
-                      <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">Your Biggest Challenges</h2>
-                      <p className="text-sm md:text-base text-gray-600 px-2">You can choose one from each category.</p>
+                      <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">
+                        Your Biggest Challenges
+                      </h2>
+                      <p className="text-sm md:text-base text-gray-600 px-2">
+                        You can choose one from each category.
+                      </p>
                     </div>
 
                     <div className="space-y-4">
                       {Object.keys(challengeGroups).map((head) => (
                         <div key={head} className="grid gap-2">
-                          <label className="block text-gray-900 font-semibold text-base">{head}</label>
+                          <label className="block text-gray-900 font-semibold text-base">
+                            {head}
+                          </label>
                           <select
                             value={challengeSelections[head] || ""}
                             onChange={(e) => {
                               const val = e.target.value;
-                              const next = { ...challengeSelections, [head]: val };
+                              const next = {
+                                ...challengeSelections,
+                                [head]: val,
+                              };
                               setChallengeSelections(next);
                               const combined: string[] = Object.entries(next)
                                 .filter(([, v]) => v)
@@ -1089,7 +1284,9 @@ export default function Quiz() {
                           >
                             <option value="">Select one</option>
                             {challengeGroups[head].map((opt) => (
-                              <option key={opt} value={opt}>{opt}</option>
+                              <option key={opt} value={opt}>
+                                {opt}
+                              </option>
                             ))}
                           </select>
                         </div>
@@ -1102,21 +1299,31 @@ export default function Quiz() {
                 {currentStep === 10 && (
                   <div className="space-y-6">
                     <div className="text-center mb-2 md:mb-4">
-                      <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">Your Main Goals 🎯</h2>
-                      <p className="text-sm md:text-base text-gray-600 px-2">Select up to 3 goals for the next 6 months.</p>
+                      <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">
+                        Your Main Goals 🎯
+                      </h2>
+                      <p className="text-sm md:text-base text-gray-600 px-2">
+                        Select up to 3 goals for the next 6 months.
+                      </p>
                     </div>
                     <div className="grid grid-cols-1 gap-2 max-h-72 overflow-y-auto pr-1 text-black">
                       {t.options.goals.map((goal: string) => {
                         const selected = quizData.goals.includes(goal);
                         return (
-                          <label key={goal} className={`flex items-center gap-3 p-3 rounded-lg border-2 text-sm md:text-base transition ${selected ? "border-neon-green bg-neon-green/10" : "border-gray-200 hover:border-gray-300"} text-black`}>
+                          <label
+                            key={goal}
+                            className={`flex items-center gap-3 p-3 rounded-lg border-2 text-sm md:text-base transition ${selected ? "border-neon-green bg-neon-green/10" : "border-gray-200 hover:border-gray-300"} text-black`}
+                          >
                             <input
                               type="checkbox"
                               checked={selected}
                               onChange={() => {
                                 const list = quizData.goals;
                                 if (selected) {
-                                  updateQuizData("goals", list.filter((g: string) => g !== goal));
+                                  updateQuizData(
+                                    "goals",
+                                    list.filter((g: string) => g !== goal),
+                                  );
                                 } else if (list.length < 3) {
                                   updateQuizData("goals", [...list, goal]);
                                 }
@@ -1135,17 +1342,37 @@ export default function Quiz() {
                 {currentStep === 11 && (
                   <div className="space-y-4 pb-6">
                     <div className="text-center mb-2 md:mb-4">
-                      <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">Social Profiles (Optional)</h2>
-                      <p className="text-sm md:text-base text-gray-600 px-2">Share your profile links.</p>
+                      <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">
+                        Social Profiles (Optional)
+                      </h2>
+                      <p className="text-sm md:text-base text-gray-600 px-2">
+                        Share your profile links.
+                      </p>
                     </div>
                     <div className="grid grid-cols-1 gap-3 max-h-72 overflow-y-auto pr-1 text-black">
-                      {(["instagram","youtube","linkedin","website","twitter","tiktok"] as const).map((key) => (
+                      {(
+                        [
+                          "instagram",
+                          "youtube",
+                          "linkedin",
+                          "website",
+                          "twitter",
+                          "tiktok",
+                        ] as const
+                      ).map((key) => (
                         <div key={key}>
-                          <label className="block text-gray-900 font-medium text-sm mb-1 capitalize">{key}</label>
+                          <label className="block text-gray-900 font-medium text-sm mb-1 capitalize">
+                            {key}
+                          </label>
                           <input
                             type="text"
                             value={(quizData.socialLinks as any)[key]}
-                            onChange={(e) => updateQuizData("socialLinks", { ...quizData.socialLinks, [key]: e.target.value })}
+                            onChange={(e) =>
+                              updateQuizData("socialLinks", {
+                                ...quizData.socialLinks,
+                                [key]: e.target.value,
+                              })
+                            }
                             className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-2 rounded-lg focus:border-electric-blue focus:outline-none text-sm"
                             placeholder={`Enter your ${key} URL`}
                           />
@@ -1159,18 +1386,26 @@ export default function Quiz() {
                 {currentStep === 12 && (
                   <div className="space-y-4 md:space-y-6 flex-1 flex flex-col">
                     <div className="text-center mb-4 md:mb-6">
-                      <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">Engagement Rate 💯</h2>
+                      <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">
+                        Engagement Rate 💯
+                      </h2>
                     </div>
                     <div className="flex-1">
-                      <label className="block text-gray-900 font-semibold mb-3 text-base md:text-lg">{t.questions.engagementRate}</label>
+                      <label className="block text-gray-900 font-semibold mb-3 text-base md:text-lg">
+                        {t.questions.engagementRate}
+                      </label>
                       <select
                         value={quizData.engagementRate}
-                        onChange={(e) => updateQuizData("engagementRate", e.target.value)}
+                        onChange={(e) =>
+                          updateQuizData("engagementRate", e.target.value)
+                        }
                         className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-3 md:py-4 rounded-lg focus:border-electric-blue focus:outline-none transition-colors text-sm md:text-base"
                       >
                         <option value="">Select your engagement rate</option>
                         {t.options.engagementRates.map((er: string) => (
-                          <option key={er} value={er}>{er}</option>
+                          <option key={er} value={er}>
+                            {er}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -1181,35 +1416,49 @@ export default function Quiz() {
                 {currentStep === 13 && (
                   <div className="space-y-4 pb-8">
                     <div className="text-center mb-2 md:mb-4">
-                      <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">Contact Information 📇</h2>
+                      <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">
+                        Contact Information 📇
+                      </h2>
                     </div>
                     <div className="grid grid-cols-1 gap-3">
                       <div>
-                        <label className="block text-gray-900 font-medium text-sm mb-1">{t.questions.name}</label>
+                        <label className="block text-gray-900 font-medium text-sm mb-1">
+                          {t.questions.name}
+                        </label>
                         <input
                           type="text"
                           value={quizData.name}
-                          onChange={(e) => updateQuizData("name", e.target.value)}
+                          onChange={(e) =>
+                            updateQuizData("name", e.target.value)
+                          }
                           className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-2 rounded-lg focus:border-electric-blue focus:outline-none text-sm"
                           placeholder="Your name"
                         />
                       </div>
                       <div>
-                        <label className="block text-gray-900 font-medium text-sm mb-1">{t.questions.email}</label>
+                        <label className="block text-gray-900 font-medium text-sm mb-1">
+                          {t.questions.email}
+                        </label>
                         <input
                           type="email"
                           value={quizData.email}
-                          onChange={(e) => updateQuizData("email", e.target.value)}
+                          onChange={(e) =>
+                            updateQuizData("email", e.target.value)
+                          }
                           className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-2 rounded-lg focus:border-electric-blue focus:outline-none text-sm"
                           placeholder="your@email.com"
                         />
                       </div>
                       <div>
-                        <label className="block text-gray-900 font-medium text-sm mb-1">{t.questions.city}</label>
+                        <label className="block text-gray-900 font-medium text-sm mb-1">
+                          {t.questions.city}
+                        </label>
                         <input
                           type="text"
                           value={quizData.city}
-                          onChange={(e) => updateQuizData("city", e.target.value)}
+                          onChange={(e) =>
+                            updateQuizData("city", e.target.value)
+                          }
                           className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-2 rounded-lg focus:border-electric-blue focus:outline-none text-sm"
                           placeholder="City"
                         />
@@ -1228,7 +1477,9 @@ export default function Quiz() {
                       Previous
                     </button>
                     <button
-                      onClick={currentStep === totalSteps ? handleSubmit : handleNext}
+                      onClick={
+                        currentStep === totalSteps ? handleSubmit : handleNext
+                      }
                       className="px-5 py-2.5 rounded-lg bg-neon-green text-black font-semibold text-sm md:text-base"
                     >
                       {currentStep === totalSteps ? t.buttons.submit : "Next"}
