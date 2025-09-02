@@ -271,7 +271,7 @@ const languages = {
       1: "बुनियादी जानकारी",
       2: "प्लेटफॉर्म और फॉलोअर्स",
       3: "कंटेंट निच",
-      4: "कंटेंट प्रकार",
+      4: "कंटेंट प्र��ार",
       5: "पोस्टिंग आवृत्ति",
       6: "अनुभव और आय",
       7: "सबसे बड़ी चुनौती",
@@ -289,7 +289,7 @@ const languages = {
       secondaryPlatforms:
         "आप और ��ौन से प्लेटफॉर्म का उपयोग करते हैं? (कई विकल्प चुनें)",
       niche: "आपका कंटेंट किस विषय पर है?",
-      contentType: "आप किस प्रकार का कंटेंट बना��े हैं?",
+      contentType: "आप किस प्रकार का कंटेंट बना��े ���ैं?",
       postingFrequency: "आप कितनी बार कंटेंट पोस्ट करते हैं?",
       experience:
         "आप कितने समय से कंटेंट बना रहे हैं? (सभी स्तर चुनें जिनका आपने अनुभव किया है)",
@@ -300,7 +300,7 @@ const languages = {
       goals:
         "आपके अगले 6 महीने के मुख्य लक्ष्य क्या हैं? (अधिकतम 3 चुनें)",
       socialLinks: "अपनी सोशल उपस्थिति साझा करें (वैकल्पिक)",
-      bio: "अपने और अपने क��टेंट के ब���रे में कुछ और बताएं (वैकल्पिक)",
+      bio: "अपने और अपने क����ेंट के बारे में कुछ और बताएं (वैकल्पिक)",
     },
     options: {
       platforms: [
@@ -366,7 +366,7 @@ const languages = {
         "सप्ताह ���ें 3-4 बार",
         "साप्ताहिक",
         "महीने में 2-3 बार",
-        "म���सिक",
+        "मासिक",
         "अनियमित",
       ],
       experiences: [
@@ -1133,7 +1133,7 @@ export default function Quiz() {
 
                 {/* Step 11: Social Links (optional) */}
                 {currentStep === 11 && (
-                  <div className="space-y-4">
+                  <div className="space-y-4 pb-6">
                     <div className="text-center mb-2 md:mb-4">
                       <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">Social Profiles (Optional)</h2>
                       <p className="text-sm md:text-base text-gray-600 px-2">Share your profile links.</p>
