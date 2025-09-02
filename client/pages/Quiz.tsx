@@ -273,10 +273,10 @@ const languages = {
       3: "कंटेंट निच",
       4: "कंटेंट प्रकार",
       5: "पोस्टिंग आवृत्ति",
-      6: "अनुभव और आय",
+      6: "अनुभव और आ��",
       7: "सबसे बड़ी चुनौती",
       8: "लक्ष्य",
-      9: "सोशल लिंक���स",
+      9: "सोशल लिंक्स",
       10: "एंगेजमेंट रेट",
     },
     questions: {
@@ -290,7 +290,7 @@ const languages = {
         "आप और ��ौन से प्लेटफॉर्म का उपयोग करते हैं? (कई विकल्प चुनें)",
       niche: "आपका कंटेंट किस विषय पर है?",
       contentType: "आप किस प्रकार का कंटेंट बना��े हैं?",
-      postingFrequency: "आप कितनी बार कंटेंट पोस्ट करते हैं?",
+      postingFrequency: "आप कितनी बार कंटेंट पोस्ट क��ते हैं?",
       experience:
         "आप कितने समय से कंटेंट बना रहे हैं? (सभी स्तर चुनें जिनका आपने अनुभव किया है)",
       monthlyIncome: "कंटेंट से आपकी वर्तमान मासिक आय क्या है?",
@@ -306,7 +306,7 @@ const languages = {
       platforms: [
         "इंस्टाग्राम",
         "यूट्यूब",
-        "लि���क्डइन",
+        "लिंक्डइन",
         "टिकटॉक",
         "ट्विटर",
         "फेसबुक",
@@ -334,9 +334,9 @@ const languages = {
         "कला और डिज़ाइन",
         "गेमिंग और ईस्पोर्ट्स",
         "संगीत और नृत्य",
-        "शिक्षा और सीखना",
+        "शिक्षा और सीख���ा",
         "खेल और एथलेटिक्स",
-        "प्रेरणा और स्व-सह��यत���",
+        "प्रेरणा और स्व-सह��यता",
         "पेरेंटिंग और परिवार",
         "DIY और शिल्प",
         "आध्यात्म और माइंडफुलनेस",
@@ -424,8 +424,8 @@ const languages = {
         description: "आकर्षक मीडिया किट बनाएं जो ब्रांड्स को पसंद आएंगे",
       },
       emailTemplates: {
-        title: "ब्रांड आउटरीच ईमेल टेम्प्लेट्स",
-        description: "ब्रांड पार्टनरशिप के लिए 30+ सिद्ध ईमेल ट�����्प्लेट्स",
+        title: "ब्रांड आउटरीच ईमेल टेम्प्लेट���स",
+        description: "ब्रांड पार्टनरशिप के लिए 30+ सिद्ध ईमेल टे��्प्लेट्स",
       },
       growthGuide: {
         title: "90-दिन की ग्रोथ स्ट्रैटेजी गाइड",
@@ -689,7 +689,7 @@ export default function Quiz() {
     if (type === "mediaKit") {
       content =
         fontSizeIndicator +
-        `${language === "hindi" ? "मीडिया किट" : "MEDIA KIT"} - ${userName}\n\n${language === "hindi" ? "व्यक्तिगत जानकारी:" : "PERSONAL INFO:"}\n${language === "hindi" ? "नाम:" : "Name:"} ${userName}\n${language === "hindi" ? "निच:" : "Niche:"} ${quizData.niche}\n${language === "hindi" ? "प्लेटफॉर्म:" : "Platform:"} ${quizData.primaryPlatform}\n${language === "hindi" ? "फॉलोअर्स:" : "Followers:"} ${quizData.followerCount}`;
+        `${language === "hindi" ? "��ीडिया किट" : "MEDIA KIT"} - ${userName}\n\n${language === "hindi" ? "व्यक्तिगत जानकारी:" : "PERSONAL INFO:"}\n${language === "hindi" ? "नाम:" : "Name:"} ${userName}\n${language === "hindi" ? "निच:" : "Niche:"} ${quizData.niche}\n${language === "hindi" ? "प्लेटफॉर्म:" : "Platform:"} ${quizData.primaryPlatform}\n${language === "hindi" ? "फॉलोअर्स:" : "Followers:"} ${quizData.followerCount}`;
     } else if (type === "emailTemplates") {
       content = fontSizeIndicator + `Email Templates - ${userName}`;
     } else if (type === "growthStrategy") {
@@ -1222,7 +1222,7 @@ export default function Quiz() {
                   <div className="container mx-auto max-w-xl px-3 md:px-4 py-3 md:py-4 flex items-center justify-between gap-3">
                     <button
                       onClick={handleBack}
-                      className="px-4 py-2 rounded-lg border text-sm md:text-base disabled:opacity-50"
+                      className="px-4 py-2 rounded-lg border text-sm md:text-base disabled:opacity-50 text-black"
                       disabled={currentStep === 1}
                     >
                       Previous
