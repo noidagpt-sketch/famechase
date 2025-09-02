@@ -269,9 +269,9 @@ const languages = {
     subtitle: "3 मिनट में अपनी व्यक्तिगत ग्रोथ रणनीति पाएं",
     steps: {
       1: "बुनियादी जानकारी",
-      2: "प्लेटफॉर्म और फॉलोअर्स",
+      2: "प��लेटफॉर्म और फॉलोअर्स",
       3: "कंटेंट निच",
-      4: "कंटेंट प्र��ार",
+      4: "कंटेंट प्रकार",
       5: "पोस्टिंग आवृत्ति",
       6: "अनुभव और आय",
       7: "सबसे बड़ी चुनौती",
@@ -288,8 +288,8 @@ const languages = {
       followerCount: "��पके प्राथमिक प्लेटफॉर्म पर कितने फॉलोअर्स हैं?",
       secondaryPlatforms:
         "आप और ��ौन से प्लेटफॉर्म का उपयोग करते हैं? (कई विकल्प चुनें)",
-      niche: "आपका कंटेंट किस विषय पर है?",
-      contentType: "आप किस प्रकार का कंटेंट बना��े ���ैं?",
+      niche: "आपका कंटें�� किस विषय पर है?",
+      contentType: "आप किस प्रकार का कंटेंट बना��े हैं?",
       postingFrequency: "आप कितनी बार कंटेंट पोस्ट करते हैं?",
       experience:
         "आप कितने समय से कंटेंट बना रहे हैं? (सभी स्तर चुनें जिनका आपने अनुभव किया है)",
@@ -299,8 +299,8 @@ const languages = {
         "आपकी सबसे बड़ी चुनौती क्या है? 3 तक चुनें – हम सब इसमें एक साथ हैं! आपकी परेशानियों को समझना हमें बेहतर समाधान देने में मदद करता है।",
       goals:
         "आपके अगले 6 महीने के मुख्य लक्ष्य क्या हैं? (अधिकतम 3 चुनें)",
-      socialLinks: "अपनी सोशल उपस्थिति साझा करें (वैकल्पिक)",
-      bio: "अपने और अपने क����ेंट के बारे में कुछ और बताएं (वैकल्पिक)",
+      socialLinks: "अपनी स��शल उपस्थिति साझा करें (वैकल्पिक)",
+      bio: "अपने और अपने क��टेंट के बारे में कुछ और बताएं (वैकल्पिक)",
     },
     options: {
       platforms: [
@@ -421,7 +421,7 @@ const languages = {
         "अपनी क्रिएटर यात्रा शुरू करने के लिए इन शक्तिशाली टूल्स को डाउनलो�� करें",
       mediaKit: {
         title: "प्रोफेशनल मीडिया किट टेम्प्लेट",
-        description: "आकर्षक मीडिया किट बनाएं जो ब्रांड्स को पसंद आएंगे",
+        description: "आक���्षक मीडिया किट बनाएं जो ब्रांड्स को पसंद आएंगे",
       },
       emailTemplates: {
         title: "ब्रांड आउटरीच ईमेल टेम्प्लेट्स",
@@ -1109,7 +1109,7 @@ export default function Quiz() {
                       {t.options.goals.map((goal: string) => {
                         const selected = quizData.goals.includes(goal);
                         return (
-                          <label key={goal} className={`flex items-center gap-3 p-3 rounded-lg border-2 text-sm md:text-base transition ${selected ? "border-neon-green bg-neon-green/10" : "border-gray-200 hover:border-gray-300"}`}>
+                          <label key={goal} className={`flex items-center gap-3 p-3 rounded-lg border-2 text-sm md:text-base transition ${selected ? "border-neon-green bg-neon-green/10" : "border-gray-200 hover:border-gray-300"} text-black`}>
                             <input
                               type="checkbox"
                               checked={selected}
