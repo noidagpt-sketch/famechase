@@ -288,7 +288,7 @@ const languages = {
       followerCount: "��पके प्राथमिक प्लेटफॉर्म पर कितने फॉलोअर्स हैं?",
       secondaryPlatforms:
         "आप और ��ौन से प्लेटफॉर्म का उपयोग करते हैं? (कई विकल्प चुनें)",
-      niche: "आपका कंटेंट किस विषय पर है?",
+      niche: "आपका कंटेंट किस ���िषय पर है?",
       contentType: "आप किस प्रकार का कंटेंट बना��े हैं?",
       postingFrequency: "आप कितनी बार कंटेंट पोस्ट करते हैं?",
       experience:
@@ -299,7 +299,7 @@ const languages = {
         "आपकी सबसे बड़ी चुनौती क्या है? 3 तक चुनें – हम सब इसमें एक साथ हैं! आपकी परेशानियों को समझना हमें बेहतर समाधान देने में मदद करता है।",
       goals:
         "आपके अगले 6 महीने के मुख्य लक्ष्य क्या हैं? (अधिकतम 3 चुनें)",
-      socialLinks: "अपनी सोशल उपस्थिति साझा करें (वैकल्पिक)",
+      socialLinks: "अपनी सोशल उ��स्थिति साझा करें (वैकल्पिक)",
       bio: "अपने और अपने क��टेंट के बारे में कुछ और बताएं (वैकल्पिक)",
     },
     options: {
@@ -363,7 +363,7 @@ const languages = {
       ],
       frequencies: [
         "रोज़ाना",
-        "सप्ताह ���ें 3-4 बार",
+        "सप���ताह ���ें 3-4 बार",
         "साप्ताहिक",
         "महीने में 2-3 बार",
         "मासिक",
@@ -421,7 +421,7 @@ const languages = {
         "अपनी क्रिएटर यात्रा शुरू करने के लिए इन शक्तिशाली टूल्स को डाउनलो�� करें",
       mediaKit: {
         title: "प्रोफेशनल मीडिया किट टेम्प्लेट",
-        description: "आकर्षक मीडिया किट बनाएं जो ब्रांड्स को पसंद आएंगे",
+        description: "आकर्षक ���ीडिया किट बनाएं जो ब्रांड्स को पसंद आएंगे",
       },
       emailTemplates: {
         title: "ब्रांड आउटरीच ईमेल टेम्प्लेट्स",
@@ -1138,7 +1138,7 @@ export default function Quiz() {
                       <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">Social Profiles (Optional)</h2>
                       <p className="text-sm md:text-base text-gray-600 px-2">Share your profile links.</p>
                     </div>
-                    <div className="grid grid-cols-1 gap-3">
+                    <div className="grid grid-cols-1 gap-3 max-h-72 overflow-y-auto pr-1 text-black">
                       {(["instagram","youtube","linkedin","website","twitter","tiktok"] as const).map((key) => (
                         <div key={key}>
                           <label className="block text-gray-900 font-medium text-sm mb-1 capitalize">{key}</label>
