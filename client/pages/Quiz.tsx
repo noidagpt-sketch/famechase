@@ -274,9 +274,9 @@ const languages = {
       4: "कंटेंट प्रकार",
       5: "पोस्टिंग आवृत्ति",
       6: "अनुभव और आय",
-      7: "सब���े बड़ी चुनौती",
+      7: "सबसे बड़ी चुनौती",
       8: "लक्ष्य",
-      9: "सोशल लिंक्स",
+      9: "सोशल लिंक���स",
       10: "एंगेजमेंट रेट",
     },
     questions: {
@@ -306,7 +306,7 @@ const languages = {
       platforms: [
         "इंस्टाग्राम",
         "यूट्यूब",
-        "लिंक्डइन",
+        "लि���क्डइन",
         "टिकटॉक",
         "ट्विटर",
         "फेसबुक",
@@ -335,8 +335,8 @@ const languages = {
         "गेमिंग और ईस्पोर्ट्स",
         "संगीत और नृत्य",
         "शिक्षा और सीखना",
-        "ख���ल और एथलेटिक्स",
-        "प्रेरणा और स्व-सह��यता",
+        "खेल और एथलेटिक्स",
+        "प्रेरणा और स्व-सह��यत���",
         "पेरेंटिंग और परिवार",
         "DIY और शिल्प",
         "आध्यात्म और माइंडफुलनेस",
@@ -370,7 +370,7 @@ const languages = {
         "अनियमित",
       ],
       experiences: [
-        "अभी शुर�� किया (0-6 महीने)",
+        "अभी शुरू किया (0-6 महीने)",
         "शुरुआती (6 महीने - 1 साल)",
         "बढ़ रहे हैं (1-2 साल)",
         "अनुभवी (2-3 साल)",
@@ -425,7 +425,7 @@ const languages = {
       },
       emailTemplates: {
         title: "ब्रांड आउटरीच ईमेल टेम्प्लेट्स",
-        description: "ब्रांड पार्टनरशिप के लिए 30+ सिद्ध ईमेल टे��्प्लेट्स",
+        description: "ब्रांड पार्टनरशिप के लिए 30+ सिद्ध ईमेल ट�����्प्लेट्स",
       },
       growthGuide: {
         title: "90-दिन की ग्रोथ स्ट्रैटेजी गाइड",
@@ -689,7 +689,7 @@ export default function Quiz() {
     if (type === "mediaKit") {
       content =
         fontSizeIndicator +
-        `${language === "hindi" ? "मीडिया कि���" : "MEDIA KIT"} - ${userName}\n\n${language === "hindi" ? "व्यक्तिगत जानकारी:" : "PERSONAL INFO:"}\n${language === "hindi" ? "नाम:" : "Name:"} ${userName}\n${language === "hindi" ? "निच:" : "Niche:"} ${quizData.niche}\n${language === "hindi" ? "प्लेटफॉर्म:" : "Platform:"} ${quizData.primaryPlatform}\n${language === "hindi" ? "फॉलोअर्स:" : "Followers:"} ${quizData.followerCount}`;
+        `${language === "hindi" ? "मीडिया किट" : "MEDIA KIT"} - ${userName}\n\n${language === "hindi" ? "व्यक्तिगत जानकारी:" : "PERSONAL INFO:"}\n${language === "hindi" ? "नाम:" : "Name:"} ${userName}\n${language === "hindi" ? "निच:" : "Niche:"} ${quizData.niche}\n${language === "hindi" ? "प्लेटफॉर्म:" : "Platform:"} ${quizData.primaryPlatform}\n${language === "hindi" ? "फॉलोअर्स:" : "Followers:"} ${quizData.followerCount}`;
     } else if (type === "emailTemplates") {
       content = fontSizeIndicator + `Email Templates - ${userName}`;
     } else if (type === "growthStrategy") {
@@ -830,7 +830,7 @@ export default function Quiz() {
       </header>
 
       <main ref={quizContentRef} className="container mx-auto px-2 md:px-4 py-2 pb-36">
-        <div className="max-w-xl mx-auto">
+        <div className="max-w-2xl mx-auto">
           <div className="text-center mb-4 md:mb-6">
             <h1 className="text-2xl md:text-4xl font-bold text-gray-900 mb-2 md:mb-4">{t.title}</h1>
             <p className="text-sm md:text-lg text-gray-600 leading-relaxed px-2">{t.subtitle}</p>
