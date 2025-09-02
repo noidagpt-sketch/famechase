@@ -268,7 +268,7 @@ const languages = {
     title: "क्रिएटर सक्सेस क्विज़",
     subtitle: "3 मिनट में अपनी व्यक्तिगत ग्रोथ रणनीति पाएं",
     steps: {
-      1: "बुनियादी जानकारी",
+      1: "बु���ियादी जानकारी",
       2: "प��लेटफॉर्म और फॉलोअर्स",
       3: "कंटेंट निच",
       4: "कंटेंट प्रकार",
@@ -307,7 +307,7 @@ const languages = {
         "यूट्यूब",
         "लिंक्डइन",
         "टिकटॉक",
-        "ट्��िटर",
+        "ट्विटर",
         "फेसबुक",
         "वेबसाइट/ब्लॉग",
       ],
@@ -328,11 +328,11 @@ const languages = {
         "फिटनेस और स्वास्थ्य",
         "व्यक्तिगत वित्त ��र निवेश",
         "मनोरंजन और कॉमेडी",
-        "उद्यमिता और व्यापार",
+        "उद्यमिता ���र व्यापार",
         "जीवनशैली और कल्याण",
         "कला और डिज़ाइन",
         "गेमिंग और ईस्पोर्ट्स",
-        "संगीत और नृत्य",
+        "सं���ीत और नृत्य",
         "शिक्षा और सीखना",
         "खेल और एथलेटिक्स",
         "प्रेरणा और स्व-सह��यता",
@@ -365,7 +365,7 @@ const languages = {
         "सप्ताह ���ें 3-4 बार",
         "साप्ताहिक",
         "महीने में 2-3 बार",
-        "मासिक",
+        "मा���िक",
         "अनियमित",
       ],
       experiences: [
@@ -427,7 +427,7 @@ const languages = {
         description: "ब्रांड पार्टनरशिप के लिए 30+ सिद्ध ईमेल टे��्प्लेट्स",
       },
       growthGuide: {
-        title: "90-दि��� की ग्रोथ स्ट्रैटेजी गाइड",
+        title: "90-दिन की ग्रोथ स्ट्रैटेजी गाइड",
         description: "अपनी फॉलोइंग बढ़ाने के लिए स्टेप-बाई-स्टे�� रोडमैप",
       },
       downloadFree: "मुफ्त डाउनलोड करें",
@@ -741,7 +741,7 @@ export default function Quiz() {
                 className="bg-white border border-gray-300 text-gray-900 px-3 py-2 rounded-lg text-sm font-medium"
               >
                 <option value="english">English</option>
-                <option value="hindi">हिंदी</option>
+                <option value="hindi">हिं��ी</option>
               </select>
             </div>
           </div>
@@ -937,7 +937,7 @@ export default function Quiz() {
             </div>
           </div>
 
-          <div className="bg-white border-2 border-gray-100 rounded-2xl px-4 md:px-8 pt-3 md:pt-6 pb-12 md:pb-16 shadow-xl backdrop-blur-sm min-h-[70vh] flex flex-col gap-3">
+          <div className="bg-white border-2 border-gray-100 rounded-2xl px-4 md:px-8 pt-3 md:pt-6 pb-20 md:pb-28 shadow-xl backdrop-blur-sm min-h-[70vh] flex flex-col gap-3">
             <div className="text-xs md:text-sm text-gray-500 mb-2">
               Step {currentStep} of {totalSteps}
             </div>
