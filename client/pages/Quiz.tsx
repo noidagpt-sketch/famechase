@@ -268,7 +268,7 @@ const languages = {
     title: "क्रिएटर सक्सेस क्विज़",
     subtitle: "3 मिनट में अपनी व्यक्तिगत ग्रोथ रणनीति पाएं",
     steps: {
-      1: "बु���ियादी जानकारी",
+      1: "बुनियादी जानकारी",
       2: "प��लेटफॉर्म और फॉलोअर्स",
       3: "कंटेंट निच",
       4: "कंटेंट प्रकार",
@@ -285,7 +285,7 @@ const languages = {
       phone: "आपका फोन नंबर क्या है? (वैकल्पिक)",
       city: "आप किस शहर से हैं?",
       primaryPlatform: "आप मुख्यतः किस प्लेटफॉर्म पर कं��ेंट बनाते हैं?",
-      followerCount: "��पके प्राथमिक प्लेटफॉर्म पर कितने फॉलोअर्स हैं?",
+      followerCount: "��पके प्राथमिक प��लेटफॉर्म पर कितने फॉलोअर्स हैं?",
       secondaryPlatforms:
         "आप और ��ौन से प्लेटफॉर्म का उपयोग करते हैं? (कई विकल्प चुनें)",
       niche: "आपका कंटें�� किस विषय पर है?",
@@ -324,15 +324,15 @@ const languages = {
         "फैशन और ब्यूटी",
         "टेक्नोलॉजी और AI",
         "खाना और खाना बनाना",
-        "यात्रा और एडवेंचर",
+        "यात्रा और एड��ेंचर",
         "फिटनेस और स्वास्थ्य",
         "व्यक्तिगत वित्त ��र निवेश",
         "मनोरंजन और कॉमेडी",
-        "उद्यमिता ���र व्यापार",
+        "उद्यमिता और व्यापार",
         "जीवनशैली और कल्याण",
         "कला और डिज़ाइन",
         "गेमिंग और ईस्पोर्ट्स",
-        "सं���ीत और नृत्य",
+        "संगीत और नृत्य",
         "शिक्षा और सीखना",
         "खेल और एथलेटिक्स",
         "प्रेरणा और स्व-सह��यता",
@@ -365,7 +365,7 @@ const languages = {
         "सप्ताह ���ें 3-4 बार",
         "साप्ताहिक",
         "महीने में 2-3 बार",
-        "मा���िक",
+        "मासिक",
         "अनियमित",
       ],
       experiences: [
@@ -741,7 +741,7 @@ export default function Quiz() {
                 className="bg-white border border-gray-300 text-gray-900 px-3 py-2 rounded-lg text-sm font-medium"
               >
                 <option value="english">English</option>
-                <option value="hindi">हिं��ी</option>
+                <option value="hindi">हिंदी</option>
               </select>
             </div>
           </div>
@@ -871,7 +871,7 @@ export default function Quiz() {
               </h2>
               <p className="text-gray-600 mb-6">
                 {language === "hindi"
-                  ? "व्यक्तिगत SWOT विश्लेषण, ग्रोथ रणनीति, और प्रीमियम टूल्स के साथ अपनी क्रिएटर यात्रा को तेज़ी से आगे बढ़ाएं।"
+                  ? "व्य��्तिगत SWOT विश्लेषण, ग्रोथ रणनीति, और प्रीमियम टूल्स के साथ अपनी क्रिएटर यात्रा को तेज़ी से आगे बढ़ाएं।"
                   : "Get personalized SWOT analysis, growth strategy, and premium tools to accelerate your creator journey."}
               </p>
               <button
@@ -1480,7 +1480,7 @@ export default function Quiz() {
                       onClick={
                         currentStep === totalSteps ? handleSubmit : handleNext
                       }
-                      disabled={!canProceed() && currentStep !== totalSteps}
+                      disabled={!canProceed()}
                       className="px-5 py-2.5 rounded-lg bg-neon-green text-black font-semibold text-sm md:text-base disabled:opacity-60 disabled:cursor-not-allowed"
                     >
                       {currentStep === totalSteps ? t.buttons.submit : t.buttons.next}
