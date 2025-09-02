@@ -210,7 +210,7 @@ const languages = {
         "🔄 Growth & Engagement: Low views & inconsistent engagement",
         "🧠 Growth & Engagement: Staying relevant with fast-moving trends",
         "🔁 Growth & Engagement: Algorithm changes killing reach",
-        "🧍��♀️ Growth & Engagement: Competing with bigger creators",
+        "🧍‍♀️ Growth & Engagement: Competing with bigger creators",
         "🗣️ Brand & Identity: Struggling to find my unique voice/style",
         "🤝 Brand & Identity: Balancing authenticity with brand appeal",
         "🌱 Brand & Identity: Building a real, connected community",
@@ -290,7 +290,7 @@ const languages = {
         "आप और ��ौन से प्लेटफॉर्म का उपयोग करते हैं? (कई विकल्प चुनें)",
       niche: "आपका कंटेंट किस विषय पर है?",
       contentType: "आप किस प्रकार का कंटेंट बना��े हैं?",
-      postingFrequency: "आप कितनी बार कंटेंट पोस्ट करते ��ैं?",
+      postingFrequency: "आप कितनी बार कंटेंट पो��्ट करते हैं?",
       experience:
         "आप कितने समय से कंटेंट बना रहे हैं? (सभी स्तर चुनें जिनका आपने अनुभव किया है)",
       monthlyIncome: "कंटेंट से आपकी वर्तमान मासिक आय क्या है?",
@@ -334,7 +334,7 @@ const languages = {
         "कला और डिज़ाइन",
         "गेमिंग और ईस्पोर्ट्स",
         "संगीत और नृत्य",
-        "शिक्षा और सीखना",
+        "शिक्षा औ��� सीखना",
         "खेल और एथलेटिक्स",
         "प्रेरणा और स्व-सह��यता",
         "पेरेंटिंग और परिवार",
@@ -370,7 +370,7 @@ const languages = {
         "अनियमित",
       ],
       experiences: [
-        "अभ��� शुरू किया (0-6 महीने)",
+        "अभी शुरू किया (0-6 महीने)",
         "शुरुआती (6 महीने - 1 साल)",
         "बढ़ रहे हैं (1-2 साल)",
         "अनुभवी (2-3 साल)",
@@ -1058,7 +1058,7 @@ export default function Quiz() {
                         <Target className="w-6 h-6 md:w-8 md:h-8 text-white" />
                       </div>
                       <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">Your Biggest Challenges</h2>
-                      <p className="text-sm md:text-base text-gray-600 px-2">Choose one from each category.</p>
+                      <p className="text-sm md:text-base text-gray-600 px-2">You can choose one from each category.</p>
                     </div>
 
                     <div className="space-y-4">
