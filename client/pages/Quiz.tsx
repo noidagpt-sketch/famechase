@@ -274,7 +274,7 @@ const languages = {
       4: "कंटेंट प्रकार",
       5: "पोस्टिंग आवृत्ति",
       6: "अनुभव और आय",
-      7: "सबसे बड़ी चुनौती",
+      7: "सब���े बड़ी चुनौती",
       8: "लक्ष्य",
       9: "सोशल लिंक्स",
       10: "एंगेजमेंट रेट",
@@ -290,7 +290,7 @@ const languages = {
         "आप और ��ौन से प्लेटफॉर्म का उपयोग करते हैं? (कई विकल्प चुनें)",
       niche: "आपका कंटेंट किस विषय पर है?",
       contentType: "आप किस प्रकार का कंटेंट बना��े हैं?",
-      postingFrequency: "आप कितनी बार कंटेंट पो��्ट करते हैं?",
+      postingFrequency: "आप कितनी बार कंटेंट पोस्ट करते हैं?",
       experience:
         "आप कितने समय से कंटेंट बना रहे हैं? (सभी स्तर चुनें जिनका आपने अनुभव किया है)",
       monthlyIncome: "कंटेंट से आपकी वर्तमान मासिक आय क्या है?",
@@ -334,8 +334,8 @@ const languages = {
         "कला और डिज़ाइन",
         "गेमिंग और ईस्पोर्ट्स",
         "संगीत और नृत्य",
-        "शिक्षा औ��� सीखना",
-        "खेल और एथलेटिक्स",
+        "शिक्षा और सीखना",
+        "ख���ल और एथलेटिक्स",
         "प्रेरणा और स्व-सह��यता",
         "पेरेंटिंग और परिवार",
         "DIY और शिल्प",
@@ -370,7 +370,7 @@ const languages = {
         "अनियमित",
       ],
       experiences: [
-        "अभी शुरू किया (0-6 महीने)",
+        "अभी शुर�� किया (0-6 महीने)",
         "शुरुआती (6 महीने - 1 साल)",
         "बढ़ रहे हैं (1-2 साल)",
         "अनुभवी (2-3 साल)",
@@ -689,7 +689,7 @@ export default function Quiz() {
     if (type === "mediaKit") {
       content =
         fontSizeIndicator +
-        `${language === "hindi" ? "मीडिया किट" : "MEDIA KIT"} - ${userName}\n\n${language === "hindi" ? "व्यक्तिगत जानकारी:" : "PERSONAL INFO:"}\n${language === "hindi" ? "नाम:" : "Name:"} ${userName}\n${language === "hindi" ? "निच:" : "Niche:"} ${quizData.niche}\n${language === "hindi" ? "प्लेटफॉर्म:" : "Platform:"} ${quizData.primaryPlatform}\n${language === "hindi" ? "फॉलोअर्स:" : "Followers:"} ${quizData.followerCount}`;
+        `${language === "hindi" ? "मीडिया कि���" : "MEDIA KIT"} - ${userName}\n\n${language === "hindi" ? "व्यक्तिगत जानकारी:" : "PERSONAL INFO:"}\n${language === "hindi" ? "नाम:" : "Name:"} ${userName}\n${language === "hindi" ? "निच:" : "Niche:"} ${quizData.niche}\n${language === "hindi" ? "प्लेटफॉर्म:" : "Platform:"} ${quizData.primaryPlatform}\n${language === "hindi" ? "फॉलोअर्स:" : "Followers:"} ${quizData.followerCount}`;
     } else if (type === "emailTemplates") {
       content = fontSizeIndicator + `Email Templates - ${userName}`;
     } else if (type === "growthStrategy") {
@@ -829,7 +829,7 @@ export default function Quiz() {
         </div>
       </header>
 
-      <main ref={quizContentRef} className="container mx-auto px-2 md:px-4 py-2 pb-24">
+      <main ref={quizContentRef} className="container mx-auto px-2 md:px-4 py-2 pb-36">
         <div className="max-w-xl mx-auto">
           <div className="text-center mb-4 md:mb-6">
             <h1 className="text-2xl md:text-4xl font-bold text-gray-900 mb-2 md:mb-4">{t.title}</h1>
