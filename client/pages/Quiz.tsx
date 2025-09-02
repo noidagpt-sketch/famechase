@@ -1483,7 +1483,9 @@ export default function Quiz() {
                       disabled={!canProceed()}
                       className="px-5 py-2.5 rounded-lg bg-neon-green text-black font-semibold text-sm md:text-base disabled:opacity-60 disabled:cursor-not-allowed"
                     >
-                      {currentStep === totalSteps ? t.buttons.submit : t.buttons.next}
+                      {currentStep === totalSteps
+                        ? t.buttons.submit
+                        : t.buttons.next}
                     </button>
                   </div>
                 </div>
