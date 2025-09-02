@@ -268,10 +268,10 @@ const languages = {
     title: "क्रिएटर सक्सेस क्विज़",
     subtitle: "3 मिनट में अपनी व्यक्तिगत ग्रोथ रणनीति पाएं",
     steps: {
-      1: "बुनियादी जानकारी",
+      1: "बुनियादी जानक��री",
       2: "प��लेटफॉर्म और फॉलोअर्स",
       3: "कंटेंट निच",
-      4: "कंटेंट प्र��ार",
+      4: "कंटेंट प्रकार",
       5: "पोस्टिंग आवृत्ति",
       6: "अनुभव और आय",
       7: "सबसे बड़ी चुनौती",
@@ -289,7 +289,7 @@ const languages = {
       secondaryPlatforms:
         "आप और ��ौन से प्लेटफॉर्म का उपयोग करते हैं? (कई विकल्प चुनें)",
       niche: "आपका कंटें�� किस विषय पर है?",
-      contentType: "आप किस प्रकार का कंटेंट बना���� हैं?",
+      contentType: "आप किस प्रकार का कंटेंट बना��े हैं?",
       postingFrequency: "आप कितनी बार कंटेंट पोस्ट करते हैं?",
       experience:
         "आप कितने समय से कंटेंट बना रहे हैं? (सभी स्तर चुनें जिनका आपने अनुभव किया है)",
@@ -299,7 +299,7 @@ const languages = {
         "आपकी सबसे बड़ी चुनौती क्या है? 3 तक चुनें – हम सब इसमें एक साथ हैं! आपकी परेशानियों को समझना हमें बेहतर समाधान देने में मदद करता है।",
       goals: "आपके अगले 6 महीने के मुख्य लक्ष्य क्या हैं? (अधिकतम 3 चुनें)",
       socialLinks: "अपनी स��शल उपस्थिति साझा करें (वैकल्पिक)",
-      bio: "अपने और अपने क��ट��ंट के बारे में कुछ और बताएं (वैकल्पिक)",
+      bio: "अपने और अपने क��टेंट के बारे में कुछ और ब��ाएं (वैकल्पिक)",
     },
     options: {
       platforms: [
@@ -332,10 +332,10 @@ const languages = {
         "जीवनशैली और कल्याण",
         "कला और डिज़ाइन",
         "गेमिंग और ईस्पोर्ट्स",
-        "संगीत और नृत्य",
+        "संगीत और नृत���य",
         "शिक्षा और सीखना",
         "खेल और एथलेटिक्स",
-        "प्रेरण�� और स्व-सह��यता",
+        "प्रेरणा और स्व-सह��यता",
         "पेरेंटिंग और परिवार",
         "DIY और शिल्प",
         "आध्यात्म और माइंडफुलनेस",
@@ -420,7 +420,7 @@ const languages = {
         "अपनी क्रिएटर यात्रा शुरू करने के लिए इन शक्तिशाली टूल्स को डाउनलो�� करें",
       mediaKit: {
         title: "प्रोफेशनल मीडिया किट टेम्प्लेट",
-        description: "आक���्षक मीडिया किट बनाएं जो ब्रांड्स को पसंद आएंगे",
+        description: "आक����्षक मीडिया किट बनाएं जो ब्रांड्स को पसंद आएंगे",
       },
       emailTemplates: {
         title: "ब्रांड आउटरीच ईमेल टेम्प्लेट्स",
@@ -937,7 +937,7 @@ export default function Quiz() {
             </div>
           </div>
 
-          <div className="bg-white border-2 border-gray-100 rounded-2xl p-4 md:p-8 shadow-xl backdrop-blur-sm min-h-[70vh] flex flex-col justify-between">
+          <div className="bg-white border-2 border-gray-100 rounded-2xl p-4 md:p-8 shadow-xl backdrop-blur-sm min-h-[70vh] flex flex-col gap-4 pb-10 md:pb-16">
             <div className="text-xs md:text-sm text-gray-500 mb-2">
               Step {currentStep} of {totalSteps}
             </div>
@@ -1480,9 +1480,10 @@ export default function Quiz() {
                       onClick={
                         currentStep === totalSteps ? handleSubmit : handleNext
                       }
-                      className="px-5 py-2.5 rounded-lg bg-neon-green text-black font-semibold text-sm md:text-base"
+                      disabled={!canProceed() && currentStep !== totalSteps}
+                      className="px-5 py-2.5 rounded-lg bg-neon-green text-black font-semibold text-sm md:text-base disabled:opacity-60 disabled:cursor-not-allowed"
                     >
-                      {currentStep === totalSteps ? t.buttons.submit : "Next"}
+                      {currentStep === totalSteps ? t.buttons.submit : t.buttons.next}
                     </button>
                   </div>
                 </div>
