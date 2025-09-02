@@ -268,7 +268,7 @@ const languages = {
     title: "क्रिएटर सक्सेस क्विज़",
     subtitle: "3 मिनट में अपनी व्यक्तिगत ग्रोथ रणनीति पाएं",
     steps: {
-      1: "बुनियादी जानक��री",
+      1: "बुनियादी जानकारी",
       2: "प��लेटफॉर्म और फॉलोअर्स",
       3: "कंटेंट निच",
       4: "कंटेंट प्रकार",
@@ -299,7 +299,7 @@ const languages = {
         "आपकी सबसे बड़ी चुनौती क्या है? 3 तक चुनें – हम सब इसमें एक साथ हैं! आपकी परेशानियों को समझना हमें बेहतर समाधान देने में मदद करता है।",
       goals: "आपके अगले 6 महीने के मुख्य लक्ष्य क्या हैं? (अधिकतम 3 चुनें)",
       socialLinks: "अपनी स��शल उपस्थिति साझा करें (वैकल्पिक)",
-      bio: "अपने और अपने क��टेंट के बारे में कुछ और ब��ाएं (वैकल्पिक)",
+      bio: "अपने और अपने क��टेंट के बारे में कुछ और बताएं (वैकल्पिक)",
     },
     options: {
       platforms: [
@@ -307,7 +307,7 @@ const languages = {
         "यूट्यूब",
         "लिंक्डइन",
         "टिकटॉक",
-        "ट्विटर",
+        "ट्��िटर",
         "फेसबुक",
         "वेबसाइट/ब्लॉग",
       ],
@@ -332,7 +332,7 @@ const languages = {
         "जीवनशैली और कल्याण",
         "कला और डिज़ाइन",
         "गेमिंग और ईस्पोर्ट्स",
-        "संगीत और नृत���य",
+        "संगीत और नृत्य",
         "शिक्षा और सीखना",
         "खेल और एथलेटिक्स",
         "प्रेरणा और स्व-सह��यता",
@@ -420,14 +420,14 @@ const languages = {
         "अपनी क्रिएटर यात्रा शुरू करने के लिए इन शक्तिशाली टूल्स को डाउनलो�� करें",
       mediaKit: {
         title: "प्रोफेशनल मीडिया किट टेम्प्लेट",
-        description: "आक����्षक मीडिया किट बनाएं जो ब्रांड्स को पसंद आएंगे",
+        description: "आक���्षक मीडिया किट बनाएं जो ब्रांड्स को पसंद आएंगे",
       },
       emailTemplates: {
         title: "ब्रांड आउटरीच ईमेल टेम्प्लेट्स",
         description: "ब्रांड पार्टनरशिप के लिए 30+ सिद्ध ईमेल टे��्प्लेट्स",
       },
       growthGuide: {
-        title: "90-दिन की ग्रोथ स्ट्रैटेजी गाइड",
+        title: "90-दि��� की ग्रोथ स्ट्रैटेजी गाइड",
         description: "अपनी फॉलोइंग बढ़ाने के लिए स्टेप-बाई-स्टे�� रोडमैप",
       },
       downloadFree: "मुफ्त डाउनलोड करें",
@@ -920,10 +920,10 @@ export default function Quiz() {
 
       <main
         ref={quizContentRef}
-        className="container mx-auto px-2 md:px-4 py-2 pb-36"
+        className="container mx-auto px-2 md:px-4 pt-1 pb-36"
       >
         <div className="max-w-2xl mx-auto">
-          <div className="text-center mb-4 md:mb-6">
+          <div className="text-center mb-2 md:mb-3">
             <h1 className="text-2xl md:text-4xl font-bold text-gray-900 mb-2 md:mb-4">
               {t.title}
             </h1>
@@ -937,7 +937,7 @@ export default function Quiz() {
             </div>
           </div>
 
-          <div className="bg-white border-2 border-gray-100 rounded-2xl p-4 md:p-8 shadow-xl backdrop-blur-sm min-h-[70vh] flex flex-col gap-4 pb-10 md:pb-16">
+          <div className="bg-white border-2 border-gray-100 rounded-2xl px-4 md:px-8 pt-3 md:pt-6 pb-12 md:pb-16 shadow-xl backdrop-blur-sm min-h-[70vh] flex flex-col gap-3">
             <div className="text-xs md:text-sm text-gray-500 mb-2">
               Step {currentStep} of {totalSteps}
             </div>
@@ -960,7 +960,7 @@ export default function Quiz() {
               <>
                 {currentStep === 1 && (
                   <div className="space-y-4 md:space-y-6 flex-1 flex flex-col">
-                    <div className="text-center mb-4 md:mb-6">
+                    <div className="text-center mb-2 md:mb-3">
                       <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-3">
                         <Globe className="w-6 h-6 md:w-8 md:h-8 text-white" />
                       </div>
@@ -995,7 +995,7 @@ export default function Quiz() {
 
                 {currentStep === 2 && (
                   <div className="space-y-4 md:space-y-6 flex-1 flex flex-col">
-                    <div className="text-center mb-4 md:mb-6">
+                    <div className="text-center mb-2 md:mb-3">
                       <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-3">
                         <Star className="w-6 h-6 md:w-8 md:h-8 text-white" />
                       </div>
@@ -1030,7 +1030,7 @@ export default function Quiz() {
 
                 {currentStep === 3 && (
                   <div className="space-y-4 md:space-y-6 flex-1 flex flex-col">
-                    <div className="text-center mb-4 md:mb-6">
+                    <div className="text-center mb-2 md:mb-3">
                       <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-3">
                         <Layout className="w-6 h-6 md:w-8 md:h-8 text-white" />
                       </div>
@@ -1070,7 +1070,7 @@ export default function Quiz() {
                 {/* Step 4: Content Niche */}
                 {currentStep === 4 && (
                   <div className="space-y-4 md:space-y-6 flex-1 flex flex-col">
-                    <div className="text-center mb-4 md:mb-6">
+                    <div className="text-center mb-2 md:mb-3">
                       <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2">
                         Your Content Niche 🎯
                       </h2>
@@ -1103,7 +1103,7 @@ export default function Quiz() {
                 {/* Step 5: Content Type */}
                 {currentStep === 5 && (
                   <div className="space-y-4 md:space-y-6 flex-1 flex flex-col">
-                    <div className="text-center mb-4 md:mb-6">
+                    <div className="text-center mb-2 md:mb-3">
                       <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2">
                         Content Format 🎥
                       </h2>
@@ -1136,7 +1136,7 @@ export default function Quiz() {
                 {/* Step 6: Posting Frequency */}
                 {currentStep === 6 && (
                   <div className="space-y-4 md:space-y-6 flex-1 flex flex-col">
-                    <div className="text-center mb-4 md:mb-6">
+                    <div className="text-center mb-2 md:mb-3">
                       <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2">
                         Posting Schedule ⏰
                       </h2>
@@ -1169,7 +1169,7 @@ export default function Quiz() {
                 {/* Step 7: Experience */}
                 {currentStep === 7 && (
                   <div className="space-y-4 md:space-y-6 flex-1 flex flex-col">
-                    <div className="text-center mb-4 md:mb-6">
+                    <div className="text-center mb-2 md:mb-3">
                       <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2">
                         Your Creator Journey 🚀
                       </h2>
@@ -1205,7 +1205,7 @@ export default function Quiz() {
                 {/* Step 8: Monthly Income */}
                 {currentStep === 8 && (
                   <div className="space-y-4 md:space-y-6 flex-1 flex flex-col">
-                    <div className="text-center mb-4 md:mb-6">
+                    <div className="text-center mb-2 md:mb-3">
                       <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2">
                         Current Income 💰
                       </h2>
@@ -1385,7 +1385,7 @@ export default function Quiz() {
                 {/* Step 12: Engagement Rate */}
                 {currentStep === 12 && (
                   <div className="space-y-4 md:space-y-6 flex-1 flex flex-col">
-                    <div className="text-center mb-4 md:mb-6">
+                    <div className="text-center mb-2 md:mb-3">
                       <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">
                         Engagement Rate 💯
                       </h2>
