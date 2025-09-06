@@ -14,7 +14,8 @@ import {
   Loader2,
 } from "lucide-react";
 import { supabase, dbHelpers, User, Product, Purchase } from "../lib/supabase";
-import { paymentHelpers, PayUPaymentData } from "../lib/payu";
+import { paymentHelpers, PayUPaymentData, PAYU_CONFIG } from "../lib/payu";
+import { sanitizeDeep } from "@/lib/sanitize";
 import SupabaseConfigBanner from "../components/SupabaseConfigBanner";
 
 interface CustomerInfo {
@@ -36,6 +37,7 @@ export default function Shop() {
   const [promoCode, setPromoCode] = useState("");
   const [appliedDiscount, setAppliedDiscount] = useState(0);
   const [userPurchases, setUserPurchases] = useState<Purchase[]>([]);
+  const [supabaseOnline, setSupabaseOnline] = useState<boolean>(!!supabase);
   const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({
     name: "",
     email: "",
@@ -71,41 +73,51 @@ export default function Shop() {
         });
       }
 
-      // Check if Supabase is configured
+      // Check if Supabase is configured and reachable
       if (supabase) {
-        // Check authentication
-        const {
-          data: { user: authUser },
-        } = await supabase.auth.getUser();
+        let canUseSupabase = true;
+        try {
+          const { data: auth } = await supabase.auth.getUser();
+          const authUser = auth?.user || null;
 
-        // If user is authenticated, create/update user record
-        if (authUser && storedQuizData) {
-          const userData = JSON.parse(storedQuizData);
-          const { data: existingUser } = await dbHelpers.getUser(authUser.id);
+          if (authUser && storedQuizData) {
+            const userData = JSON.parse(storedQuizData);
 
-          if (!existingUser) {
-            // Create new user record
-            await dbHelpers.createUser({
-              id: authUser.id,
-              name: userData.name,
-              email: userData.email || authUser.email,
-              phone: userData.phone,
-              city: userData.city,
-              niche: userData.niche,
-              primary_platform: userData.primaryPlatform,
-              follower_count: userData.followerCount,
-              goals: userData.goals,
-              quiz_data: userData,
-            });
+            const { data: existingUser } = await dbHelpers.getUser(authUser.id);
+            if (!existingUser) {
+              await dbHelpers.createUser({
+                id: authUser.id,
+                name: userData.name,
+                email: userData.email || authUser.email,
+                phone: userData.phone,
+                city: userData.city,
+                niche: userData.niche,
+                primary_platform: userData.primaryPlatform,
+                follower_count: userData.followerCount,
+                goals: userData.goals,
+                quiz_data: userData,
+              });
+            }
+
+            setUser(existingUser || userData);
+
+            const { data: purchases } = await dbHelpers.getUserPurchases(
+              authUser.id,
+            );
+            setUserPurchases(purchases || []);
           }
+        } catch (e) {
+          console.warn("Supabase fetch failed; switching to local mode", e);
+          canUseSupabase = false;
+        }
+        setSupabaseOnline(canUseSupabase);
 
-          setUser(existingUser || userData);
-
-          // Load user's purchases
-          const { data: purchases } = await dbHelpers.getUserPurchases(
-            authUser.id,
-          );
-          setUserPurchases(purchases || []);
+        if (!canUseSupabase) {
+          const stored = localStorage.getItem("purchasedProducts");
+          if (stored) {
+            const localPurchases = JSON.parse(stored);
+            setUserPurchases(localPurchases);
+          }
         }
       } else {
         // Fallback to localStorage when Supabase is not configured
@@ -200,32 +212,38 @@ export default function Shop() {
 
       const finalAmount = calculateDiscountedPrice(product.price);
 
-      if (supabase) {
+      if (supabase && supabaseOnline) {
         // Create PayU payment directly without Edge Functions
         const { paymentHelpers } = await import("../lib/payu");
 
         // Generate transaction ID
-        const txnid = `FAMECHASE_${Date.now()}_${Math.random().toString(36).substring(2)}`.toUpperCase();
+        const txnid =
+          `FAMECHASE_${Date.now()}_${Math.random().toString(36).substring(2)}`.toUpperCase();
 
         // First, ensure user data is saved to Supabase
         let userId = null;
         if (quizData) {
           const { data: userData, error: userError } = await supabase
-            .from('users')
-            .upsert([{
-              name: customerInfo.name,
-              email: customerInfo.email,
-              phone: customerInfo.phone,
-              city: customerInfo.city,
-              niche: quizData.niche,
-              primary_platform: quizData.primaryPlatform,
-              follower_count: quizData.followerCount,
-              goals: quizData.goals,
-              quiz_data: quizData,
-            }], {
-              onConflict: 'email',
-              ignoreDuplicates: false
-            })
+            .from("users")
+            .upsert(
+              [
+                {
+                  name: customerInfo.name,
+                  email: customerInfo.email,
+                  phone: customerInfo.phone,
+                  city: customerInfo.city,
+                  niche: quizData.niche,
+                  primary_platform: quizData.primaryPlatform,
+                  follower_count: quizData.followerCount,
+                  goals: quizData.goals,
+                  quiz_data: quizData,
+                },
+              ],
+              {
+                onConflict: "email",
+                ignoreDuplicates: false,
+              },
+            )
             .select()
             .single();
 
@@ -234,24 +252,26 @@ export default function Shop() {
 
         // Save purchase to Supabase
         const { data: purchaseData, error: purchaseError } = await supabase
-          .from('purchases')
-          .insert([{
-            user_id: userId,
-            product_id: productId,
-            amount: finalAmount,
-            discount_amount: product.price - finalAmount,
-            promo_code: promoCode || null,
-            payment_id: txnid,
-            payment_status: 'pending',
-            payment_method: 'payu',
-            customer_info: customerInfo
-          }])
+          .from("purchases")
+          .insert([
+            {
+              user_id: userId,
+              product_id: productId,
+              amount: finalAmount,
+              discount_amount: product.price - finalAmount,
+              promo_code: promoCode || null,
+              payment_id: txnid,
+              payment_status: "pending",
+              payment_method: "payu",
+              customer_info: customerInfo,
+            },
+          ])
           .select()
           .single();
 
         if (purchaseError) {
-          console.error('Purchase creation error:', purchaseError);
-          throw new Error('Failed to create purchase record');
+          console.error("Purchase creation error:", purchaseError);
+          throw new Error("Failed to create purchase record");
         }
 
         // Create PayU payment data
@@ -265,10 +285,10 @@ export default function Shop() {
           surl: `${window.location.origin}/payment-success`,
           furl: `${window.location.origin}/payment-failure`,
           udf1: purchaseData.id, // Purchase ID
-          udf2: productId,       // Product ID
+          udf2: productId, // Product ID
           udf3: finalAmount.toString(), // Amount
-          udf4: '',
-          udf5: ''
+          udf4: "",
+          udf5: "",
         };
 
         // Generate hash using PayU helper
@@ -278,11 +298,11 @@ export default function Shop() {
         // Redirect to PayU payment gateway
         const form = document.createElement("form");
         form.method = "POST";
-        form.action = "https://test.payu.in/_payment";
+        form.action = PAYU_CONFIG.baseUrl;
 
         // PayU required fields
         const payuFields = {
-          key: 'WBtjxn',
+          key: PAYU_CONFIG.merchantKey,
           txnid: paymentData.txnid,
           amount: paymentData.amount.toString(),
           productinfo: paymentData.productinfo,
@@ -296,7 +316,7 @@ export default function Shop() {
           udf3: paymentData.udf3,
           udf4: paymentData.udf4,
           udf5: paymentData.udf5,
-          hash: hash
+          hash: hash,
         };
 
         Object.entries(payuFields).forEach(([key, value]) => {
@@ -391,10 +411,10 @@ export default function Shop() {
       trending: "ट्रेंडिंग",
       downloads: "डाउनलोड",
       rating: "रेटिंग",
-      securePayment: "सुरक्षित भुगतान",
+      securePayment: "स��रक्षित भुगतान",
       instantDownload: "तुरंत डाउनलोड",
       buyNow: "अभी खरीदें",
-      downloadFree: "फ्री ड��उनलोड करें",
+      downloadFree: "फ्री डाउनलोड करें",
       paymentForm: "अपनी जानकारी पूरी करें",
       fullName: "पूरा नाम",
       emailAddress: "ईमेल पता",
@@ -406,7 +426,7 @@ export default function Shop() {
     },
   };
 
-  const currentLang = t[language];
+  const currentLang = sanitizeDeep(t[language]);
 
   if (loading) {
     return (
@@ -459,7 +479,7 @@ export default function Shop() {
               <Award className="w-5 h-5" />
               <span className="font-semibold">
                 {language === "hindi"
-                  ? "प्रीमिय�� क्रिएटर टूल्स"
+                  ? "प्रीमियम क्रिएटर टूल्स"
                   : "Premium Creator Tools"}
               </span>
             </div>
@@ -581,7 +601,7 @@ export default function Shop() {
                           </div>
                           {product.original_price > product.price && (
                             <div className="text-lg text-gray-500 line-through">
-                              ��{product.original_price}
+                              ₹{product.original_price}
                             </div>
                           )}
                           <div className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold mb-4">
@@ -645,7 +665,7 @@ export default function Shop() {
             </h3>
             <p className="text-gray-600 mb-6">
               {language === "hindi"
-                ? "प्रीमियम टूल्स को खरीदने से पहले आपको अपनी क्रिएटर प्रोफाइल बनानी होगी��� यह केवल 2 मिनट में हो जाएगा!"
+                ? "प्रीमियम टूल्स को खरीदने से पहले आपको अपनी क्रिएटर प्रोफाइल बनानी होगी। यह केवल 2 मिनट में हो जाएगा!"
                 : "Before purchasing premium tools, you need to complete your creator profile. It takes only 2 minutes!"}
             </p>
             <div className="space-y-3">

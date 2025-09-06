@@ -1,6 +1,13 @@
 import path from "path";
-import { createServer } from "./index";
+import { createRequire } from "module";
 import * as express from "express";
+
+// Use createRequire to load the CommonJS server/index.js so Rollup/Vite
+// cannot statically analyze a missing named export. This avoids the
+// "createServer is not exported" build error.
+const require = createRequire(import.meta.url);
+const indexModule = require("./index");
+const createServer = (indexModule && (indexModule.createServer || indexModule.default || indexModule)) as any;
 
 const app = createServer();
 const port = process.env.PORT || 3000;

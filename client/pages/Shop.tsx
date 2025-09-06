@@ -36,6 +36,8 @@ import {
   ProductConfig,
   productConfigs,
 } from "../lib/products";
+import { supabase, dbHelpers, isSupabaseConfigured } from "@/lib/supabase";
+import { sanitizeDeep } from "@/lib/sanitize";
 
 interface PurchasedProduct {
   id: string;
@@ -255,22 +257,22 @@ export default function Shop() {
     hindi: {
       title: "क्रिएटर टूल्स और संसाधन",
       subtitle: "आपकी क्रिएटर यात्रा को तेज़ करने के लिए प्रोफेशनल टूल्स",
-      freeResources: "फ्री क्रिएटर संस���धन",
+      freeResources: "फ्री क्रिएटर संसाधन",
       premiumTools: "प्रीमियम क्रिएटर टूल्स",
       adminPanel: "एडमिन पैनल",
       toggleProduct: "प्रोडक्ट टॉगल",
       enabled: "सक्षम",
-      disabled: "निष्क��रिय",
+      disabled: "निष्क्रिय",
       bestseller: "बेस्टसेलर",
       trending: "ट्रेंडिंग",
-      limited: "सीमि�� समय",
-      offerEnds: "ऑफर समाप���त होता है",
-      downloads: "ड��उ���लोड",
+      limited: "सीमित समय",
+      offerEnds: "ऑफर समाप्त होता है",
+      downloads: "डाउनलोड",
       rating: "रेटिंग",
       securePayment: "सुरक्षित भुगतान",
       instantDownload: "तुरंत डाउनलोड",
       buyNow: "अभी खरीदें",
-      downloadFree: "फ्री डाउ��लोड करें",
+      downloadFree: "फ्री डाउनलोड करें",
       bundleOffer: "सीमित समय बंडल ऑफर 🔥",
       save: "बचाएं",
       getBundle: "कम्प्लीट बंडल पाएं",
@@ -285,12 +287,12 @@ export default function Shop() {
       downloadYourProducts: "अपने प्रोडक्ट्स डाउनलोड करें",
       purchaseSuccess: "खरीदारी सफल! 🎉",
       thanksForPurchase:
-        "आपकी खरीदारी के ���िए धन्यवा���! आपके प्रोडक्ट्स डाउनलोड के लिए तैयार ���ैं।",
+        "आपकी खरीदारी के लिए धन्यवाद! आपके प्रोडक्ट्स डाउनलोड के लिए तैयार हैं।",
       backToShop: "शॉप पर वापस जाएं",
     },
   };
 
-  const currentLang = t[language];
+  const currentLang = sanitizeDeep(t[language]);
 
   const handlePurchase = async (productId: string) => {
     setIsSubmitting(true);
@@ -314,7 +316,7 @@ export default function Shop() {
     setShowSuccessPage(productId);
   };
 
-  const handleDownload = (productId: string, downloadId: string) => {
+  const handleDownload = async (productId: string, downloadId: string) => {
     const content = generateProductDownload(
       productId,
       downloadId,
@@ -326,6 +328,23 @@ export default function Shop() {
 
     if (content && download) {
       downloadFile(content, download.fileName, language);
+      // optional: record download
+      try {
+        if (isSupabaseConfigured() && supabase) {
+          const { data } = await supabase.auth.getUser();
+          const userId = data.user?.id;
+          if (userId) {
+            await dbHelpers.recordDownload({
+              user_id: userId,
+              product_id: productId,
+              download_id: downloadId,
+              downloaded_at: new Date().toISOString(),
+            });
+          }
+        }
+      } catch (e) {
+        // no-op
+      }
     }
   };
 
@@ -517,7 +536,7 @@ export default function Shop() {
             </div>
             <p className="text-sm opacity-90">
               {language === "hindi"
-                ? "5000+ क्रिएटर्स का भरोसा • स���लता गारंटी • तुरंत डाउनलोड"
+                ? "5000+ ��्रिएटर्स का भरोसा • सफलता गारंटी • तुरंत डाउनलोड"
                 : "Trusted by 5000+ creators • Success guaranteed • Instant download"}
             </p>
           </div>
@@ -572,7 +591,7 @@ export default function Shop() {
                     {product.category === "masterclass" && (
                       <div className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">
                         {language === "hindi"
-                          ? "एक्सपर्ट गाइड"
+                          ? "एक���सपर्ट गाइड"
                           : "Expert Guide"}
                       </div>
                     )}
@@ -586,13 +605,13 @@ export default function Shop() {
                           ? "कम्प्लीट क्रिएटर ग्रोथ किट"
                           : language === "hindi" &&
                               product.id === "reels-mastery"
-                            ? "इ��स्टाग्राम रील्स मास्���री कोर्स"
+                            ? "इंस्टाग्राम रील्स मास्टरी कोर्स"
                             : language === "hindi" &&
                                 product.id === "brand-masterclass"
                               ? "ब्रांड कोलैबोरेशन मास्टरक्लास"
                               : language === "hindi" &&
                                   product.id === "complete-bundle"
-                                ? "कम्प्लीट ���्र���एटर बंडल"
+                                ? "कम्प्लीट क्रिएटर बंडल"
                                 : product.name}
                       </h3>
                       <p className="text-gray-600 mb-4">
@@ -714,12 +733,12 @@ export default function Shop() {
             </div>
             <h3 className="text-2xl font-bold text-gray-900 mb-4">
               {language === "hindi"
-                ? "❌ पहले अपनी प्रोफा��ल बनाएं!"
+                ? "❌ पहले अपनी प्रोफाइल बनाएं!"
                 : "❌ Complete Your Profile First!"}
             </h3>
             <p className="text-gray-600 mb-6">
               {language === "hindi"
-                ? "प्रीमियम टूल्स को खरीदने से पहले आपको अपनी क्रिएटर प्रोफाइल बनानी ���ोगी। यह केवल 2 मिनट में हो जाएगा!"
+                ? "प्रीमियम टूल्स को खरीदने से पहले आपको अपनी क���रिएटर प्रोफाइल बनानी होगी। यह केवल 2 मिनट में ह��� जाएगा!"
                 : "Before purchasing premium tools, you need to complete your creator profile. It takes only 2 minutes!"}
             </p>
             <div className="space-y-3">
@@ -728,7 +747,7 @@ export default function Shop() {
                 className="w-full bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all inline-block"
               >
                 {language === "hindi"
-                  ? "🎯 अभ�� प्रोफाइल बनाएं"
+                  ? "🎯 अभी प्रोफाइल बनाएं"
                   : "🎯 Create Profile Now"}
               </Link>
               <button
@@ -811,7 +830,7 @@ export default function Shop() {
               <div className="border-t pt-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   {language === "hindi"
-                    ? "प्रोमो कोड (वैकल���पिक)"
+                    ? "प्रोमो कोड (वैकल्पिक)"
                     : "Promo Code (Optional)"}
                 </label>
                 <div className="flex gap-2">
@@ -871,7 +890,7 @@ export default function Shop() {
                 )}
                 <div className="flex justify-between items-center font-bold text-lg border-t pt-2 mt-2">
                   <span className="text-gray-900">
-                    {language === "hindi" ? "कुल ��ाशि:" : "Total Amount:"}
+                    {language === "hindi" ? "कुल राशि:" : "Total Amount:"}
                   </span>
                   <span className="text-blue-600">
                     ₹
