@@ -1,5 +1,5 @@
-import { defineConfig, Plugin } from "vite";
-import react from "@vitejs/plugin-react-swc";
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 import path from "path";
 
 // Note: do NOT import server at top-level. Dynamically import createServer only when
@@ -7,10 +7,11 @@ import path from "path";
 // server/package.json during production builds.
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
+export default defineConfig({
   server: {
-    host: "::",
-    port: 8080,
+    host: "0.0.0.0",
+    port: parseInt(process.env.PORT || "5173"),
+    strictPort: true,
   },
   build: {
     outDir: "dist/spa",
@@ -22,4 +23,7 @@ export default defineConfig(({ mode }) => ({
       "@shared": path.resolve(__dirname, "./shared"),
     },
   },
-}));
+  define: {
+    "process.env": {},
+  },
+});
