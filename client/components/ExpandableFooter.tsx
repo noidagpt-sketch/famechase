@@ -42,7 +42,7 @@ We never sell or share your data with third parties. All information is stored s
 You can request deletion or correction of your data at any time by emailing mail@famechase.com.`,
   },
   terms: {
-    title: "📜 Terms & Conditions (T&C)",
+    title: "📜 Terms & Conditions (T&C) By Famechase.com",
     content: `Effective Date: July 9, 2025
 
 By using FameChase.com, you agree to the following terms:
