@@ -15,7 +15,9 @@ Our mission is to make influencer success accessible, strategic, and profitable 
     content: `Have a question, feedback, or partnership inquiry?
 We're here to help!
 
-📧 Email us at: mail@famechase.com`,
+📧 Email us at: mail@famechase.com
+📍 Address: A1471/9, Indira Nagar Lucknow, UP
+📱 Mobile: 8009785785`,
   },
   privacy: {
     title: "🔒 Privacy Policy",
@@ -58,7 +60,9 @@ All content, designs, and tools provided are the intellectual property of FameCh
 We reserve the right to modify or discontinue services (free or paid) at any time.
 
 5. Contact:
-For any questions, email us at mail@famechase.com`,
+For any questions, email us at mail@famechase.com
+
+by Famechase.com`,
   },
 };
 
