@@ -62,7 +62,7 @@ We reserve the right to modify or discontinue services (free or paid) at any tim
 5. Contact:
 For any questions, email us at mail@famechase.com
 
-by Famechase.com`,
+by famechase.com`,
   },
 };
 
