@@ -50,8 +50,8 @@ By using FameChase.com, you agree to the following terms:
 1. Use of Service:
 Our services and digital downloads are for personal, non-commercial use. You may not redistribute, resell, or republish them.
 
-2. Payments & Refunds:
-All purchases are final. Since our products are digital and delivered instantly, we do not offer refunds.
+2. Payments:
+All purchases are final. Refunds are governed by our Refund Policy.
 
 3. Intellectual Property:
 All content, designs, and tools provided are the intellectual property of FameChase. Unauthorized use is prohibited.
@@ -63,6 +63,13 @@ We reserve the right to modify or discontinue services (free or paid) at any tim
 For any questions, email us at mail@famechase.com
 
 by famechase.com`,
+  },
+  refund: {
+    title: "↩️ Refund Policy",
+    content: `Effective Date: July 9, 2025
+
+For digital products delivered instantly after purchase, we do not offer refunds.
+If you were charged by mistake or have a billing concern, email mail@famechase.com within 7 days and we will review on a case-by-case basis.`,
   },
 };
 
