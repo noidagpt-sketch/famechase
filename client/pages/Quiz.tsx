@@ -1284,7 +1284,9 @@ export default function Quiz() {
                             }}
                             className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-3 rounded-lg focus:border-orange-500 focus:outline-none"
                           >
-                            <option value="">{language === "hindi" ? "एक चुनें" : "Select one"}</option>
+                            <option value="">
+                              {language === "hindi" ? "एक चुनें" : "Select one"}
+                            </option>
                             {challengeGroups[head].map((opt) => (
                               <option key={opt} value={opt}>
                                 {opt}
@@ -1380,7 +1382,11 @@ export default function Quiz() {
                               })
                             }
                             className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-2 rounded-lg focus:border-electric-blue focus:outline-none text-sm"
-                            placeholder={language === "hindi" ? `${key} URL दर्ज करें` : `Enter your ${key} URL`}
+                            placeholder={
+                              language === "hindi"
+                                ? `${key} URL दर्ज करें`
+                                : `Enter your ${key} URL`
+                            }
                           />
                         </div>
                       ))}
