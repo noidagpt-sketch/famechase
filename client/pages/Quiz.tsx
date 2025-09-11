@@ -289,7 +289,7 @@ const languages = {
       secondaryPlatforms:
         "आप और ��ौन से प्लेटफॉर्म का उपयोग करते हैं? (कई विकल्प चुनें)",
       niche: "आपका कंटें�� किस विषय पर है?",
-      contentType: "आप किस प्रकार का कंटेंट बना��े हैं?",
+      contentType: "आप किस प्रकार का कंटेंट बना��े है���?",
       postingFrequency: "आप कितनी बार कंटेंट पोस्ट करते हैं?",
       experience:
         "आप कितने समय से कंटेंट बना रहे हैं? (सभी स्तर चुनें जिनका आपने अनुभव किया है)",
@@ -299,7 +299,7 @@ const languages = {
         "आपकी सबसे बड़ी चुनौती क्या है? 3 तक चुनें – हम सब इसमें एक साथ हैं! आपकी परेशानियों को समझना हमें बेहतर समाधान देने में मदद करता है।",
       goals: "आपके अगले 6 महीने के मुख्य लक्ष्य क्या हैं? (अधिकतम 3 चुनें)",
       socialLinks: "अपनी स��शल उपस्थिति साझा करें (वैकल्पिक)",
-      bio: "अपने और अपने क��टेंट के बारे में कुछ और बताएं (वैकल्पिक)",
+      bio: "अपने और अपने क��टेंट ���े बारे में कुछ और बताएं (वैकल्पिक)",
     },
     options: {
       platforms: [
@@ -1244,10 +1244,12 @@ export default function Quiz() {
                         <Target className="w-6 h-6 md:w-8 md:h-8 text-white" />
                       </div>
                       <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">
-                        Your Biggest Challenges
+                        {t.questions.biggestChallenge}
                       </h2>
                       <p className="text-sm md:text-base text-gray-600 px-2">
-                        You can choose one from each category.
+                        {language === "hindi"
+                          ? "हर श्रेणी से एक विकल्प चुनें।"
+                          : "You can choose one from each category."}
                       </p>
                     </div>
 
@@ -1282,7 +1284,7 @@ export default function Quiz() {
                             }}
                             className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-3 rounded-lg focus:border-orange-500 focus:outline-none"
                           >
-                            <option value="">Select one</option>
+                            <option value="">{language === "hindi" ? "एक चुनें" : "Select one"}</option>
                             {challengeGroups[head].map((opt) => (
                               <option key={opt} value={opt}>
                                 {opt}
@@ -1300,10 +1302,12 @@ export default function Quiz() {
                   <div className="space-y-6">
                     <div className="text-center mb-2 md:mb-4">
                       <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">
-                        Your Main Goals 🎯
+                        {t.questions.goals}
                       </h2>
                       <p className="text-sm md:text-base text-gray-600 px-2">
-                        Select up to 3 goals for the next 6 months.
+                        {language === "hindi"
+                          ? "अगले 6 महीनों के लिए अधिकतम 3 लक्ष्य चुनें।"
+                          : "Select up to 3 goals for the next 6 months."}
                       </p>
                     </div>
                     <div className="grid grid-cols-1 gap-2 max-h-72 overflow-y-auto pr-1 text-black">
@@ -1343,10 +1347,12 @@ export default function Quiz() {
                   <div className="space-y-4 pb-6">
                     <div className="text-center mb-2 md:mb-4">
                       <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-2">
-                        Social Profiles (Optional)
+                        {t.questions.socialLinks}
                       </h2>
                       <p className="text-sm md:text-base text-gray-600 px-2">
-                        Share your profile links.
+                        {language === "hindi"
+                          ? "अपने प्रोफाइल लिंक साझा करें।"
+                          : "Share your profile links."}
                       </p>
                     </div>
                     <div className="grid grid-cols-1 gap-3 max-h-72 overflow-y-auto pr-1 text-black">
@@ -1374,7 +1380,7 @@ export default function Quiz() {
                               })
                             }
                             className="w-full bg-white border-2 border-gray-300 text-gray-900 px-3 py-2 rounded-lg focus:border-electric-blue focus:outline-none text-sm"
-                            placeholder={`Enter your ${key} URL`}
+                            placeholder={language === "hindi" ? `${key} URL दर्ज करें` : `Enter your ${key} URL`}
                           />
                         </div>
                       ))}
