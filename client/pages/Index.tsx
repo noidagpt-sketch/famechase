@@ -38,8 +38,7 @@ const translations = {
       getStartedFree: "Get Started Free",
     },
     hero: {
-      badge:
-        "India’s Platform for Creator & Marketer Growth",
+      badge: "India’s Platform for Creator & Marketer Growth",
       title: "Learn How to Grow and Monetize Your Content Effectively",
       titleHighlight: "",
       subtitle:
@@ -605,7 +604,6 @@ export default function Index() {
               {t.hero.ctaSecondary}
             </Link>
           </div>
-
         </div>
       </main>
 
