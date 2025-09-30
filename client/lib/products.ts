@@ -1,4 +1,6 @@
 // Product Management System
+import { PDFDocument, StandardFonts, type PDFFont } from "pdf-lib";
+
 export interface ProductConfig {
   id: string;
   name: string;
@@ -386,7 +388,7 @@ function generateMediaKitContent(
 
 👤 क्रिएटर की नकारी:
 नाम: ${userName}
-ईमेल: ${userEmail}
+ईमे��: ${userEmail}
 निच: ${userNiche}
 प्राथमिक प्लेटफॉर्म: ${userPlatform}
 फॉलोअर्स: ${userFollowers}
@@ -408,7 +410,7 @@ function generateMediaKitContent(
 
 🏆 पिछले कोलैबोरेशन:
 • [ब्रांड न��म 1] - [कोलैबोरेशन का प्रकार]
-• [ब्रांड नाम 2] - [कोलैबोरेशन का प्रकार]
+• [ब्रांड ��ाम 2] - [कोलैबोरेशन का प्रकार]
 • [ब्रांड नाम 3] - [कोलैबोरेश का प्रकार]
 
 🎯 टारगेट ऑडियंस:
@@ -446,7 +448,7 @@ function generateMediaKitContent(
 2. रियल परफॉर्मेंस मेट्रिक्स अपडट करें
 3. अपने बेस्ट कंटेंट सैंपल्स जोड़ें
 4. ब्रांड-स्पेसिफि कस्टमाइज़े��न करें
-5. प्रोफेशनल डिज़ाइन में कन्वर्ट करें
+5. प्रोफेशनल डिज़ाइन में कन्��र्ट करें
 
 🎨 डिज़ान टिप्स:
 • क्लीन और प्रोफेशनल लेआउ
@@ -553,7 +555,7 @@ function generateEmailTemplatesContent(
 
 मैं ${userName} हूं, ${userNiche} में एक पैशनेट कंटेंट क्रिएटर ूं जिसके ${userPlatform} पर ${userFollowers} engaged followers हैं।
 
-मुझे आपके ब्रांड के साथ कोलैबोरेट करने में बहुत रुचि है क्योंकि:
+मुझे आपके ब्रांड के ��ाथ कोलैबोरेट करने में बहुत रुचि है क्योंकि:
 • आपके प्रोडक्ट्स मेर��� ऑडियंस के साथ perfectly align करते हैं
 • मेर followers को ${userNiche} में genuine interest है
 • मैं authentic और engaging कंटेंट बनाने में स्पेशलाइज़ करता हूं
@@ -655,7 +657,7 @@ ${userName}
 
 Dear [Brand Team],
 
-हमारे recent collaboration के results share करना चाहता हूं:
+हम���रे recent collaboration के results share करना चाहता हूं:
 
 📊 PERFORMANCE METRICS:
 • Post Reach: [number] impressions
@@ -905,7 +907,7 @@ function generatePricingCalculatorContent(
 Base rate per 1K = ₹100-500 (niche के आ��ार पर)
 Minimum post rate = Followers per 1K × Base rate
 
-2️⃣ NICHE MULTIPLIERS:
+2️��� NICHE MULTIPLIERS:
 • Fashion & Beauty: 1.2x
 • Technology & AI: 1.5x
 • Finance & Investing: 1.8x
@@ -1232,7 +1234,7 @@ Sunday: Quarter reflection
 3. Entertainment (20%): Fun content, trends, challenges
 4. Promotion (15%): Products, services, collaborations
 
-⏰ POSTING SCHEDULE:
+��� POSTING SCHEDULE:
 • Best times: 7-9 AM, 12-2 PM, 7-9 PM IST
 • Monday-Friday: 1-2 posts
 • Weekends: 1 post
@@ -1485,7 +1487,7 @@ Month 3: Monetization Focus
 
 🎯 GOALS TRACKING:
 • Follower growth target: [Your goal]
-• Engagement rate goal: [Your target]
+��� Engagement rate goal: [Your target]
 • Reach improvement: [Your target]
 • Brand collaboration: [Number goal]
 
@@ -1539,7 +1541,7 @@ ${userNiche} क्रिएटर्स के लिए विस्तृत 
 • इंफ्लुएंसर्स और अन्य क्रिएटर्स के साथ कोलैबोरेशन
 • लाइव वीडियो और Q&A सेशन शुरू करें
 • विरल रील्स और ट्रेंड्स पर फोकस करें
-• एनालिटिक्स को ट्रैक करें और ऑप्टिमाइज करें
+• एनालिटिक्स को ट्रैक करें और ऑप��टिमाइज करें
 • हैशटैग और कीवरड स्ट्रैटेजी रिफाइन करें
 • आगे की योजना और वी���ियो सीरीज बनाएं
 
@@ -1659,7 +1661,7 @@ function generateHashtagGuideContent(
   if (language === "hindi") {
     return `#️⃣ हैशटैग रिसर्च मास्टर गाइड
 
-${userNiche} क्रिएटर्स े लिए ${userPlatform} हैशटैग रणनीति
+${userNiche} क्रिएटर्स े लि�� ${userPlatform} हैशटैग रणनीति
 
 🔍 हैशटैग की बुनियादी बातें:
 • हैशटै व्यूज को बढ़ात हैं (30x तक बढ़ कते हैं)
@@ -1975,7 +1977,7 @@ ${userPlatform} | ${userFollowers} Followers
 • क्रॉस-प्लेटफॉर्म प्रमोशन
 • दैनिक एनालिटिक्स रिपोर्ट
 
-💼 एड-ऑन सरविसेज:
+💼 ए��-ऑन सरविसेज:
 
 • रश डिलीवरी (24-48 hours): +25%
 • एक्सक्लजिव कंटेंट: +40%
@@ -2154,7 +2156,7 @@ ${userNiche} ्रिएटर्स के लिए प्रमाणित 
 5. "इससे पहले vs अब - मेरी [निच] जर्नी"
 6. "24 घंटे में मैंने क्या सीखा [निच] के बारे में"
 7. "[निच] के बारे में मिथ्स जो गलत हैं"
-8. "मैं कैसे [निच] में एक्सपर्ट बना"
+8. "मैं क��से [निच] में एक्सपर्ट बना"
 9. "[निच] करते समय ये गलतियां मत करना"
 10. "एक दिन मेरे साथ [निच] क दुनिया में"
 
@@ -2174,7 +2176,7 @@ ${userNiche} ्रिएटर्स के लिए प्रमाणित 
 14. "[निच] के लिए सबसे जरूरी टूल्स"
 15. "[निच] की हिस्ट्री - 60 सेकंड में"
 16. "[निच] में पैसा कमाने के तरीके"
-17. "मैं कैसे [स्पेसिफिक रिजल्ट] पाया"
+17. "मैं कैसे [स्पे���िफिक रिजल्ट] पाया"
 18. "[निच] में मेरी टॉप 3 टिप्स"
 19. "क्या करें और क्या न करें [निच] में"
 20. "[निच] के बारे में तथ्य जो आप नहीं जानते"
@@ -2192,7 +2194,7 @@ ${userNiche} ्रिएटर्स के लिए प्रमाणित 
 🎉 एंर्टेनमेंट रील्स (15 आइडियाज):
 31. "मेरे [निच] के दोस्तों के साथ"
 32. "जब मैं [निच] के बारे में सोचता हूं vs रियलिटी"
-33. "[निच] के टाइप्स ऑफ पीपल"
+33. "[निच] के टाइप्स ���फ पीपल"
 34. "मेरी [निच] जर्नी - कॉमेडी वर्जन"
 35. "[निच] के स्ट्रगल्स"
 36. "क्ा होता है जब मैं [निच activity] करता हूं"
@@ -2213,7 +2215,7 @@ ${userNiche} ्रिएटर्स के लिए प्रमाणित 
 49. "[िच] के साथ वायरल चैलेंज"
 50. "AI + [निच] = Future"
 
-🎵 बेस्ट ऑडियो/म्यूजिक:
+🎵 बेस्ट ऑडियो/म��यूजिक:
 • Original audio (अपनी आवाज)
 • Trending bollywood songs
 • Viral sounds से Instagram
@@ -2375,7 +2377,7 @@ ${userNiche} क्रिएटर्स के लिए ायरल डिट
 
 🔄 प्रोवन ट्रांजिशन्स:
 
-✨ हैंड ट्रांजिशन:
+✨ हैंड ट्��ांजिशन:
 • हैंड कवर करें - कपड़े/लुक बदलें
 • उंगली स्नैप - टेक्स्ट/ग्राफिक add करें
 • हैंड swipe - सीन चंज करें
@@ -2502,7 +2504,7 @@ ${userNiche} क्रिएटर्स के लिए ायरल डिट
 
 📱 मोबाइल एडिटिंग workflow:
 1. CapCut में import करें
-2. Clips को sequence में arrange करें
+2. Clips को sequence में arrange कर���ं
 3. Music add करें और beat के साथ sync करें
 4. Transitions add करें
 5. Text overlays add करें
@@ -3213,7 +3215,7 @@ ${userNiche} क्रिएटर्स के लिए एल्गोरि�
 
 3️⃣ ऑडियो स्ट्रैटेजी:
 • ट्रेंडिग म्यूजिक का इस्तेमाल करें
-• वोकल्स और beat drops के साथ sync करें
+• वोकल्स और beat drops के सा�� sync करें
 • जम म्यूजिक से timing match करें
 • ओरिजिनल sounds बनाएं (वयरल potential ज्यादा)
 
@@ -3261,7 +3263,7 @@ ${userNiche} क्रिएटर्स के लिए एल्गोरि�
 • Cross-promotion े initial boost लें
 
 🔄 कंटेंट रिपरपाजिंग और adaptation:
-• टिकटॉक viral content को adapt करें
+• टिकट��क viral content को adapt करें
 • YouTube Shorts trends को follow करें
 • इंटर्नेशनल trends को Indian context में adapt करें
 • पुराने viral content को नए twist के साथ recreate करें
@@ -3409,7 +3411,7 @@ ${userNiche} क्रिएटर्स के लिए 10+ कामयाब
 • Multiple characters in single video
 • Regional language incorporation
 • Everyday situations comedy
-• आगे-पीछे jump cuts का smart use
+• आगे-प��छे jump cuts का smart use
 
 ---
 
@@ -3540,7 +3542,7 @@ ${userNiche} क्रिएटर्स के लिए 10+ कामयाब
 5. Audience feedback actively collect र implement करें
 
 🎆 याद रखें:
-“सफलता रातोंरात नहीं आती। ये सभी creators ने वर्षों की मेहनत, लगन और निरंतर सीखने के बाद यह मुकाम हासिल किया है।”`;
+“सफलता रातोंरात नहीं आती। ये सभी creators ने वर्षों की मेहनत, लगन और निरंतर सीखने के बाद य�� मुकाम हासिल किया है।”`;
   }
 
   return `🏆 VIRAL CREATOR CASE STUDIES
@@ -3749,7 +3751,7 @@ ${userNiche} क्रिएटर्स के लिए 10+ कामयाब
 
 📈 SUCCESS METRICS:
 • 1.2M+ Instagram followers
-• Multiple fashion brand collaborations
+��� Multiple fashion brand collaborations
 • Lifestyle product line launch
 • Fashion influencer awards
 
@@ -3863,7 +3865,7 @@ ${userName} - ${userNiche} के लिए 25+ प्रोवन ईमेल 
 • Monthly Reach: [आपकी reach]
 • Audience Demographics: [मुख्य demographics]
 
-क्या आप एक quick call schedule कर सकते हैं collaboration possibilities discuss करने के लिए?
+क्या आप एक quick call schedule कर सकते है��� collaboration possibilities discuss करने के लिए?
 
 मैं आपके brand values के साथ authentic content बनाने को तैयार हूं।
 
@@ -4083,7 +4085,7 @@ Dear [Brand Team],
 🎬 EVENT COLLABORATION PROPOSAL:
 
 📱 PRE-LAUNCH BUZZ (Week 1-2):
-• Teaser content और anticipation building
+• Teaser content ���र anticipation building
 • Behind-the-scenes content creation
 • Audience excitement generation
 • Early access content
@@ -4214,7 +4216,7 @@ Thank you for your interest! Here's my detailed collaboration proposal:
 • My audience perfectly matches your target demographic
 • Authentic storytelling that drives genuine conversions
 • Professional content quality without big agency rates
-• Focus on long-term brand relationship building
+��� Focus on long-term brand relationship building
 
 Looking forward to next steps.
 
@@ -4414,7 +4416,7 @@ Long-tail tags (2-5):
 5. Keyword Planner (Google Ads)
 
 📈 ENGAGEMENT ऑप्टिमाइजेशन:
-• पहले 15 seconds में hook
+• पहले 15 seconds मे��� hook
 • Comments के लिए specific questions पूछें
 • End screens और cards strategically use करें
 • Playlists में organize करें
@@ -5205,7 +5207,7 @@ Example: "MY STORY", "WHAT HAPPENED"
 Layout:
 • Two options side by side
 • "VS" prominently displayed
-• Equal space for both options
+��� Equal space for both options
 • Clear winner indication
 
 Example: "OPTION A VS OPTION B"
@@ -5303,7 +5305,7 @@ Best for: Premium content, mysterious topics, creative arts
 
 💻 TECH/BUSINESS:
 • Clean, professional aesthetics
-• Blue or green color schemes
+��� Blue or green color schemes
 • Charts and data visualization
 • Modern, sleek fonts
 • Technology imagery
@@ -5664,7 +5666,7 @@ Growth Tracking and Optimization for ${userNiche} Creators
 • Subscriber growth rate
 • Top performing content
 • Audience retention trends
-• Revenue and RPM changes
+��� Revenue and RPM changes
 
 📆 MONTHLY DEEP DIVE:
 • Comprehensive performance review
@@ -5812,7 +5814,7 @@ ${userNiche} क्िएटर्स के लिए ऑर्गेनिक 
 4️⃣ एंगेजमेंट सिग्नल्स:
 • Meaningful conversations (comments)
 • Shares और reactions weight
-• Time spent on content
+�� Time spent on content
 • Click-through rates
 • Save और bookmark actions
 
@@ -5943,7 +5945,7 @@ ${userNiche} क्िएटर्स के लिए ऑर्गेनिक 
 📊 ANALYTICS TRACKING:
 
 📈 KEY METRICS:
-• Organic reach percentage
+��� Organic reach percentage
 • Engagement rate
 • Page views और followers growth
 • Post performance comparison
@@ -6754,7 +6756,7 @@ function generateFacebookGroupsContent(
   if (language === "hindi") {
     return ` फेसबुक ग्रुप्स मोनेटाइजेशन गाइड
 
-${userNiche} क्रिएटर्स के लिए कम्युनिटी बिल्डिंग और आय रणनीति
+${userNiche} क्रिएटर्स के लिए कम्युन���टी बिल्डिंग और आय रणनीति
 
 🎯 FACEBOOK GROUPS का POWER:
 
@@ -6846,13 +6848,13 @@ Pricing Strategy:
 🛍️ PRODUCT/SERVICE PROMOTION:
 • 80/20 rule follow करें (80% value, 20% promotion)
 • Authentic testimonials share करें
-• Problem-solving approach use करें
+• Problem-solving approach use ��रें
 • Limited-time offers for group members
 • Exclusive bonuses provide करें
 
 💼 CONSULTING/COACHING:
 • Free advice regularly provide करें
-• Success stories share करे
+• Success stories share कर���
 • 1-on-1 consultation bookings
 • Group coaching sessions
 • Mastermind programs
@@ -6957,7 +6959,7 @@ Pricing Strategy:
 🔧 SCALING STRATEGIES:
 
 📈 GROWTH HACKS:
-• Current members को invite करने के लिए encourage करं
+• Current members को invite करने के लिए encourage ��रं
 • Cross-promotion with related groups
 • Content repurposing from other platforms
 • SEO-optimized group description
@@ -7393,7 +7395,7 @@ Content: Personal stories, behind-the-scenes
 
 Example posts:
 • "आज मैं share करूंगा मेरी journey का एक interesting part"
-• "Saturday storytime: कैसे मैंने [specific challenge] overcome किया"
+• "Saturday storytime: कैस��� मैंने [specific challenge] overcome किया"
 • "Behind-the-scenes: [current project] के बारे में"
 
 🌟 SUNDAY - SUNDAY REFLECTION:
@@ -8091,7 +8093,7 @@ Case Study 1: [Brand] - [results]
 Case Study 2: [Brand] - [results]
 Case Study 3: [Brand] - [results]
 
-══════════════════════════════════════
+════════════���═════════════════════════
 
 🎨 DESIGN TEMPLATE #6: LIFESTYLE INFLUENCER
 ═══════════════════════════════════════
@@ -8129,7 +8131,7 @@ Email: [email]
 Instagram: @${userName.toLowerCase()}
 Website: [website]
 
-═════════════════════════════════════
+═════��═══════════════════════════════
 
 🎨 DESIGN TEMPLATE #7: TECH/BUSINESS PROFESSIONAL
 ═══════════════════════════════════════
@@ -8321,7 +8323,7 @@ Email: [email]
 Portfolio: [website]
 Manager: [manager contact]
 
-══════════════════════════════════════
+══════��═══════════════════════════════
 
 💡 CUSTOMIZATION GUIDE:
 
@@ -8444,7 +8446,7 @@ Manager: [If applicable]
 ══════════════════════════════════════
 
 🎨 DESIGN TEMPLATE #4: CREATIVE ARTISTIC
-═══════════════════��═══════════════════
+═══════════════════��══════════���════════
 
 ✨ ${userName} ✨
 🎨 Creative ${userNiche} Storyteller 🎨
@@ -8958,7 +8960,7 @@ Premium Campaign: ₹[Base Rate × 4]
 • 2 Feed posts + 2 Reels + 8 Stories
 • YouTube integration
 • Comprehensive analytics
-• 2 revisions included
+�� 2 revisions included
 • 30-day story highlights
 
 💰 ADDITIONAL SERVICES:
@@ -9049,7 +9051,7 @@ ${userNiche} क्रिएटर्स के लिए आवश्यक फ
 • Instagram Insights (FREE) - बिल्ट-इन एनालिटिक्स
 • Google Analytics (FREE) - व���बसाइट ट्रैफिक ट्रैकिंग
 • Hootsuite Insights ($49/month) - क्ॉस-प्लेटफॉर्म एनालिटिक्स
-• Sprout Social ($89/month) - अड्वांस रिपोर्टिंग
+• Sprout Social ($89/month) - ���ड्वांस रिपोर्टिंग
 
 🎨 कंटेंट क्रिएशन टूल्स:
 • Canva (FREE/Pro $12.99/month) - ग्राफिक डिजाइन
@@ -9068,7 +9070,7 @@ ${userNiche} क्रिएटर्स के लिए आवश्यक फ
 • Buffer (FREE/Pro $15/month) - पोस्ट स्केड्यूलिंग
 • Later (FREE/Pro $18/month) - विजुअल कं���ेंट प्लानिंग
 • Hootsuite (FREE/Pro $49/month) - मल्टी-पलेटफॉर्म मैनेजमेंट
-• Creator Studio (FREE) - Facebook/Instagram नेटिव टूल
+• Creator Studio (FREE) - Facebook/Instagram नेट��व टूल
 
 🚀 SEO और हैटैग टूल्स:
 • Hashtagify (FREE/Pro $29/month) - हैशटैग रिसर्च
@@ -9092,7 +9094,7 @@ ${userNiche} क्रिएटर्स के लिए आवश्यक फ
 • Commission Junction (FREE) - मल्टी-ब्रांड नेवर्क
 • ShareASale (FREE) - ब्रांड पार्टनरशिप
 
-✏️ प्रोडक्टिविटी टूल्स:
+✏️ प्रोडक्���िविटी टूल्स:
 • Toggl (FREE/Pro $9/month) - टाइम ट्रैकिंग
 • RescueTime (FREE/Pro $12/month) - प्रोडक्टिविटी एनालिसिस
 • Forest App (250) - फोकस और कॉन्संट्रेशन
@@ -9114,7 +9116,7 @@ ${userNiche} क्रिएटर्स के लिए आवश्यक फ
 
 🛠️ प्रो टप्स:
 1. फ्री टूल्स से शुरू कें
-2. एक बार में सिर्फ 1-2 पेड टूल्स आजमाएं
+2. एक बार में सिर्फ 1-2 पेड टूल्स आ��माएं
 3. अपन बजट और जरूरतों के हिसाब से चुनें
 4. महीने में एक बार टूल्स की समीक्ष करें
 5. ROI के लिए टूल्स के परफॉर्मेंस को ट्रैक करें
@@ -9249,18 +9251,149 @@ export function generateProductDownload(
   return download.content;
 }
 
-export function downloadFile(
+export async function downloadFile(
   content: string,
   fileName: string,
-  language: "english" | "hindi",
-): void {
-  const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+): Promise<void> {
+  const pdfDoc = await PDFDocument.create();
+  const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+  const fontSize = 12;
+  const lineHeight = fontSize * 1.4;
+  const margin = 48;
+
+  let page = pdfDoc.addPage();
+  let pageSize = page.getSize();
+  const maxWidth = pageSize.width - margin * 2;
+  let yPosition = pageSize.height - margin;
+
+  const normalizedContent = content.replace(/\r\n/g, "\n");
+  const paragraphs = normalizedContent.split("\n");
+
+  for (const paragraph of paragraphs) {
+    const lines = wrapTextToLines(paragraph, font, fontSize, maxWidth);
+
+    if (lines.length === 0) {
+      yPosition -= lineHeight;
+      continue;
+    }
+
+    for (const line of lines) {
+      if (yPosition < margin) {
+        page = pdfDoc.addPage();
+        pageSize = page.getSize();
+        yPosition = pageSize.height - margin;
+      }
+
+      page.drawText(line, {
+        x: margin,
+        y: yPosition,
+        size: fontSize,
+        font,
+      });
+
+      yPosition -= lineHeight;
+    }
+
+    yPosition -= lineHeight * 0.5;
+  }
+
+  const pdfBytes = await pdfDoc.save();
+  const blob = new Blob([pdfBytes], { type: "application/pdf" });
   const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `${fileName}_${language}.txt`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  const trimmedName = fileName.trim();
+  anchor.download = /\.pdf$/i.test(trimmedName)
+    ? trimmedName
+    : `${trimmedName}.pdf`;
+  document.body.appendChild(anchor);
+  anchor.click();
+  document.body.removeChild(anchor);
   URL.revokeObjectURL(url);
+}
+
+function wrapTextToLines(
+  text: string,
+  font: PDFFont,
+  fontSize: number,
+  maxWidth: number,
+): string[] {
+  const trimmed = text.replace(/\s+/g, (segment) =>
+    segment.includes("\n") ? segment : " ",
+  );
+
+  if (!trimmed) {
+    return [];
+  }
+
+  const words = trimmed.split(" ");
+  const lines: string[] = [];
+  let currentLine = "";
+
+  const pushCurrentLine = () => {
+    if (currentLine.trim().length > 0) {
+      lines.push(currentLine.trimEnd());
+    }
+    currentLine = "";
+  };
+
+  for (const word of words) {
+    if (!word) {
+      continue;
+    }
+
+    const candidate = currentLine ? `${currentLine} ${word}` : word;
+    const width = font.widthOfTextAtSize(candidate, fontSize);
+
+    if (width <= maxWidth) {
+      currentLine = candidate;
+      continue;
+    }
+
+    if (!currentLine) {
+      const splitWord = splitLongWord(word, font, fontSize, maxWidth);
+      lines.push(...splitWord.slice(0, -1));
+      currentLine = splitWord[splitWord.length - 1] ?? "";
+      continue;
+    }
+
+    pushCurrentLine();
+    const splitWord = splitLongWord(word, font, fontSize, maxWidth);
+    currentLine = splitWord.pop() ?? "";
+    lines.push(...splitWord);
+  }
+
+  pushCurrentLine();
+  return lines;
+}
+
+function splitLongWord(
+  word: string,
+  font: PDFFont,
+  fontSize: number,
+  maxWidth: number,
+): string[] {
+  const segments: string[] = [];
+  let remaining = word;
+
+  while (remaining.length > 0) {
+    let sliceLength = remaining.length;
+
+    while (sliceLength > 0) {
+      const segment = remaining.slice(0, sliceLength);
+      if (font.widthOfTextAtSize(segment, fontSize) <= maxWidth) {
+        segments.push(segment);
+        remaining = remaining.slice(sliceLength);
+        break;
+      }
+      sliceLength -= 1;
+    }
+
+    if (sliceLength === 0) {
+      segments.push(remaining.charAt(0));
+      remaining = remaining.slice(1);
+    }
+  }
+
+  return segments;
 }
