@@ -255,7 +255,7 @@ export default function Shop() {
       backToShop: "Back to Shop",
     },
     hindi: {
-      title: "क्रिएटर टूल्स और संसाधन",
+      title: "क्रिए��र टूल्स और संसाधन",
       subtitle: "आपकी क्रिएटर यात्रा को तेज़ करने के लिए प्रोफेशनल टूल्स",
       freeResources: "फ्री क्रिएटर संसाधन",
       premiumTools: "प्रीमियम क्रिएटर टूल्स",
@@ -327,8 +327,8 @@ export default function Shop() {
     const download = product?.downloads.find((d) => d.id === downloadId);
 
     if (content && download) {
-      downloadFile(content, download.fileName, language);
-      // optional: record download
+      const localizedFileName = `${download.fileName}_${language}`;
+      await downloadFile(content, localizedFileName);
       try {
         if (isSupabaseConfigured() && supabase) {
           const { data } = await supabase.auth.getUser();
@@ -361,7 +361,7 @@ export default function Shop() {
       if (product) {
         product.downloads.forEach((download) => {
           setTimeout(() => {
-            handleDownload(productId, download.id);
+            void handleDownload(productId, download.id);
           }, 500); // Stagger downloads
         });
       }
