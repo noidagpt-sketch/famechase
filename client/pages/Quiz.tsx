@@ -25,6 +25,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 import { sanitizeDeep } from "@/lib/sanitize";
+import { downloadFile } from "@/lib/products";
 import {
   Dialog,
   DialogContent,
@@ -331,7 +332,7 @@ const languages = {
         "उद्यमिता और व्यापार",
         "जीवनशैली और कल्याण",
         "कला और डिज़ाइन",
-        "गेमिंग और ईस्पोर्ट्स",
+        "गेमिंग और ���स्पोर्ट्स",
         "संगीत और नृत्य",
         "शिक्षा और सीखना",
         "खेल और एथलेटिक्स",
