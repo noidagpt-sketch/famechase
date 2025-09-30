@@ -269,7 +269,7 @@ const languages = {
     title: "क्रिएटर सक्सेस क्विज़",
     subtitle: "3 मिनट में अपनी व्यक्तिगत ग्रोथ रणनीति पाएं",
     steps: {
-      1: "बुनियादी जानकारी",
+      1: "बुन��यादी जानकारी",
       2: "प��लेटफॉर्म और फॉलोअर्स",
       3: "कंटेंट निच",
       4: "कंटेंट प्रकार",
@@ -288,7 +288,7 @@ const languages = {
       primaryPlatform: "आप मुख्यतः किस प्लेटफॉर्म पर कं��ेंट बनाते हैं?",
       followerCount: "��पके प्राथमिक प��लेटफॉर्म पर कितने फॉलोअर्स हैं?",
       secondaryPlatforms:
-        "आप और ��ौन से प्लेटफॉर्म का उपयोग करते हैं? (कई व��कल्प चुनें)",
+        "आप और ��ौन से प्लेटफॉर्म का उपयोग करते हैं? (कई विकल्प ���ुनें)",
       niche: "आपका कंटें�� किस विषय पर है?",
       contentType: "आप किस प्रकार का कंटेंट बना��े है���?",
       postingFrequency: "आप कितनी बार कंटेंट पोस्ट करते हैं?",
@@ -298,7 +298,7 @@ const languages = {
       engagementRate: "आपका औसत एंगेजमेंट रेट क्या है?",
       biggestChallenge:
         "आपकी सबसे बड़ी चुनौती क्या है? 3 तक चुनें – हम सब इसमें एक साथ हैं! आपकी परेशानियों को समझना हमें बेहतर समाधान देने में मदद करता है।",
-      goals: "आपके अगले 6 महीने के मुख्य लक्ष्य क्या हैं? (���धिकतम 3 चुनें)",
+      goals: "आपके अगले 6 महीने के मुख्य लक्ष्य क्या हैं? (अधिकत��� 3 चुनें)",
       socialLinks: "अपन��� स��शल उपस्थिति साझा करें (वैकल्पिक)",
       bio: "अपने और अपने क��टेंट ���े बारे में कुछ और बताएं (वैकल्पिक)",
     },
@@ -359,7 +359,7 @@ const languages = {
         "स्टोरीज़",
         "लिखित पोस्ट",
         "पॉडकास्ट",
-        "मिश���रित कंटेंट",
+        "मिश्रित कंटेंट",
       ],
       frequencies: [
         "रोज़ाना",
@@ -843,9 +843,9 @@ export default function Quiz() {
                 </div>
                 <button
                   onClick={() =>
-                    generateDownload(
+                    void generateDownload(
                       "growthStrategy",
-                      `Basic_Growth_Guide_${language}.txt`,
+                      `Basic_Growth_Guide_${language}.pdf`,
                     )
                   }
                   className="w-full bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all"
