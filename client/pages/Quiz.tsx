@@ -275,7 +275,7 @@ const languages = {
       4: "कंटेंट प्रकार",
       5: "पोस्टिंग आवृत्ति",
       6: "अनुभव और आय",
-      7: "सबसे बड़ी चुनौती",
+      7: "सबसे बड़ी च��नौती",
       8: "लक्ष्य",
       9: "सोशल लिंक्स",
       10: "एंगेजमेंट रेट",
@@ -335,7 +335,7 @@ const languages = {
         "गेमिंग और ईस्पोर्ट्स",
         "संगीत ��र नृत्य",
         "शिक्षा और सीखना",
-        "खेल और एथलेटिक्स",
+        "ख���ल और एथलेटिक्स",
         "प्रेरणा और स्व-सह��यता",
         "पेरेंटिंग और परिवार",
         "DIY और शिल्प",
@@ -370,7 +370,7 @@ const languages = {
         "अनियमित",
       ],
       experiences: [
-        "अभी शुरू किया (0-6 महीने)",
+        "अभी शुर�� किया (0-6 महीने)",
         "शुरुआती (6 महीने - 1 साल)",
         "बढ़ रहे हैं (1-2 साल)",
         "अनुभवी (2-3 साल)",
@@ -700,7 +700,7 @@ export default function Quiz() {
     if (type === "mediaKit") {
       content =
         fontSizeIndicator +
-        `${language === "hindi" ? "मीडिया किट" : "MEDIA KIT"} - ${userName}\n\n${language === "hindi" ? "व्यक्तिगत जानकारी:" : "PERSONAL INFO:"}\n${language === "hindi" ? "नाम:" : "Name:"} ${userName}\n${language === "hindi" ? "निच:" : "Niche:"} ${quizData.niche}\n${language === "hindi" ? "प्लेटफॉर्म:" : "Platform:"} ${quizData.primaryPlatform}\n${language === "हिंदी" ? "फॉलोअर्स:" : "Followers:"} ${quizData.followerCount}`;
+        `${language === "hindi" ? "मीडिया किट" : "MEDIA KIT"} - ${userName}\n\n${language === "hindi" ? "व्यक्तिगत जानकारी:" : "PERSONAL INFO:"}\n${language === "hindi" ? "नाम:" : "Name:"} ${userName}\n${language === "hindi" ? "निच:" : "Niche:"} ${quizData.niche}\n${language === "hindi" ? "प्लेटफॉर्म:" : "Platform:"} ${quizData.primaryPlatform}\n${language === "hindi" ? "फॉलोअर्स:" : "Followers:"} ${quizData.followerCount}`;
     } else if (type === "emailTemplates") {
       content = fontSizeIndicator + `Email Templates - ${userName}`;
     } else if (type === "growthStrategy") {
