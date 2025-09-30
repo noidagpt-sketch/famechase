@@ -299,7 +299,7 @@ const languages = {
       biggestChallenge:
         "आपकी सबसे बड़ी चुनौती क्या है? 3 तक चुनें – हम सब इसमें एक साथ हैं! आपकी परेशानियों को समझना हमें बेहतर समाधान देने में मदद करता है।",
       goals: "आपके अगले 6 महीने के मुख्य लक्ष्य क्या हैं? (अधिकतम 3 चुनें)",
-      socialLinks: "अपनी स��शल उपस्थिति साझा करें (वैकल्पिक)",
+      socialLinks: "अपन��� स��शल उपस्थिति साझा करें (वैकल्पिक)",
       bio: "अपने और अपने क��टेंट ���े बारे में कुछ और बताएं (वैकल्पिक)",
     },
     options: {
@@ -332,8 +332,8 @@ const languages = {
         "उद्यमिता और व्यापार",
         "जीवनशैली और कल्याण",
         "कला और डिज़ाइन",
-        "गेमिंग और ���स्पोर्ट्स",
-        "संगीत और नृत्य",
+        "गेमिंग और ईस्पोर्ट्स",
+        "संगीत ��र नृत्य",
         "शिक्षा और सीखना",
         "खेल और एथलेटिक्स",
         "प्रेरणा और स्व-सह��यता",
@@ -692,7 +692,7 @@ export default function Quiz() {
     updateQuizData("secondaryPlatforms", selected);
   };
 
-  const generateDownload = (type: string, fileName: string) => {
+  const generateDownload = async (type: string, fileName: string) => {
     let content = "";
     const userName = quizData.name || "Creator";
     const fontSizeIndicator = `\n=== DISPLAY INSTRUCTIONS ===\nIMPORTANT: Set Font Size to 18-22pt for comfortable reading\nPlease zoom to 150-200% or increase font size in your viewer\nThis content is optimized for larger text display for better readability\n========================================================\n\n`;
@@ -700,22 +700,14 @@ export default function Quiz() {
     if (type === "mediaKit") {
       content =
         fontSizeIndicator +
-        `${language === "hindi" ? "मीडिया किट" : "MEDIA KIT"} - ${userName}\n\n${language === "hindi" ? "व्यक्तिगत जानकारी:" : "PERSONAL INFO:"}\n${language === "hindi" ? "नाम:" : "Name:"} ${userName}\n${language === "hindi" ? "निच:" : "Niche:"} ${quizData.niche}\n${language === "hindi" ? "प्लेटफॉर्म:" : "Platform:"} ${quizData.primaryPlatform}\n${language === "hindi" ? "फॉलोअर्स:" : "Followers:"} ${quizData.followerCount}`;
+        `${language === "hindi" ? "मीडिया किट" : "MEDIA KIT"} - ${userName}\n\n${language === "hindi" ? "व्यक्तिगत जानकारी:" : "PERSONAL INFO:"}\n${language === "hindi" ? "नाम:" : "Name:"} ${userName}\n${language === "hindi" ? "निच:" : "Niche:"} ${quizData.niche}\n${language === "hindi" ? "प्लेटफॉर्म:" : "Platform:"} ${quizData.primaryPlatform}\n${language === "हिंदी" ? "फॉलोअर्स:" : "Followers:"} ${quizData.followerCount}`;
     } else if (type === "emailTemplates") {
       content = fontSizeIndicator + `Email Templates - ${userName}`;
     } else if (type === "growthStrategy") {
       content = fontSizeIndicator + `Growth Strategy - ${userName}`;
     }
 
-    const blob = new Blob([content], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = fileName;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    await downloadFile(content, fileName);
   };
 
   if (showFreeResources) {
