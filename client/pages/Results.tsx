@@ -38,6 +38,7 @@ import {
 } from "lucide-react";
 import { analyzeQuizData } from "../lib/ai-analysis";
 import { supabase, dbHelpers, isSupabaseConfigured } from "@/lib/supabase";
+import { downloadFile } from "@/lib/products";
 import { sanitizeDeep } from "@/lib/sanitize";
 
 interface QuizData {
@@ -135,7 +136,7 @@ const languages = {
     currentStatus: "वर्तमान स्थिति",
     swotAnalysis: "SWOT विश्लेषण",
     strengths: "मजबूती",
-    weaknesses: "कमजोरी",
+    weaknesses: "��मजोरी",
     opportunities: "अवसर",
     threats: "खतरे",
     keySuggestions: "मुख्य सुझाव",
@@ -152,7 +153,7 @@ const languages = {
     phoneNumber: "फोन नंबर",
     city: "शहर",
     age: "उम्र",
-    paySecure: "₹99 भुगतान करें - सुरक्षित भुगतान",
+    paySecure: "₹99 भुगतान करें - सुरक्षित ���ुगतान",
     processing: "प्रसंस्करण...",
     whatYouGet: "भुगतान करने के बाद आपको मिलेगा:",
     fameScoreReport: "फेम स्कोर रिपोर्ट",
@@ -169,7 +170,7 @@ const languages = {
     primaryPlatform: "प्राथमिक प्लेटफॉर्म:",
     contentNiche: "कंटेंट निच:",
     contentType: "कंटेंट प्रकार:",
-    postingFrequency: "पोस्टिंग आवृत्ति:",
+    postingFrequency: "पोस्टिंग आवृ��्ति:",
     followers: "फॉलोअर्स:",
     monthlyIncome: "मासिक आय:",
     experienceLevel: "अनुभव स्तर:",
@@ -345,7 +346,7 @@ export default function Results() {
 
     // Add enhanced font size indicator for optimal readability
     const fontSizeIndicator = `
-╔══════════════════════════════════════════════════════╗
+╔═��════════════════════════════════════════════════════╗
 ║                 📖 READING INSTRUCTIONS                  ║
 ║                                                          ║
 ║   FONT SIZE: SET TO 24-32pt (MINIMUM 22pt)           ║
@@ -574,7 +575,7 @@ ${analysis.suggestions
   .join("\n")}
 
 ${language === "hindi" ? "60-दिन की रणनीति:" : "60-DAY STRATEGY:"}
-${language === "hindi" ? "- कंटेंट कैलेंडर का अनुकूलन" : "- Content calendar optimization"}
+${language === "hindi" ? "- ���ंटेंट कैलेंडर का अनुकूलन" : "- Content calendar optimization"}
 ${language === "hindi" ? "- ब्रांड आउटरीच शुरू करना" : "- Begin brand outreach"}
 ${language === "hindi" ? "- एंगेजमेंट ��ेट्रिक्स में सुधार" : "- Improve engagement metrics"}
 ${language === "hindi" ? "- नेटवर्किंग और सहयोग" : "- Networking and collaborations"}
@@ -698,7 +699,7 @@ ${language === "hindi" ? "प्लेटफॉर्म:" : "Platform:"} ${quiz
 ${language === "hindi" ? "पोस्टिंग फ्रीक्वेंसी:" : "Posting Frequency:"} ${quizData.postingFrequency}
 
 ${language === "hindi" ? "🎯 मार्केट इंटेलिजेंस:" : "🎯 MARKET INTELLIGENCE:"}
-${language === "hindi" ? "निच मल्टीप्लायर:" : "Niche Multiplier:"} ${niche.multiplier}x (${language === "hindi" ? "उद्योग औसत से " : "vs industry average"})
+${language === "hindi" ? "निच मल��टीप्लायर:" : "Niche Multiplier:"} ${niche.multiplier}x (${language === "hindi" ? "उद्योग औसत से " : "vs industry average"})
 ${language === "hindi" ? "औसत CPM:" : "Average CPM:"} ₹${niche.avgCPM}/1K views
 ${language === "hindi" ? "सक्रिय ब्रांड्स:" : "Active Brands:"} ${niche.brandCount.toLocaleString()} in your niche
 ${language === "hindi" ? "पोस्टिंग बोनस:" : "Posting Bonus:"} ${Math.round((postingMultiplier - 1) * 100)}% ${language === "hindi" ? "अतिरिक्त" : "additional"}
@@ -829,7 +830,7 @@ ${language === "hindi" ? "🎯 कंटेंट परफॉर्मेंस
 ┌───────────────────────────────────────────┐
  ${language === "hindi" ? "कंेंट ाइप" : "Content Type"}: ________________    │
  ${language === "hindi" ? "पोसट टाइम" : "Post Time"}: ___:___ (बेस्ट: 7-9 PM)   │
-│ ${language === "hindi" ? "हैशटैग्स यूज्ड" : "Hashtags Used"}: _____ (बेस्ट: 8-12)  │
+│ ${language === "hindi" ? "हैशटैग्स यूज्ड" : "Hashtags Used"}: _____ (���ेस्ट: 8-12)  │
 │ ${language === "hindi" ? "1घंटे में रीच" : "1hr Reach"}: _____ (टारगेट: 15-25%)  │
 │ ${language === "hindi" ? "24घंटे में रीच" : "24hr Reach"}: _____ (टारगेट: 70-85%) │
 │ ${language === "hindi" ? "स्टोरी व्यूज" : "Story Views"}: _____ (टारगेट: 40-60%) │
@@ -859,7 +860,7 @@ ${language === "hindi" ? "📈 मासिक ROI ट्रैकर:" : "📈 
 │ ROI: (_____ ÷ _____) × 100 = _____%      │
 └───────────────────────────────────────────┘
 
-${language === "hindi" ? "⚡ एक्शन आइटम्स (हर हफ्ते करें):" : "⚡ ACTION ITEMS (Do Every Week):"}
+${language === "hindi" ? "⚡ एक्शन आ���टम्स (हर हफ्ते करें):" : "⚡ ACTION ITEMS (Do Every Week):"}
 □ ${language === "hindi" ? "टॉप 3 परफॉर्मिंग पोस्ट्स को analyze रें और pattern ढूढं" : "Analyze top 3 performing posts and find patterns"}
 □ ${language === "hindi" ? "Competitor के टॉप पस्ट्स स्टडी करें (कम से कम 5)" : "Study competitor top posts (minimum 5)"}
 □ ${language === "hindi" ? "हैशटैग परफॉर्मेंस चेक करें और underperforming को replace करें" : "Check hashtag performance and replace underperforming ones"}
@@ -966,7 +967,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव्यू:" : "
             </h1>
             <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
               {language === "hindi"
-                ? "आपका संपूर्ण क्रिएटर टूलकिट तैयार है। अपनी व्यक्तिगत फाइलें डाउनलोड करें।"
+                ? "आपक��� संपूर्ण क्रिएटर टूलकिट तैयार है। अपनी व्यक्तिगत फाइलें डाउनलोड करें।"
                 : "Your complete Creator Toolkit is ready. Download your personalized files."}
             </p>
 
@@ -1034,7 +1035,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव्यू:" : "
                 </h3>
                 <p className="text-gray-600 mb-4">
                   {language === "hindi"
-                    ? "आपके लिए बनाई गई विस्तृत 90-दिन की actionable growth strategy"
+                    ? "आपके लिए बनाई ���ई विस्तृत 90-दिन की actionable growth strategy"
                     : "Detailed 90-day actionable growth strategy tailored specifically for you"}
                 </p>
                 <div className="bg-gray-50 rounded-lg p-4 mb-4">
