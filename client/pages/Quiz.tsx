@@ -288,7 +288,7 @@ const languages = {
       primaryPlatform: "आप मुख्यतः किस प्लेटफॉर्म पर कं��ेंट बनाते हैं?",
       followerCount: "��पके प्राथमिक प��लेटफॉर्म पर कितने फॉलोअर्स हैं?",
       secondaryPlatforms:
-        "आप और ��ौन से प्लेटफॉर्म का उपयोग ��रते हैं? (कई विकल्प चुनें)",
+        "आप और ��ौन से प्लेटफॉर्म का उपयोग करते हैं? (कई व��कल्प चुनें)",
       niche: "आपका कंटें�� किस विषय पर है?",
       contentType: "आप किस प्रकार का कंटेंट बना��े है���?",
       postingFrequency: "आप कितनी बार कंटेंट पोस्ट करते हैं?",
@@ -298,7 +298,7 @@ const languages = {
       engagementRate: "आपका औसत एंगेजमेंट रेट क्या है?",
       biggestChallenge:
         "आपकी सबसे बड़ी चुनौती क्या है? 3 तक चुनें – हम सब इसमें एक साथ हैं! आपकी परेशानियों को समझना हमें बेहतर समाधान देने में मदद करता है।",
-      goals: "आपके अगले 6 महीने के मुख्य लक्���्य क्या हैं? (अधिकतम 3 चुनें)",
+      goals: "आपके अगले 6 महीने के मुख्य लक्ष्य क्या हैं? (���धिकतम 3 चुनें)",
       socialLinks: "अपन��� स��शल उपस्थिति साझा करें (वैकल्पिक)",
       bio: "अपने और अपने क��टेंट ���े बारे में कुछ और बताएं (वैकल्पिक)",
     },
@@ -358,8 +358,8 @@ const languages = {
         "लाइव स्ट्रीम",
         "स्टोरीज़",
         "लिखित पोस्ट",
-        "पॉडक��स्ट",
-        "मिश्रित कंटेंट",
+        "पॉडकास्ट",
+        "मिश���रित कंटेंट",
       ],
       frequencies: [
         "रोज़ाना",
@@ -809,9 +809,9 @@ export default function Quiz() {
                 </div>
                 <button
                   onClick={() =>
-                    generateDownload(
+                    void generateDownload(
                       "emailTemplates",
-                      `Basic_Email_Templates_${language}.txt`,
+                      `Basic_Email_Templates_${language}.pdf`,
                     )
                   }
                   className="w-full bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all"
