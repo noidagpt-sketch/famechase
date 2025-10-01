@@ -287,7 +287,7 @@ export default function Shop() {
       downloadYourProducts: "अपने प्रोडक्ट्स डाउनलोड करें",
       purchaseSuccess: "खरीदारी सफल! 🎉",
       thanksForPurchase:
-        "आपकी खरीदारी के लिए धन्यवाद! आपके प्रोडक्ट्स डाउनलोड के लिए तैयार हैं।",
+        "आपकी खरीदारी के लिए धन्यवाद! आपके प्���ोडक्ट्स डाउनलोड के लिए तैयार हैं।",
       backToShop: "शॉप पर वापस जाएं",
     },
   };
@@ -464,7 +464,7 @@ export default function Shop() {
                       </h3>
                       <button
                         onClick={() =>
-                          handleDownload(showSuccessPage, download.id)
+                          void handleDownload(showSuccessPage, download.id)
                         }
                         className="w-full bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all"
                       >
@@ -591,7 +591,7 @@ export default function Shop() {
                     {product.category === "masterclass" && (
                       <div className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">
                         {language === "hindi"
-                          ? "एक���स��र्ट गाइड"
+                          ? "एक���सपर्ट गाइड"
                           : "Expert Guide"}
                       </div>
                     )}
@@ -738,7 +738,7 @@ export default function Shop() {
             </h3>
             <p className="text-gray-600 mb-6">
               {language === "hindi"
-                ? "प्रीमियम टूल्स को खरीदने से पहले आपको अपनी क����रिएटर प्रोफाइल बनानी होगी। यह केवल 2 मिनट में ह��� जाएगा!"
+                ? "प्रीमियम टूल्स को खरीदने से पहले आपको अपनी क���रिएटर प्रोफाइल बनानी होगी। यह केवल 2 मिनट में ह��� जाएगा!"
                 : "Before purchasing premium tools, you need to complete your creator profile. It takes only 2 minutes!"}
             </p>
             <div className="space-y-3">
@@ -942,7 +942,7 @@ export default function Shop() {
           <div className="flex items-center gap-2">
             <Zap className="w-4 h-4 animate-pulse" />
             <div className="text-sm font-bold">
-              {language === "hindi" ? "⏰ सीमित समय!" : "⏰ Limited Time!"}
+              {language === "hindi" ? "⏰ सीमित समय!" : "��� Limited Time!"}
             </div>
           </div>
           <div className="text-xs font-mono bg-black bg-opacity-20 px-2 py-1 rounded">
