@@ -131,7 +131,8 @@ const languages = {
       goals: "What are your main goals for the next 6 months? (Select max 3)",
       socialLinks: "Share Your Social Presence (Optional)",
       bio: "Anything more about yourself and your content (optional)",
-      engagementRate: "What's your average engagement rate?",
+      engagementRate:
+        "What's your average engagement rate? (Average Engagement Rate = (Total Likes + Comments + Shares) ÷ Total Followers × 100)",
     },
     options: {
       platforms: [
@@ -285,7 +286,7 @@ const languages = {
       email: "आपका ईमेल पता क्या है?",
       phone: "आपका फोन नंबर क्या है? (वैकल्पिक)",
       city: "आप किस शहर से हैं?",
-      primaryPlatform: "आप मुख्यतः किस प्लेटफॉर्म पर कं��ेंट बनाते हैं?",
+      primaryPlatform: "आप मुख्यतः किस प्लेटफॉर्म पर कं��ेंट बन���ते हैं?",
       followerCount: "��पके प्राथमिक प��लेटफॉर्म पर कितने फॉलोअर्स हैं?",
       secondaryPlatforms:
         "आप और ��ौन से प्लेटफॉर्म का उपयोग करते हैं? (कई विकल्प ���ुनें)",
@@ -295,7 +296,8 @@ const languages = {
       experience:
         "आप कितने समय से कंटेंट बना रहे हैं? (सभी स्तर चुनें जिनका आपने अनुभव किया है)",
       monthlyIncome: "कंटेंट से आपकी वर्तमान मासिक आय क्या है?",
-      engagementRate: "आपका औसत एंगेजमेंट रेट क्या है?",
+      engagementRate:
+        "आपका औसत एंगेजमेंट रेट क्या है? (औसत एंगेजमेंट रेट = (कुल लाइक + कमेंट + शेयर) ÷ कुल फॉलोअर्�� × 100)",
       biggestChallenge:
         "आपकी सबसे बड़ी चुनौती क्या है? 3 तक चुनें – हम सब इसमें एक साथ हैं! आपकी परेशानियों को समझना हमें बेहतर समाधान देने में मदद करता है।",
       goals: "आपके अगले 6 महीने के मुख्य लक्ष्य क्या हैं? (अधिकत��� 3 चुनें)",
@@ -429,7 +431,7 @@ const languages = {
       },
       growthGuide: {
         title: "90-दिन की ग्रोथ स्ट्रैटेजी गाइड",
-        description: "अपनी फॉलोइंग बढ़ाने के लिए स्टेप-बाई-स्टे�� रोडमैप",
+        description: "अपनी फॉलोइंग बढ़ाने के लिए स्टेप-बाई-स्टे�� ���ोडमैप",
       },
       downloadFree: "मुफ्त डाउनलोड करें",
     },
@@ -700,7 +702,7 @@ export default function Quiz() {
     if (type === "mediaKit") {
       content =
         fontSizeIndicator +
-        `${language === "hindi" ? "मीडिया किट" : "MEDIA KIT"} - ${userName}\n\n${language === "hindi" ? "व्यक्तिगत जानकारी:" : "PERSONAL INFO:"}\n${language === "hindi" ? "नाम:" : "Name:"} ${userName}\n${language === "hindi" ? "निच:" : "Niche:"} ${quizData.niche}\n${language === "hindi" ? "प्लेटफॉर्म:" : "Platform:"} ${quizData.primaryPlatform}\n${language === "hindi" ? "फॉलोअर्स:" : "Followers:"} ${quizData.followerCount}`;
+        `${language === "hindi" ? "मीडिया किट" : "MEDIA KIT"} - ${userName}\n\n${language === "hindi" ? "व्यक्तिगत जानकारी:" : "PERSONAL INFO:"}\n${language === "hindi" ? "नाम:" : "Name:"} ${userName}\n${language === "hindi" ? "निच:" : "Niche:"} ${quizData.niche}\n${language === "hindi" ? "प्लेटफॉ���्म:" : "Platform:"} ${quizData.primaryPlatform}\n${language === "hindi" ? "फॉलोअर्स:" : "Followers:"} ${quizData.followerCount}`;
     } else if (type === "emailTemplates") {
       content = fontSizeIndicator + `Email Templates - ${userName}`;
     } else if (type === "growthStrategy") {
@@ -1346,7 +1348,7 @@ export default function Quiz() {
                       </h2>
                       <p className="text-sm md:text-base text-gray-600 px-2">
                         {language === "hindi"
-                          ? "अपने प्रोफाइल लिंक साझा करें।"
+                          ? "अ��ने प्रोफाइल लिंक साझा करें।"
                           : "Share your profile links."}
                       </p>
                     </div>
