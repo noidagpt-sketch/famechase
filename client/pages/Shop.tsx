@@ -255,7 +255,7 @@ export default function Shop() {
       backToShop: "Back to Shop",
     },
     hindi: {
-      title: "क्रिए��र टूल्स और संसाधन",
+      title: "क्रिएटर टूल्स और संसाधन",
       subtitle: "आपकी क्रिएटर यात्रा को तेज़ करने के लिए प्रोफेशनल टूल्स",
       freeResources: "फ्री क्रिएटर संसाधन",
       premiumTools: "प्रीमियम क्रिएटर टूल्स",
@@ -327,7 +327,7 @@ export default function Shop() {
     const download = product?.downloads.find((d) => d.id === downloadId);
 
     if (content && download) {
-      const localizedFileName = `${download.fileName}_${language}`;
+      const localizedFileName = `${download.fileName}_${language}.pdf`;
       await downloadFile(content, localizedFileName);
       try {
         if (isSupabaseConfigured() && supabase) {
@@ -591,7 +591,7 @@ export default function Shop() {
                     {product.category === "masterclass" && (
                       <div className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">
                         {language === "hindi"
-                          ? "एक���सपर्ट गाइड"
+                          ? "एक���स��र्ट गाइड"
                           : "Expert Guide"}
                       </div>
                     )}
@@ -738,7 +738,7 @@ export default function Shop() {
             </h3>
             <p className="text-gray-600 mb-6">
               {language === "hindi"
-                ? "प्रीमियम टूल्स को खरीदने से पहले आपको अपनी क���रिएटर प्रोफाइल बनानी होगी। यह केवल 2 मिनट में ह��� जाएगा!"
+                ? "प्रीमियम टूल्स को खरीदने से पहले आपको अपनी क����रिएटर प्रोफाइल बनानी होगी। यह केवल 2 मिनट में ह��� जाएगा!"
                 : "Before purchasing premium tools, you need to complete your creator profile. It takes only 2 minutes!"}
             </p>
             <div className="space-y-3">
