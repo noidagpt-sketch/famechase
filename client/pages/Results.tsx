@@ -78,71 +78,31 @@ interface PersonalInfo {
 }
 
 const translateSuggestionToHindi = (suggestion: string): string => {
-  const dictionary: Array<[RegExp, string | ((match: string, ...args: string[]) => string)]> = [
-    [
-      /URGENT \(THIS WEEK\):/i,
-      "तुरंत कार्रवाई (इस सप्ताह):",
-    ],
-    [
-      /CRITICAL \(START TOMORROW\):/i,
-      "गंभीर प्राथमिकता (कल से शुरू करें):",
-    ],
-    [
-      /QUICK MONEY \(7 DAYS\):/i,
-      "तेज़ कमाई (7 दिन):",
-    ],
-    [
-      /YOUR #1 PRIORITY:/i,
-      "आपकी #1 प्राथमिकता:",
-    ],
-    [
-      /YOUR TOP OPPORTUNITY:/i,
-      "आपका सबसे बड़ा अवसर:",
-    ],
+  const dictionary: Array<
+    [RegExp, string | ((match: string, ...args: string[]) => string)]
+  > = [
+    [/URGENT \(THIS WEEK\):/i, "तुरंत कार्रवाई (इस सप्ताह):"],
+    [/CRITICAL \(START TOMORROW\):/i, "गंभीर प्राथमिकता (कल से शुरू करें):"],
+    [/QUICK MONEY \(7 DAYS\):/i, "तेज़ कमाई (7 दिन):"],
+    [/YOUR #1 PRIORITY:/i, "आपकी #1 प्राथमिकता:"],
+    [/YOUR TOP OPPORTUNITY:/i, "आपका सबसे बड़ा अवसर:"],
     [
       /INSTAGRAM FORMULA \(START TODAY\):/i,
       "इंस्टाग्राम फॉर्मूला (आज से शुरू करें):",
     ],
-    [
-      /CAROUSEL STRATEGY \(WEEKLY\):/i,
-      "करोसेल रणनीति (हर सप्ताह):",
-    ],
+    [/CAROUSEL STRATEGY \(WEEKLY\):/i, "करोसेल रणनीति (हर सप्ताह):"],
     [
       /EMAIL 10 ([^ ]+) brands/i,
       (_match: string, niche: string) => `${niche} ब्रांड्स को ईमेल भेजें`,
     ],
-    [
-      /Expected result: ([^.]*)/i,
-      "अपेक्षित परिणाम: $1",
-    ],
-    [
-      /Use these hashtags: ([^.]+)/i,
-      "इन हैशटैग का उपयोग करें: $1",
-    ],
-    [
-      /Start paid story promotions/i,
-      "पेड स्टोरी प्रमोशन शुरू करें",
-    ],
-    [
-      /Create affiliate content/i,
-      "एफिलिएट कंटेंट बनाएं",
-    ],
-    [
-      /Day 1-2:/i,
-      "दिन 1-2:",
-    ],
-    [
-      /Day 3-7:/i,
-      "दिन 3-7:",
-    ],
-    [
-      /Use trending audio/i,
-      "ट्रेंडिंग ऑडियो का उपयोग करें",
-    ],
-    [
-      /Schedule for 7 PM daily/i,
-      "हर दिन शाम 7 बजे पोस्ट शेड्यूल करें",
-    ],
+    [/Expected result: ([^.]*)/i, "अपेक्षित परिणाम: $1"],
+    [/Use these hashtags: ([^.]+)/i, "इन हैशटैग का उपयोग करें: $1"],
+    [/Start paid story promotions/i, "पेड स्टोरी प्रमोशन शुरू करें"],
+    [/Create affiliate content/i, "एफिलिएट कंटेंट बनाएं"],
+    [/Day 1-2:/i, "दिन 1-2:"],
+    [/Day 3-7:/i, "दिन 3-7:"],
+    [/Use trending audio/i, "ट्रेंडिंग ऑडियो का उपयोग करें"],
+    [/Schedule for 7 PM daily/i, "हर दिन शाम 7 बजे पोस्ट शेड्यूल करें"],
   ];
 
   let translated = suggestion
@@ -1290,10 +1250,18 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
                         {/* Pricing (synced with Shop) */}
                         <div className="flex items-center gap-3 mb-4">
                           {(() => {
-                            const product = products.find((p) => p.name === rec.name);
+                            const product = products.find(
+                              (p) => p.name === rec.name,
+                            );
                             const original = product?.original_price;
                             const price = product?.price;
-                            const discount = original && price ? Math.max(0, Math.round((1 - price / original) * 100)) : null;
+                            const discount =
+                              original && price
+                                ? Math.max(
+                                    0,
+                                    Math.round((1 - price / original) * 100),
+                                  )
+                                : null;
                             return (
                               <>
                                 <div className="text-gray-400 line-through text-lg">
@@ -1303,7 +1271,9 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
                                   {price ? `₹${price}` : ""}
                                 </div>
                                 {discount !== null && (
-                                  <div className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-bold">{discount}% OFF</div>
+                                  <div className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-bold">
+                                    {discount}% OFF
+                                  </div>
                                 )}
                               </>
                             );
