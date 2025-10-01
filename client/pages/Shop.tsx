@@ -287,7 +287,7 @@ export default function Shop() {
       downloadYourProducts: "अपने प्रोडक्ट्स डाउनलोड करें",
       purchaseSuccess: "खरीदारी सफल! 🎉",
       thanksForPurchase:
-        "आपकी खरीदारी के लिए धन्यवाद! आपके प्रोडक्ट्स डाउनलोड के लिए तैयार हैं।",
+        "आपकी खरीदारी के लिए धन्यवाद! आपके प्���ोडक्ट्स डाउनलोड के लिए तैयार हैं।",
       backToShop: "शॉप पर वापस जाएं",
     },
   };
@@ -327,8 +327,8 @@ export default function Shop() {
     const download = product?.downloads.find((d) => d.id === downloadId);
 
     if (content && download) {
-      downloadFile(content, download.fileName, language);
-      // optional: record download
+      const localizedFileName = `${download.fileName}_${language}.pdf`;
+      await downloadFile(content, localizedFileName);
       try {
         if (isSupabaseConfigured() && supabase) {
           const { data } = await supabase.auth.getUser();
@@ -361,7 +361,7 @@ export default function Shop() {
       if (product) {
         product.downloads.forEach((download) => {
           setTimeout(() => {
-            handleDownload(productId, download.id);
+            void handleDownload(productId, download.id);
           }, 500); // Stagger downloads
         });
       }
@@ -464,7 +464,7 @@ export default function Shop() {
                       </h3>
                       <button
                         onClick={() =>
-                          handleDownload(showSuccessPage, download.id)
+                          void handleDownload(showSuccessPage, download.id)
                         }
                         className="w-full bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all"
                       >
@@ -942,7 +942,7 @@ export default function Shop() {
           <div className="flex items-center gap-2">
             <Zap className="w-4 h-4 animate-pulse" />
             <div className="text-sm font-bold">
-              {language === "hindi" ? "⏰ सीमित समय!" : "⏰ Limited Time!"}
+              {language === "hindi" ? "⏰ सीमित समय!" : "��� Limited Time!"}
             </div>
           </div>
           <div className="text-xs font-mono bg-black bg-opacity-20 px-2 py-1 rounded">
