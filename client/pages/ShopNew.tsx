@@ -272,7 +272,7 @@ function ShopNew() {
         "आपकी खरीदारी के लिए धन्यवाद! आपके प्रोडक्ट्स डाउनलोड के लिए तैयार हैं।",
       backToShop: "शॉप पर वापस जाएं",
       recentHeadline: "अभी-अभी जिन्होंने अपना किट लिया",
-      adminToggleShow: "���डमिन पैनल खोलें",
+      adminToggleShow: "एडमिन पैनल खोलें",
       adminToggleHide: "एडमिन पैनल बंद करें",
       instamojoNote:
         "Instamojo से भुगतान करने के बाद यहाँ लौटें और ‘Download’ पर क्लिक करें।",
@@ -283,7 +283,7 @@ function ShopNew() {
 
   const currentLang = useMemo(
     () => sanitizeDeep(translations[language]),
-    [language, translations],
+    [language],
   );
 
   const handlePurchase = async (productId: string | null) => {
@@ -708,7 +708,7 @@ function ShopNew() {
                         </div>
                         <p className="text-green-600 text-xs mt-1">
                           {language === "hindi"
-                            ? "तुरंत डाउनल���ड • सफलता की गारंटी"
+                            ? "तुरंत डाउनलोड • सफलता की गारंटी"
                             : "Instant download • Success guarantee"}
                         </p>
                       </div>
