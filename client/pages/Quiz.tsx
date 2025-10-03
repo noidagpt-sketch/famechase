@@ -1,27 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  ArrowRight,
-  ArrowLeft,
-  Instagram,
-  Youtube,
-  Linkedin,
-  Globe,
-  ChevronDown,
-  Twitter,
-  Star,
-  Target,
-  TrendingUp,
-  CheckCircle,
-  Sparkles,
-  User,
-  Mail,
-  MapPin,
-  Calendar,
-  Download,
-  Home,
-  FileText,
-  Layout,
-} from "lucide-react";
+import { ArrowRight, ArrowLeft, Instagram, Youtube, Linkedin, Globe, ChevronDown, Twitter, Star, Target, TrendingUp, CircleCheck as CheckCircle, Sparkles, User, Mail, MapPin, Calendar, Download, Chrome as Home, FileText, LayoutGrid as Layout } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 import { sanitizeDeep } from "@/lib/sanitize";

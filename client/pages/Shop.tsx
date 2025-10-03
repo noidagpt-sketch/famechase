@@ -1,32 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Star,
-  Download,
-  CheckCircle,
-  CreditCard,
-  Shield,
-  Zap,
-  Clock,
-  TrendingUp,
-  Award,
-  Users,
-  PlayCircle,
-  FileText,
-  Mail,
-  Calendar,
-  Sparkles,
-  Target,
-  DollarSign,
-  Globe,
-  Home,
-  Settings,
-  Eye,
-  EyeOff,
-  User,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, Star, Download, CircleCheck as CheckCircle, CreditCard, Shield, Zap, Clock, TrendingUp, Award, Users, CirclePlay as PlayCircle, FileText, Mail, Calendar, Sparkles, Target, DollarSign, Globe, Chrome as Home, Settings, Eye, EyeOff, User } from "lucide-react";
 import {
   getAllProducts,
   getProductConfig,

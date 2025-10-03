@@ -1,41 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Star,
-  TrendingUp,
-  Target,
-  DollarSign,
-  Download,
-  CheckCircle,
-  Globe,
-  CreditCard,
-  Shield,
-  Zap,
-  Sparkles,
-  FileText,
-  Mail,
-  Layout,
-  BarChart,
-  Calendar,
-  User,
-  MapPin,
-  AlertTriangle,
-  Award,
-  Lightbulb,
-  Clock,
-  Lock,
-  Unlock,
-  Home,
-  Share2,
-  Twitter,
-  MessageCircle,
-  Trophy,
-  Gift,
-  Rocket,
-  Heart,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, Star, TrendingUp, Target, DollarSign, Download, CircleCheck as CheckCircle, Globe, CreditCard, Shield, Zap, Sparkles, FileText, Mail, LayoutGrid as Layout, ChartBar as BarChart, Calendar, User, MapPin, TriangleAlert as AlertTriangle, Award, Lightbulb, Clock, Lock, Clock as Unlock, Chrome as Home, Share2, Twitter, MessageCircle, Trophy, Gift, Rocket, Heart } from "lucide-react";
 import { analyzeQuizData } from "../lib/ai-analysis";
 import { supabase, dbHelpers, isSupabaseConfigured } from "@/lib/supabase";
 import { downloadFile } from "@/lib/products";
