@@ -195,8 +195,6 @@ export const productConfigs: ProductConfig[] = [
       "Media Kit Templates (10 designs)",
       "Negotiation Tactics & Rate Cards",
       "Contract Templates",
-      "50+ Brand Contact Database",
-      "Pitch Deck Templates",
     ],
     downloads: [
       {
@@ -230,22 +228,6 @@ export const productConfigs: ProductConfig[] = [
         language: "both",
         content: generateBrandContractContent,
         fileName: "Brand_Partnership_Contracts",
-      },
-      {
-        id: "brand-database",
-        name: "50+ Brand Contact Database",
-        type: "template",
-        language: "both",
-        content: generateBrandDatabaseContent,
-        fileName: "Brand_Contact_Database_50plus",
-      },
-      {
-        id: "pitch-decks",
-        name: "Pitch Deck Templates",
-        type: "template",
-        language: "both",
-        content: generatePitchDeckContent,
-        fileName: "Brand_Pitch_Deck_Templates",
       },
     ],
   },

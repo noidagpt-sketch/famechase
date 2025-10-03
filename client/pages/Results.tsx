@@ -136,7 +136,7 @@ const languages = {
     weaknesses: "Weaknesses",
     opportunities: "Opportunities",
     threats: "Threats",
-    keySuggestions: "मुख्य सुझाव",
+    keySuggestions: "Key Suggestions",
     creatorVitalStats: "Your Creator Vital Stats",
     fameScore: "Fame Score",
     growthPotential: "Growth Potential",
@@ -2207,16 +2207,16 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
               </div>
             </div>
 
-            {!showPaymentForm ? (
-              <button
-                onClick={() => setShowPaymentForm(true)}
-                className="bg-gradient-to-r from-neon-green to-electric-blue text-black px-8 py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center gap-3 mx-auto animate-pulse"
-              >
-                <Unlock className="w-5 h-5" />
-                Unlock Complete Toolkit - ₹99
-                <ArrowRight className="w-5 h-5" />
-              </button>
-            ) : (
+            <Link
+              to="/shop"
+              className="bg-gradient-to-r from-neon-green to-electric-blue text-black px-8 py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center gap-3 mx-auto animate-pulse inline-flex justify-center"
+            >
+              <Unlock className="w-5 h-5" />
+              Unlock Complete Toolkit - Visit Shop
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+
+            {showPaymentForm && (
               <div className="max-w-md mx-auto">
                 <div className="bg-white rounded-xl p-6 border-2 border-gray-200 mb-6">
                   <h3 className="text-lg font-bold text-gray-900 mb-4">

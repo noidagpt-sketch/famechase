@@ -522,12 +522,21 @@ export default function Quiz() {
   >({});
 
   const challengeGroups = (() => {
-    const groups: Record<string, string[]> = {
-      "Growth & Engagement": [],
-      "Brand & Identity": [],
-      "Monetization & Scaling": [],
-      "Creator Wellness": [],
-    };
+    const groupKeys = language === "hindi"
+      ? {
+          "ग्रोथ और एंगेजमेंट": [],
+          "ब्रांड और पहचान": [],
+          "मोनेटाइज़ेशन और स्केलिंग": [],
+          "क्रिएटर वेलनेस": [],
+        }
+      : {
+          "Growth & Engagement": [],
+          "Brand & Identity": [],
+          "Monetization & Scaling": [],
+          "Creator Wellness": [],
+        };
+
+    const groups: Record<string, string[]> = groupKeys;
     const list = languages[language].options.challenges as string[];
     list.forEach((c) => {
       const parts = c.split(": ");
