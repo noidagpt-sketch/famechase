@@ -2,7 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { CheckCircle, Download, Home, Loader2 } from "lucide-react";
 import { supabase, dbHelpers, isSupabaseConfigured } from "../lib/supabase";
-import { paymentHelpers } from "../lib/payu";
+import {
+  downloadFile,
+  generateProductDownload,
+  getProductConfig,
+  productConfigs,
+  type ProductConfig,
+} from "../lib/products";
 
 export default function PaymentSuccess() {
   const [searchParams] = useSearchParams();
