@@ -83,10 +83,11 @@ export const buildInstamojoCheckoutUrl = (
   searchParams.set("embed", "form");
   searchParams.set("amount", params.amount.toFixed(2));
   searchParams.set("purpose", params.purpose);
-  searchParams.set(
-    "data_readonly",
-    params.lockAmount === false ? "" : "amount",
-  );
+  if (params.lockAmount === false) {
+    searchParams.delete("data_readonly");
+  } else {
+    searchParams.set("data_readonly", "amount");
+  }
   searchParams.set(
     "allow_repeated_payments",
     params.allowRepeatedPayments ? "true" : "false",
