@@ -96,42 +96,50 @@ export default function PaymentSuccess() {
       };
 
       // Direct payment verification without Edge Functions
-      const isSuccess = paymentResponse.status === 'success';
+      const isSuccess = paymentResponse.status === "success";
       const txnid = paymentResponse.txnid;
 
       if (!txnid) {
-        setVerificationResult({ success: false, error: 'Missing transaction ID' });
+        setVerificationResult({
+          success: false,
+          error: "Missing transaction ID",
+        });
         return;
       }
 
       // Update purchase status in Supabase
       const { data: purchaseData, error: purchaseError } = await supabase!
-        .from('purchases')
+        .from("purchases")
         .update({
-          payment_status: isSuccess ? 'success' : 'failed',
+          payment_status: isSuccess ? "success" : "failed",
           payu_response: paymentResponse,
-          updated_at: new Date().toISOString()
+          updated_at: new Date().toISOString(),
         })
-        .eq('payment_id', txnid)
+        .eq("payment_id", txnid)
         .select()
         .single();
 
       if (purchaseError) {
-        console.error('Failed to update purchase:', purchaseError);
-        setVerificationResult({ success: false, error: 'Failed to update purchase' });
+        console.error("Failed to update purchase:", purchaseError);
+        setVerificationResult({
+          success: false,
+          error: "Failed to update purchase",
+        });
         return;
       }
 
       setVerificationResult({
         success: true,
         verified: true,
-        paymentStatus: isSuccess ? 'success' : 'failed',
-        purchase: purchaseData
+        paymentStatus: isSuccess ? "success" : "failed",
+        purchase: purchaseData,
       });
 
       if (isSuccess && purchaseData) {
         setPurchase(purchaseData);
-        const { data: productData } = await dbHelpers.getProduct(purchaseData.product_id);
+        const { data: productData } = await dbHelpers.getProduct(
+          purchaseData.product_id,
+        );
         setProduct(productData);
       }
     } catch (error) {

@@ -54,7 +54,10 @@ async function loadDevanagariFontBytes(): Promise<Uint8Array | null> {
     devanagariFontCache = new Uint8Array(arrayBuffer);
     return devanagariFontCache;
   } catch (error) {
-    console.warn("Unable to load Devanagari font, falling back to standard font.", error);
+    console.warn(
+      "Unable to load Devanagari font, falling back to standard font.",
+      error,
+    );
     devanagariFontLoadFailed = true;
     return null;
   }
@@ -67,7 +70,10 @@ async function embedPrimaryPdfFont(pdfDoc: PDFDocument): Promise<PDFFont> {
     try {
       return await pdfDoc.embedFont(devanagariBytes, { subset: true });
     } catch (error) {
-      console.warn("Failed to embed Devanagari font, using Helvetica fallback.", error);
+      console.warn(
+        "Failed to embed Devanagari font, using Helvetica fallback.",
+        error,
+      );
     }
   }
 
