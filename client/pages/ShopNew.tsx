@@ -301,9 +301,9 @@ function ShopNew() {
       thanksForPurchase:
         "आपकी खरीदारी के लिए धन्यवाद! आपके प्रोडक्ट्स डाउनलोड के लिए तैयार हैं।",
       backToShop: "शॉप पर वापस जाएं",
-      recentHeadline: "अभी-अभी जिन्होंने अपना किट लिया",
+      recentHeadline: "अ��ी-अभी जिन्होंने अपना किट लिया",
       adminToggleShow: "एडमिन पैनल खोलें",
-      adminToggleHide: "एडमिन पैनल बंद करें",
+      adminToggleHide: "एडमिन पैन�� बंद करें",
       instamojoNote:
         "Instamojo से भुगतान करने के बाद यहाँ लौटें और ‘Download’ पर क्लिक करें।",
       instamojoNoteShort:
@@ -694,7 +694,7 @@ function ShopNew() {
                         {language === "hindi" && product.id === "complete-growth-kit"
                           ? "कम्प्लीट क्रिएटर ग्रोथ किट"
                           : language === "hindi" && product.id === "reels-mastery"
-                            ? "इंस्टाग्राम रील्स मास्टरी कोर्स"
+                            ? "इंस्टाग्राम री���्स मास्टरी कोर्स"
                             : language === "hindi" && product.id === "brand-masterclass"
                               ? "ब्रांड कोलैबोरेशन मास्टरक्लास"
                               : language === "hindi" && product.id === "complete-bundle"
@@ -755,21 +755,6 @@ function ShopNew() {
                               ₹{product.originalPrice}
                             </div>
                           )}
-                          <div className="text-sm text-blue-600 font-medium mt-2">
-                            💰{' '}
-                            {language === "hindi"
-                              ? "प्रोमो कोड से अतिरिक्त छूट प्राप्त करें"
-                              : "Get extra discount with promo codes"}
-                          </div>
-                          <div className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold mb-4">
-                            {Math.round(
-                              ((product.originalPrice - product.price) /
-                                product.originalPrice) *
-                                100,
-                            )}
-                            % OFF
-                          </div>
-
                           {isPurchased ? (
                             <button
                               onClick={() => setShowSuccessPage(product.id)}
@@ -782,21 +767,16 @@ function ShopNew() {
                             <>
                               <button
                                 onClick={() => handleBuyClick(product.id)}
-                                className="w-full bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all mb-2"
+                                className="w-full bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all mb-4"
                               >
-                                {currentLang.buyNow} - ₹{product.price}
+                                <CreditCard className="w-4 h-4 inline mr-2" />
+                                {language === "hindi" ? "Instamojo से भुगतान करें" : "Pay securely with Instamojo"}
+                                <span className="ml-2">₹{product.price}</span>
                               </button>
-                              <a
-                                href="https://www.instamojo.com/@famechase"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="w-full flex justify-center items-center gap-2 bg-blue-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-blue-700 transition-all mb-2"
-                              >
-                                <ExternalLink className="w-4 h-4" />
-                                Pay with Instamojo
-                              </a>
                               <p className="text-xs text-gray-600 mb-4 text-center">
-                                {currentLang.instamojoNote}
+                                {language === "hindi"
+                                  ? "भुगतान पूरा होने के बाद डाउनलोड अपने आप खुल जाएगा।"
+                                  : "Payment completes in a secure popup. Downloads unlock instantly."}
                               </p>
                             </>
                           )}
