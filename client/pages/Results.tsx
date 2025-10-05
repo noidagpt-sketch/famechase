@@ -43,6 +43,12 @@ interface PersonalInfo {
   city: string;
 }
 
+interface StoredPurchase {
+  id: string;
+  purchaseDate: string;
+  customerInfo: unknown;
+}
+
 const translateSuggestionToHindi = (suggestion: string): string => {
   const dictionary: Array<
     [RegExp, string | ((match: string, ...args: string[]) => string)]
@@ -147,7 +153,7 @@ const languages = {
     profileSynopsis: "प्रोफाइल सारांश",
     creatorProfile: "क्रिएटर प्र���फाइल",
     currentStatus: "वर्तमान स्थिति",
-    swotAnalysis: "SWOT विश्लेषण",
+    swotAnalysis: "SWOT विश्ल��षण",
     strengths: "मजबूती",
     weaknesses: "कमजोरी",
     opportunities: "अवसर",
@@ -168,7 +174,7 @@ const languages = {
     age: "उम्र",
     paySecure: "सुरक्षित भुगतान करें",
     processing: "प्रसंस्करण...",
-    whatYouGet: "भुगतान करने के बा�� आपको मिलेगा:",
+    whatYouGet: "भुगतान करने के बाद आपको मिलेगा:",
     fameScoreReport: "फेम स्कोर रिपोर्ट",
     mediaKitTemplate: "�����डिया किट टेम्प्लेट",
     growthStrategy: "ग्���ोथ स्ट्रैटेजी",
@@ -368,7 +374,7 @@ export default function Results() {
 
     // Add enhanced font size indicator for optimal readability
     const fontSizeIndicator = `
-╔════��════════════════════��════════════════════════════╗
+╔════��═════════════════════════════════════════════════╗
 ║                 📖 READING INSTRUCTIONS                  ║
 ║                                                          ║
 ║   FONT SIZE: SET TO 24-32pt (MINIMUM 22pt)           ║
@@ -543,7 +549,7 @@ ${language === "hindi" ? "🎨 कंटेंट निच:" : "🎨 Content Ni
 ${language === "hindi" ? "📹 कंटेंट प्रकार:" : "📹 Content Type:"} ${quizData.contentType}
 
 
-📈 ${language === "hindi" ? "प्रदर्शन मेट्रिक्स:" : "PERFORMANCE METRICS:"}
+📈 ${language === "hindi" ? "प्��दर्शन मेट्रिक्स:" : "PERFORMANCE METRICS:"}
 ─────────────────���─────────────────────────────
 
 ${language === "hindi" ? "⭐ फेम स्कोर:" : "⭐ Fame Score:"} ${analysis.fameScore}/100
@@ -571,7 +577,7 @@ ${language === "hindi" ? "विशेषताएं:" : "SPECIALTIES:"}
 - ${analysis.suggestions.slice(0, 3).join("\n- ")}
 
 ${language === "hindi" ? "संपर्क:" : "CONTACT INFORMATION:"}
-${language === "hindi" ? "ईमेल:" : "Email:"} ${personalInfo.email}
+${language === "hindi" ? "ई��ेल:" : "Email:"} ${personalInfo.email}
 ${language === "hindi" ? "फोन:" : "Phone:"} ${personalInfo.phone}
 ${language === "hindi" ? "वेबसाइट:" : "Website:"} ${quizData.socialLinks.website || "Available upon request"}`;
     } else if (type === "growthStrategy") {
@@ -606,7 +612,7 @@ ${language === "hindi" ? "90-दिन के लक्ष्य:" : "90-DAY GOA
 ${language === "hindi" ? "- फलोअर वृद्धि:" : "- Follower Growth:"} 30-50%
 ${language === "hindi" ? "- एंगेमेंट वृद्धि:" : "- Engagement Increase:"} 40-80%
 ${language === "hindi" ? "- आय लकष्य:" : "- Income Target:"} ${analysis.incomeProjection}
-${language === "hindi" ? "- ब्रांड ार्टनरशिप:" : "- Brand Partnerships:"} 2-5 ${language === "hindi" ? "सहयोग" : "collaborations"}
+${language === "hindi" ? "- ��्रांड ार्टनरशिप:" : "- Brand Partnerships:"} 2-5 ${language === "hindi" ? "सहयोग" : "collaborations"}
 
 ${language === "hindi" ? "मुख्य सफलता संकेतक (KPIs):" : "KEY SUCCESS INDICATORS (KPIs):"}
 ${language === "hindi" ? "- दैनिक एंगे��मेंट रेट" : "- Daily engagement rate"}
@@ -728,7 +734,7 @@ ${language === "hindi" ? "पोस्टिंग बोनस:" : "Posting Bon
 
 ${language === "hindi" ? "💰 रियलिस्टिक कमाई रें (मासिक):" : "💰 REALISTIC EARNING RANGE (Monthly):"}
 ${language === "hindi" ? "कंजर्वेटिव:" : "Conservative:"} ₹${realisticMonthlyMin.toLocaleString()}
-${language === "hindi" ? "ऑप्टिमिस्टक:" : "Optimistic:"} ₹${realisticMonthlyMax.toLocaleString()}
+${language === "hindi" ? "ऑप्टि��िस्टक:" : "Optimistic:"} ₹${realisticMonthlyMax.toLocaleString()}
 ${language === "hindi" ? "औसत टारगेट:" : "Average Target:"} ₹${Math.round((realisticMonthlyMin + realisticMonthlyMax) / 2).toLocaleString()}
 
 ${language === "hindi" ? "📊 ���्रीमियम प्लेटफॉर्म रेट कार्ड:" : "📊 PREMIUM PLATFORM RATE CARD:"}
@@ -747,7 +753,7 @@ ${language === "hindi" ? "महीना 5-6:" : "Month 5-6:"} ₹${Math.round(
 ⚡ FACT: 73% of creators who follow structured plans see 5x income growth vs. those without plans
 💡 TIMING MATTERS: Best time to start monetization is NOW - creator economy growing 25% yearly
 
-${language === "hindi" ? "🎯 ��्रांड कोलैबोरेशन पोटेंशियल:" : "🎯 BRAND COLLABORATION POTENTIAL:"}
+${language === "hindi" ? "🎯 ब्रांड कोलैबोरेशन पोटेंशियल:" : "🎯 BRAND COLLABORATION POTENTIAL:"}
 ${language === "hindi" ? "मासिक इंक्वायरी:" : "Monthly Inquiries:"} ${Math.round(followerNum / 5000)}-${Math.round(followerNum / 2000)}
 ${language === "hindi" ? "कन्वर्जन रेट:" : "Conversion Rate:"} 15-30%
 ${language === "hindi" ? "औसत डील वैल्यू:" : "Average Deal Value:"} ₹${Math.round(followerNum * 0.012 * niche.multiplier).toLocaleString()}
@@ -755,7 +761,7 @@ ${language === "hindi" ? "औसत डील वैल्यू:" : "Average De
 ${language === "hindi" ? "⚡ एक्शनेबल इनसाइट्स:" : "⚡ ACTIONABLE INSIGHTS:"}
 • ${language === "hindi" ? "आपकी नीच में " + niche.brandCount + " ब्रांड्स सक्रि हैं" : niche.brandCount + " brands are actively looking for creators in your niche"}
 • ${language === "hindi" ? "आपका CPM इंडस्ट्री एवरेज े " + Math.round((niche.avgCPM / 15 - 1) * 100) + "% ज्यादा" : "Your CPM is " + Math.round((niche.avgCPM / 15 - 1) * 100) + "% above industry average"}
-• ${language === "hindi" ? "बेस्ट पोस्टिंग टाइम्स: 7-9 PM IST (" + niche.avgCPM + "% हाई एंगेजमे���ट)" : "Best posting times: 7-9 PM IST (" + niche.avgCPM + "% higher engagement)"}
+• ${language === "hindi" ? "बेस्ट पोस्टिंग टाइम्स: 7-9 PM IST (" + niche.avgCPM + "% हाई एंगेजमेंट)" : "Best posting times: 7-9 PM IST (" + niche.avgCPM + "% higher engagement)"}
 
 ${language === "hindi" ? "🔥 प्रो टिप्स:" : "🔥 PRO TIPS:"}
 1. ${language === "hindi" ? "मिनिमम रेट हमेशा ₹" + Math.round(followerNum * 0.008).toLocaleString() + "/पोस्ट रखें" : "Never charge less than ₹" + Math.round(followerNum * 0.008).toLocaleString() + "/post"}
@@ -838,8 +844,8 @@ ${language === "hindi" ? "💰 मोनेाइज़ेन ट्रैकर
  ${language === "hindi" ? "पिच भेजे गए" : "Pitches Sent"}: _____ (टारगेट: 20-30)    │
 │ ${language === "hindi" ? "िप्लाई मिले" : "Replies Received"}: _____ (टारेट: 30%)     │
 │ ${language === "hindi" ? "डीलस क्लोज्��" : "Deals Closed"}: _____ (टारगेट: 15%)      │
-│ ${language === "hindi" ? "कुल कमाई" : "Total Earnings"}: _____ (टारगेट: ₹${Math.round(currentFollowers * 0.5).toLocaleString()})│
-│ ${language === "hindi" ? "औत डील वैल्यू" : "Avg Deal Value"}: ₹_____ (टारगे��: ₹${Math.round(currentFollowers * 0.08).toLocaleString()}) 
+│ ${language === "hindi" ? "कुल कमाई" : "Total Earnings"}: _____ (टा���गेट: ₹${Math.round(currentFollowers * 0.5).toLocaleString()})│
+│ ${language === "hindi" ? "औत डील वैल्यू" : "Avg Deal Value"}: ₹_____ (टारगेट: ₹${Math.round(currentFollowers * 0.08).toLocaleString()}) 
 ───────────��──────────────────────���────────┘
 
 ${language === "hindi" ? "📊 साप्ताहिक ग्रोथ मेट्रिक्स:" : "📊 WEEKLY GROWTH METRICS:"}
@@ -850,7 +856,7 @@ ${language === "hindi" ? "📊 साप्ताहिक ग्रोथ म�
 
 ${language === "hindi" ? "🎯 कंटेंट परफॉर्मेंस स्कोरकार्ड:" : "🎯 CONTENT PERFORMANCE SCORECARD:"}
 ┌───────────────────────────────────────────┐
- ${language === "hindi" ? "कंेंट ाइप" : "Content Type"}: ________________    │
+ ${language === "hindi" ? "कंेंट ाइप" : "Content Type"}: ________________    ���
  ${language === "hindi" ? "पोसट टाइम" : "Post Time"}: ___:___ (बेस्ट: 7-9 PM)   │
 │ ${language === "hindi" ? "हैश��ैग्स यूज्ड" : "Hashtags Used"}: _____ (बेस्ट: 8-12)  │
 │ ${language === "hindi" ? "1घंटे में रीच" : "1hr Reach"}: _____ (टारगेट: 15-25%)  │
@@ -861,7 +867,7 @@ ${language === "hindi" ? "🎯 कंटेंट परफॉर्मेंस
 ${language === "hindi" ? "🔥 प्रो-लेवल एनालिटिक्स टिप्स:" : "🔥 PRO-LEVEL ANALYTICS TIPS:"}
 1. ${language === "hindi" ? "रीच 50% से कम = Algorithm penalty. तुरंत बेहर कंटेंट पोसट करं" : "Reach below 50% = Algorithm penalty. Post better content immediately"}
 2. ${language === "hindi" ? "सव रेट 2% से ज्यादा = वायरल potential. इसी रह क कंटेंट बनएं" : "Save rate above 2% = Viral potential. Create similar content"}
-3. ${language === "hindi" ? "कमेंट्स मे��� रिप्लाई जरूर कर��ं - Engagement बढ��ेगा 40%" : "Always reply to comments - Boosts engagement by 40%"}
+3. ${language === "hindi" ? "कमेंट्स मे��� रिप्लाई जरूर कर��ं - Engagement बढ़ेगा 40%" : "Always reply to comments - Boosts engagement by 40%"}
 4. ${language === "hindi" ? "पहले 30 मिनट में जयाद��� likes = Algorithm boost" : "High likes in first 30 minutes = Algorithm boost"}
 
 ${language === "hindi" ? "📈 मासिक ROI ट्रैकर:" : "📈 MONTHLY ROI TRACKER:"}
@@ -978,7 +984,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
             </h1>
             <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
               {language === "hindi"
-                ? "आपका संपूर्ण क्रिएटर ट���लकिट तैया��� है। ���पनी व्यक्तिगत फाइलें डाउनलोड करें।"
+                ? "आपका संपूर्ण क्रिएटर ट���लकिट तैया��� है। अपनी व्यक्तिगत फाइलें डाउनलोड करें।"
                 : "Your complete Creator Toolkit is ready. Download your personalized files."}
             </p>
 
@@ -1046,7 +1052,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
                 </h3>
                 <p className="text-gray-600 mb-4">
                   {language === "hindi"
-                    ? "आपके लिए बनाई ग��� व��स्तृत 90-दिन की actionable growth strategy"
+                    ? "आपके लिए बनाई ग��� विस्तृत 90-दिन की actionable growth strategy"
                     : "Detailed 90-day actionable growth strategy tailored specifically for you"}
                 </p>
                 <div className="bg-gray-50 rounded-lg p-4 mb-4">
@@ -1071,7 +1077,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
                     <p>
                       •{" "}
                       {language === "hindi"
-                        ? "Content ideas आपके niche के ��ि���"
+                        ? "Content ideas आपके niche के ��िए"
                         : "Content ideas for your niche"}
                     </p>
                     <p>
@@ -1137,7 +1143,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
                     className="bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition-colors"
                   >
                     <Download className="w-4 h-4 inline mr-2" />
-                    {language === "hindi" ? "डाउनलोड करें" : "Download"}
+                    {language === "hindi" ? "डाउनल��ड करें" : "Download"}
                   </button>
                 </div>
 
@@ -1679,7 +1685,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
                                   <p className="font-medium text-orange-600">
                                     {language === "hindi"
                                       ? "🎯 Algorithm को खुश करें:"
-                                      : "��� Algorithm Optimization:"}
+                                      : "🎯 Algorithm Optimization:"}
                                   </p>
                                   <p>
                                     {language === "hindi"
@@ -1783,7 +1789,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
                                     </p>
                                     <p>
                                       {language === "hindi"
-                                        ? " Specific action plan ���ाएं इस challenge ��े लिए"
+                                        ? " Specific action plan बाएं इस challenge ��े लिए"
                                         : "• Create specific action plan for this challenge"}
                                     </p>
                                     <p>
@@ -2100,7 +2106,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
               <div className="flex items-center justify-center gap-2 mb-2">
                 <Target className="w-5 h-5 text-orange-600" />
                 <span className="font-bold text-orange-700">
-                  {language === "hindi" ? "अगला माइलस्ट������:" : "Next Milestone:"}
+                  {language === "hindi" ? "अगला माइलस्ट���न:" : "Next Milestone:"}
                 </span>
               </div>
               <div className="text-sm text-gray-600 text-center">
