@@ -31,32 +31,15 @@ interface PurchasedProduct {
   customerInfo: unknown;
 }
 
-interface CustomerInfo {
-  name: string;
-  email: string;
-  phone: string;
-  city: string;
-}
-
 function ShopNew() {
   const [language, setLanguage] = useState<"english" | "hindi">(() => {
     const savedLanguage = localStorage.getItem("famechase-language");
     return (savedLanguage as "english" | "hindi") || "english";
   });
   const [products, setProducts] = useState<ProductConfig[]>([]);
-  const [showPaymentForm, setShowPaymentForm] = useState<string | null>(null);
   const [showQuizRequiredPopup, setShowQuizRequiredPopup] = useState(false);
-  const [promoCode, setPromoCode] = useState("");
-  const [appliedDiscount, setAppliedDiscount] = useState(0);
   const [timeLeft, setTimeLeft] = useState(86400);
   const [recentPurchases, setRecentPurchases] = useState<string[]>([]);
-  const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({
-    name: "",
-    email: "",
-    phone: "",
-    city: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [purchasedProducts, setPurchasedProducts] = useState<PurchasedProduct[]>(
     [],
   );
@@ -182,7 +165,7 @@ function ShopNew() {
 
   const applyPromoCode = () => {
     if (!validatePromoCode(promoCode)) {
-      alert(language === "hindi" ? "अमान्य प्रोमो कोड" : "Invalid promo code");
+      alert(language === "hindi" ? "अमान्य प्रोमो ��ोड" : "Invalid promo code");
     }
   };
 
@@ -244,7 +227,7 @@ function ShopNew() {
       toggleProduct: "प्रोडक्ट टॉगल",
       enabled: "सक्रिय",
       disabled: "निष्क्रिय",
-      bestseller: "बे��्टसेलर",
+      bestseller: "बेस्टसेलर",
       trending: "ट्रेंडिंग",
       expertGuide: "एक्सपर्ट गाइड",
       offerEnds: "ऑफर समाप्त होता है",
@@ -265,7 +248,7 @@ function ShopNew() {
       city: "शहर",
       processing: "प्रसंस्करण...",
       paySecure: "सुरक्षित भुगतान करें",
-      downloadYourProducts: "अपने प्रोडक्ट्स ���ाउनलोड करें",
+      downloadYourProducts: "अपने प्रोडक्ट्स डाउनलोड करें",
       purchaseSuccess: "खरीदारी सफल! 🎉",
       thanksForPurchase:
         "आपकी खरीदारी के लिए धन्यवाद! आपके प्रोडक्ट्स डाउनलोड के लिए तैयार हैं।",
@@ -799,7 +782,7 @@ function ShopNew() {
             </div>
             <h3 className="text-2xl font-bold text-gray-900 mb-4">
               {language === "hindi"
-                ? "❌ पहले अप��ी प्रोफाइल पूर्ण करें"
+                ? "❌ पहले अपनी प्रोफाइल पू���्ण करें"
                 : "❌ Complete Your Profile First"}
             </h3>
             <p className="text-gray-600 mb-6">
