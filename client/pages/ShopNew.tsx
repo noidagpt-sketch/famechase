@@ -185,12 +185,41 @@ function ShopNew() {
     }
   };
 
-  const handleBuyClick = (productId: string) => {
+  const handleBuyClick = async (productId: string) => {
     if (!checkQuizCompletion()) {
       setShowQuizRequiredPopup(true);
       return;
     }
-    setShowPaymentForm(productId);
+
+    const product = getProductConfig(productId);
+    if (!product) {
+      return;
+    }
+
+    const quizInfo = quizData ?? {};
+
+    localStorage.setItem("pendingProductPurchase", productId);
+
+    const checkoutUrl = buildInstamojoCheckoutUrl(
+      "https://www.instamojo.com/@famechase",
+      {
+        amount: product.price,
+        purpose: product.name,
+        name: quizInfo.name || "",
+        email: quizInfo.email || "",
+        phone: quizInfo.phone || "",
+        redirectUrl: `${window.location.origin}/shop?payment_status=Credit`,
+        notes: {
+          product_id: productId,
+          product_name: product.name,
+          preferred_language: language,
+        },
+        lockAmount: true,
+        allowRepeatedPayments: false,
+      },
+    );
+
+    await openInstamojoCheckout(checkoutUrl);
   };
 
   const validatePromoCode = (code: string) => {
