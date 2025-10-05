@@ -316,28 +316,6 @@ function ShopNew() {
     [language],
   );
 
-  const handlePurchase = async (productId: string | null) => {
-    if (!productId) {
-      return;
-    }
-    setIsSubmitting(true);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    const purchase: PurchasedProduct = {
-      id: productId,
-      purchaseDate: new Date().toISOString(),
-      customerInfo: { ...customerInfo, ...quizData },
-    };
-
-    const updated = [...purchasedProducts, purchase];
-    setPurchasedProducts(updated);
-    localStorage.setItem("purchasedProducts", JSON.stringify(updated));
-
-    setIsSubmitting(false);
-    setShowPaymentForm(null);
-    setShowSuccessPage(productId);
-  };
-
   const handleDownload = async (productId: string | null, downloadId: string) => {
     if (!productId) {
       return;
@@ -815,7 +793,7 @@ function ShopNew() {
             </h3>
             <p className="text-gray-600 mb-6">
               {language === "hindi"
-                ? "प्रीमियम टूल्स खरीदने से पहले आपको केवल 2 मिनट का क्विज़ पूरा करना होगा।"
+                ? "प्रीमियम टूल्स खरीदने से पहले आ���को केवल 2 मिनट का क्विज़ पूरा करना होगा।"
                 : "Before purchasing premium tools, please finish the 2-minute creator quiz."}
             </p>
             <div className="space-y-3">
