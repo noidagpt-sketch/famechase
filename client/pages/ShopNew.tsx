@@ -224,13 +224,6 @@ function ShopNew() {
 
 
 
-  const calculateDiscountedPrice = (originalPrice: number) => {
-    if (appliedDiscount > 0) {
-      return Math.round(originalPrice * (1 - appliedDiscount / 100));
-    }
-    return originalPrice;
-  };
-
   const translations = {
     english: {
       title: "Creator Tools & Resources",
@@ -289,7 +282,7 @@ function ShopNew() {
       downloads: "डाउनलोड",
       rating: "रेटिंग",
       securePayment: "सुरक्षित भुगतान",
-      instantDownload: "तुरंत डाउनलो��",
+      instantDownload: "तुरंत डाउनलोड",
       buyNow: "अभी खरीदें",
       downloadFree: "फ्री डाउनलोड करें",
       bundleOffer: "सीमित समय बंडल ऑफर 🔥",
@@ -308,7 +301,7 @@ function ShopNew() {
       thanksForPurchase:
         "आपकी खरीदारी के लिए धन्यवाद! आपके प्रोडक्ट्स डाउनलोड के लिए तैयार हैं।",
       backToShop: "शॉप पर वापस जाएं",
-      recentHeadline: "��भी-अभी जिन्होंने अपना किट लिया",
+      recentHeadline: "अभी-अभी जिन्होंने अपना किट लिया",
       adminToggleShow: "एडमिन पैनल खोलें",
       adminToggleHide: "एडमिन पैनल बंद करें",
       instamojoNote:
