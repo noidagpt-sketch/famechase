@@ -49,17 +49,66 @@ function ShopNew() {
 
   useEffect(() => {
     setProducts(getAllProducts());
+
     const storedPurchases = localStorage.getItem("purchasedProducts");
+    let existingPurchases: PurchasedProduct[] = [];
+
     if (storedPurchases) {
-      setPurchasedProducts(JSON.parse(storedPurchases));
-    }
-    const storedQuizData = localStorage.getItem("fameChaseQuizData");
-    if (storedQuizData) {
-      const data = JSON.parse(storedQuizData);
-      setQuizData(data);
-      if (data.language) {
-        setLanguage(data.language);
+      try {
+        const parsed = JSON.parse(storedPurchases);
+        if (Array.isArray(parsed)) {
+          existingPurchases = parsed;
+          setPurchasedProducts(parsed);
+        }
+      } catch (error) {
+        console.warn("Unable to parse stored purchases", error);
       }
+    }
+
+    const storedQuizData = localStorage.getItem("fameChaseQuizData");
+    let parsedQuizData: any = null;
+
+    if (storedQuizData) {
+      try {
+        parsedQuizData = JSON.parse(storedQuizData);
+        setQuizData(parsedQuizData);
+        if (parsedQuizData.language) {
+          setLanguage(parsedQuizData.language);
+        }
+      } catch (error) {
+        console.warn("Unable to parse quiz data", error);
+      }
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const paymentStatus = urlParams.get("payment_status");
+    const pendingPurchase = localStorage.getItem("pendingProductPurchase");
+
+    if (
+      pendingPurchase &&
+      (paymentStatus === "Credit" || paymentStatus === "success")
+    ) {
+      const alreadyPurchased = existingPurchases.some(
+        (purchase) => purchase.id === pendingPurchase,
+      );
+
+      if (!alreadyPurchased) {
+        const purchase: PurchasedProduct = {
+          id: pendingPurchase,
+          purchaseDate: new Date().toISOString(),
+          customerInfo: parsedQuizData ?? {},
+        };
+        existingPurchases = [...existingPurchases, purchase];
+        setPurchasedProducts(existingPurchases);
+        localStorage.setItem(
+          "purchasedProducts",
+          JSON.stringify(existingPurchases),
+        );
+      }
+
+      localStorage.removeItem("pendingProductPurchase");
+      setShowSuccessPage(pendingPurchase);
+      window.history.replaceState({}, "", "/shop");
     }
   }, []);
 
@@ -221,7 +270,7 @@ function ShopNew() {
     },
     hindi: {
       title: "क्रिएटर टूल्स और संसाधन",
-      subtitle: "आपकी क्रिएटर यात्रा को तेज़ करने के लिए प्रोफेशनल टूल्स",
+      subtitle: "आपकी क्रिएट��� यात्रा को तेज़ करने के लिए प्रोफेशनल टूल्स",
       premiumTools: "प्रीमियम क्रिएटर टूल्स",
       adminPanel: "एडमिन पैनल",
       toggleProduct: "प्रोडक्ट टॉगल",
