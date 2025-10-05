@@ -12,6 +12,7 @@ import {
 } from "../lib/products";
 import { supabase, dbHelpers, isSupabaseConfigured } from "@/lib/supabase";
 import { sanitizeDeep } from "@/lib/sanitize";
+import { openInstamojoCheckout, buildInstamojoCheckoutUrl } from "@/lib/instamojo";
 
 interface PurchasedProduct {
   id: string;
@@ -67,20 +68,30 @@ export default function Shop() {
     }
 
     // Check for pending purchase completion
+    const urlParams = new URLSearchParams(window.location.search);
+    const paymentStatus = urlParams.get('payment_status');
     const pendingPurchase = localStorage.getItem('pendingProductPurchase');
-    if (pendingPurchase && window.location.search.includes('payment_status=Credit')) {
+
+    if (pendingPurchase && (paymentStatus === 'Credit' || paymentStatus === 'success')) {
       // Mark product as purchased
       const purchase: PurchasedProduct = {
         id: pendingPurchase,
         purchaseDate: new Date().toISOString(),
         customerInfo: storedQuizData ? JSON.parse(storedQuizData) : {},
       };
-      const updated = stored ? [...JSON.parse(stored), purchase] : [purchase];
-      setPurchasedProducts(updated);
-      localStorage.setItem("purchasedProducts", JSON.stringify(updated));
+      const existingPurchases = stored ? JSON.parse(stored) : [];
+      // Check if already purchased
+      const alreadyPurchased = existingPurchases.some((p: PurchasedProduct) => p.id === pendingPurchase);
+      if (!alreadyPurchased) {
+        const updated = [...existingPurchases, purchase];
+        setPurchasedProducts(updated);
+        localStorage.setItem("purchasedProducts", JSON.stringify(updated));
+      }
       localStorage.removeItem('pendingProductPurchase');
       // Show success page
       setShowSuccessPage(pendingPurchase);
+      // Clean up URL
+      window.history.replaceState({}, '', '/shop');
     }
   }, []);
 
@@ -166,12 +177,39 @@ export default function Shop() {
     }
   };
 
-  const handleBuyClick = (productId: string) => {
+  const handleBuyClick = async (productId: string) => {
     if (!checkQuizCompletion()) {
       setShowQuizRequiredPopup(true);
       return;
     }
-    setShowPaymentForm(productId);
+
+    const product = getProductConfig(productId);
+    if (!product) return;
+
+    // Store pending purchase
+    localStorage.setItem('pendingProductPurchase', productId);
+
+    // Build Instamojo checkout URL with embedded form
+    const checkoutUrl = buildInstamojoCheckoutUrl(
+      'https://www.instamojo.com/@famechase',
+      {
+        amount: product.price,
+        purpose: product.name,
+        name: quizData?.name || '',
+        email: quizData?.email || '',
+        phone: quizData?.phone || '',
+        redirectUrl: `${window.location.origin}/shop?payment_status=Credit`,
+        notes: {
+          product_id: productId,
+          product_name: product.name,
+        },
+        lockAmount: true,
+        allowRepeatedPayments: false,
+      }
+    );
+
+    // Open Instamojo embedded checkout
+    await openInstamojoCheckout(checkoutUrl);
   };
 
   const validatePromoCode = (code: string) => {
@@ -686,25 +724,13 @@ export default function Shop() {
                               Download Products
                             </button>
                           ) : (
-                            <>
-                              <a
-                                href={`https://www.instamojo.com/@famechase?amount=${product.price}&data_name=${quizData?.name || ''}&data_email=${quizData?.email || ''}&data_phone=${quizData?.phone || ''}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="w-full bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all mb-4 inline-block text-center"
-                                onClick={() => {
-                                  // Store pending purchase
-                                  localStorage.setItem('pendingProductPurchase', product.id);
-                                }}
-                              >
-                                {currentLang.buyNow} - ₹{product.price}
-                              </a>
-                              <p className="text-xs text-gray-600 text-center mb-4">
-                                {language === "hindi"
-                                  ? "भुगतान के बाद इस पेज पर वापस आएं"
-                                  : "Return to this page after payment"}
-                              </p>
-                            </>
+                            <button
+                              onClick={() => void handleBuyClick(product.id)}
+                              className="w-full bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all mb-4"
+                            >
+                              <CreditCard className="w-4 h-4 inline mr-2" />
+                              {language === "hindi" ? "भुगतान करें" : "Pay with Instamojo"} - ₹{product.price}
+                            </button>
                           )}
 
                           <div className="space-y-2 text-sm text-gray-600">
