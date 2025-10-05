@@ -5,9 +5,7 @@ import {
   CheckCircle,
   CreditCard,
   Download,
-  ExternalLink,
   Home,
-  Loader2,
   Shield,
   Star,
   Target,
@@ -22,6 +20,7 @@ import {
   type ProductConfig,
   productConfigs,
 } from "../lib/products";
+import { buildInstamojoCheckoutUrl, openInstamojoCheckout } from "@/lib/instamojo";
 import { supabase, dbHelpers, isSupabaseConfigured } from "@/lib/supabase";
 import { sanitizeDeep } from "@/lib/sanitize";
 import SupabaseConfigBanner from "../components/SupabaseConfigBanner";
@@ -245,7 +244,7 @@ function ShopNew() {
       toggleProduct: "प्रोडक्ट टॉगल",
       enabled: "सक्रिय",
       disabled: "निष्क्रिय",
-      bestseller: "बेस्टसेलर",
+      bestseller: "बे��्टसेलर",
       trending: "ट्रेंडिंग",
       expertGuide: "एक्सपर्ट गाइड",
       offerEnds: "ऑफर समाप्त होता है",
@@ -266,7 +265,7 @@ function ShopNew() {
       city: "शहर",
       processing: "प्रसंस्करण...",
       paySecure: "सुरक्षित भुगतान करें",
-      downloadYourProducts: "अपने प्रोडक्ट्स डाउनलोड करें",
+      downloadYourProducts: "अपने प्रोडक्ट्स ���ाउनलोड करें",
       purchaseSuccess: "खरीदारी सफल! 🎉",
       thanksForPurchase:
         "आपकी खरीदारी के लिए धन्यवाद! आपके प्रोडक्ट्स डाउनलोड के लिए तैयार हैं।",
@@ -800,7 +799,7 @@ function ShopNew() {
             </div>
             <h3 className="text-2xl font-bold text-gray-900 mb-4">
               {language === "hindi"
-                ? "❌ पहले अपनी प्रोफाइल पूर्ण करें"
+                ? "❌ पहले अप��ी प्रोफाइल पूर्ण करें"
                 : "❌ Complete Your Profile First"}
             </h3>
             <p className="text-gray-600 mb-6">
