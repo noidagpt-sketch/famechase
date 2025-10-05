@@ -222,24 +222,6 @@ function ShopNew() {
     await openInstamojoCheckout(checkoutUrl);
   };
 
-  const validatePromoCode = (code: string) => {
-    const validCodes: Record<string, number> = {
-      CREATOR20: 20,
-      LAUNCH50: 50,
-      FIRST25: 25,
-      SAVE30: 30,
-      WELCOME15: 15,
-      SPECIAL40: 40,
-    };
-
-    const upperCode = code.toUpperCase();
-    if (validCodes[upperCode]) {
-      setAppliedDiscount(validCodes[upperCode]);
-      return true;
-    }
-    setAppliedDiscount(0);
-    return false;
-  };
 
   const applyPromoCode = () => {
     if (!validatePromoCode(promoCode)) {
@@ -860,7 +842,7 @@ function ShopNew() {
             </div>
             <h3 className="text-2xl font-bold text-gray-900 mb-4">
               {language === "hindi"
-                ? "❌ पहले अपनी प्रोफाइल पू���्ण करें"
+                ? "❌ पहले अपनी प���रोफाइल पू���्ण करें"
                 : "❌ Complete Your Profile First"}
             </h3>
             <p className="text-gray-600 mb-6">
