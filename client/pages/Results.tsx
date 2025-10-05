@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Star, TrendingUp, Target, DollarSign, Download, CircleCheck as CheckCircle, Globe, CreditCard, Shield, Zap, Sparkles, FileText, Mail, LayoutGrid as Layout, ChartBar as BarChart, Calendar, User, MapPin, TriangleAlert as AlertTriangle, Award, Lightbulb, Clock, Lock, Clock as Unlock, Chrome as Home, Share2, Twitter, MessageCircle, Trophy, Gift, Rocket, Heart } from "lucide-react";
+import { ArrowLeft, ArrowRight, Star, TrendingUp, Target, DollarSign, Download, CircleCheck as CheckCircle, Globe, CreditCard, Shield, Zap, Sparkles, FileText, Mail, LayoutGrid as Layout, ChartBar as BarChart, Calendar, User, MapPin, TriangleAlert as AlertTriangle, Award, Lightbulb, Clock, Lock, Unlock, Chrome as Home, Share2, Twitter, MessageCircle, Trophy, Gift, Rocket, Heart } from "lucide-react";
 import { analyzeQuizData } from "../lib/ai-analysis";
 import { supabase, dbHelpers, isSupabaseConfigured } from "@/lib/supabase";
-import { downloadFile } from "@/lib/products";
+import { buildInstamojoCheckoutUrl, openInstamojoCheckout } from "@/lib/instamojo";
+import { downloadFile, getProductConfig } from "@/lib/products";
 import { sanitizeDeep } from "@/lib/sanitize";
 
 interface QuizData {
@@ -66,7 +67,7 @@ const translateSuggestionToHindi = (suggestion: string): string => {
     [/Create affiliate content/i, "एफिलिएट कंटेंट बनाएं"],
     [/Day 1-2:/i, "दिन 1-2:"],
     [/Day 3-7:/i, "दिन 3-7:"],
-    [/Use trending audio/i, "ट्रेंडिंग ऑडियो का उपयोग करें"],
+    [/Use trending audio/i, "ट्रे���डिंग ऑडियो का उपयोग करें"],
     [/Schedule for 7 PM daily/i, "हर दिन शाम 7 बजे पोस्ट शेड्यूल करें"],
   ];
 
@@ -458,7 +459,7 @@ ${language === "hindi" ? "💰 आय प्रक्षेपण:" : "💰 Inco
 
 
 🎯 ${language === "hindi" ? "प्रोफाइल सारांश:" : "PROFILE SUMMARY:"}
-─────────────────────────────────────────────
+──────────────────────────────────────────��──
 
 ${language === "hindi" ? "📱 प्लेटफॉर्म:" : "📱 Platform:"} ${quizData.primaryPlatform}
 
@@ -527,7 +528,7 @@ ${language === "hindi" ? "📧 ईमेल:" : "📧 Email:"} ${personalInfo.em
 
 ${language === "hindi" ? "📞 फोन:" : "📞 Phone:"} ${personalInfo.phone}
 
-${language === "hindi" ? "🏙️ शहर:" : "🏙️ City:"} ${personalInfo.city}
+${language === "hindi" ? "🏙️ शह���:" : "🏙️ City:"} ${personalInfo.city}
 
 
 📊 ${language === "hindi" ? "सोशल मीडिया प्रोफाइल:" : "SOCIAL MEDIA PROFILES:"}
@@ -547,7 +548,7 @@ ${language === "hindi" ? "📹 कंटेंट प्रकार:" : "📹 C
 
 ${language === "hindi" ? "⭐ फेम स्कोर:" : "⭐ Fame Score:"} ${analysis.fameScore}/100
 
-${language === "hindi" ? "💯 एंगेजमेंट रेट:" : "💯 Engagement Rate:"} ${language === "hindi" ? "उच्च ुणवत्ता" : "High Quality"}
+${language === "hindi" ? "💯 एंगेजमेंट रेट:" : "💯 Engagement Rate:"} ${language === "hindi" ? "उ���्च ुणवत्ता" : "High Quality"}
 
 ${language === "hindi" ? "📊 मासिक रीच:" : "📊 Monthly Reach:"} ${language === "hindi" ? "व���यापक दर्शक" : "Wide Audience"}
 
@@ -765,7 +766,7 @@ ${language === "hindi" ? "🎯 आपका कस्���म रेट क�
 ══════════════════════════════════════════��════
 ${language === "hindi" ? "बिक पैकेज:" : "Basic Package:"} ₹${Math.round(followerNum * 0.012 * niche.multiplier).toLocaleString()}
 ${language === "hindi" ? "स्टैंडर्ड पैेज:" : "Standard Package:"} ₹${Math.round(followerNum * 0.025 * niche.multiplier).toLocaleString()}
-${language === "hindi" ? "प्रीमियम पैकेज:" : "Premium Package:"} ₹${Math.round(followerNum * 0.045 * niche.multiplier).toLocaleString()}
+${language === "hindi" ? "प्रीमियम प��केज:" : "Premium Package:"} ₹${Math.round(followerNum * 0.045 * niche.multiplier).toLocaleString()}
 
 ${language === "hindi" ? "⏱️ लस्ट अपडेटेड:" : "⏱️ Last Updated:"} ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`;
     } else if (type === "analyticsTracker") {
@@ -1123,7 +1124,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
                   </h3>
                   <p className="text-gray-600 text-sm mb-4">
                     {language === "hindi"
-                      ? "जा���ें कि आप र महीने कतन कमा कते हैं। टॉप क्रिएटरस के डेटा पर आधरित 95% सटीक कैक���लेशन।"
+                      ? "जा���ें कि आप र महीने कतन कमा कते हैं। टॉप क्र���एटरस के डेटा पर आधरित 95% सटीक कैक���लेशन।"
                       : "Calculate real-time earnings potential based on your follower count & niche"}
                   </p>
                   <button
@@ -1185,7 +1186,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
               </h2>
               <p className="text-gray-600 mb-6">
                 {language === "hindi"
-                  ? "आपके quiz responses ���े आधर पर, हमारे AI ने ये specific tools recommend किए हैं जो आपकी exact needs जो पूरा करेंगे।"
+                  ? "आपके quiz responses ���े आधर पर, हमारे AI ने ये specific tools recommend किए ��ैं जो आपकी exact needs जो पूरा करेंगे।"
                   : "Based on your quiz responses, our AI has identified these specific tools that will address your exact needs and accelerate your growth."}
               </p>
 
@@ -1602,7 +1603,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
                     <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
                     <p className="text-gray-700">
                       {language === "hindi"
-                        ? `आप ${quizData.niche} में कंटेंट बनाते हैं - यह क बहुत डिमांडिं नि है जहाँ ब्रांड्स ${quizData.followerCount.includes("1K") ? "3-5" : quizData.followerCount.includes("10K") ? "10-15" : "20+"} लाख रुपए सालाा खर्च रते हैं।`
+                        ? `आप ${quizData.niche} में कंटेंट बनाते हैं - यह क बह��त डिमांडिं नि है जहाँ ब्रांड्स ${quizData.followerCount.includes("1K") ? "3-5" : quizData.followerCount.includes("10K") ? "10-15" : "20+"} लाख रुपए सालाा खर्च रते हैं।`
                         : `You create ${quizData.contentType.toLowerCase()} in ${quizData.niche} - a high-demand niche where brands spend ₹${quizData.followerCount.includes("1K") ? "3-5" : quizData.followerCount.includes("10K") ? "10-15" : "20+"} lakhs annually.`}
                     </p>
                   </div>
@@ -1658,7 +1659,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
                                   </p>
                                   <p>
                                     {language === "hindi"
-                                      ? "• 7-9 PM IST में post करें (35% ्यादा reach)"
+                                      ? "• 7-9 PM IST में post ��रें (35% ्यादा reach)"
                                       : "• Post during 7-9 PM IST (35% higher reach)"}
                                   </p>
                                   <p>
@@ -1682,7 +1683,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
                                   </p>
                                   <p>
                                     {language === "hindi"
-                                      ? "• पहले 30 minutes मे actively respond करें"
+                                      ? "• पहले 30 minutes मे actively respond करे��"
                                       : "• Respond actively in first 30 minutes after posting"}
                                   </p>
                                   <p>
@@ -2054,7 +2055,7 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
                 </div>
                 <div className="text-sm text-gray-600">
                   {quizData.monthlyIncome === "₹0 (No income yet)" ||
-                  quizData.monthlyIncome === "₹0 (अभी तक कोई आय नहीं)"
+                  quizData.monthlyIncome === "₹0 (अभी तक ���ोई आय नहीं)"
                     ? language === "hindi"
                       ? "अभी monetize नहीं किया"
                       : "Not monetized yet"
