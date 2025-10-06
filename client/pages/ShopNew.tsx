@@ -5,9 +5,7 @@ import {
   CheckCircle,
   CreditCard,
   Download,
-  ExternalLink,
   Home,
-  Loader2,
   Shield,
   Star,
   Target,
@@ -22,6 +20,7 @@ import {
   type ProductConfig,
   productConfigs,
 } from "../lib/products";
+import { buildInstamojoCheckoutUrl, openInstamojoCheckout } from "@/lib/instamojo";
 import { supabase, dbHelpers, isSupabaseConfigured } from "@/lib/supabase";
 import { sanitizeDeep } from "@/lib/sanitize";
 import SupabaseConfigBanner from "../components/SupabaseConfigBanner";
@@ -32,32 +31,15 @@ interface PurchasedProduct {
   customerInfo: unknown;
 }
 
-interface CustomerInfo {
-  name: string;
-  email: string;
-  phone: string;
-  city: string;
-}
-
 function ShopNew() {
   const [language, setLanguage] = useState<"english" | "hindi">(() => {
     const savedLanguage = localStorage.getItem("famechase-language");
     return (savedLanguage as "english" | "hindi") || "english";
   });
   const [products, setProducts] = useState<ProductConfig[]>([]);
-  const [showPaymentForm, setShowPaymentForm] = useState<string | null>(null);
   const [showQuizRequiredPopup, setShowQuizRequiredPopup] = useState(false);
-  const [promoCode, setPromoCode] = useState("");
-  const [appliedDiscount, setAppliedDiscount] = useState(0);
   const [timeLeft, setTimeLeft] = useState(86400);
   const [recentPurchases, setRecentPurchases] = useState<string[]>([]);
-  const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({
-    name: "",
-    email: "",
-    phone: "",
-    city: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [purchasedProducts, setPurchasedProducts] = useState<PurchasedProduct[]>(
     [],
   );
@@ -67,17 +49,66 @@ function ShopNew() {
 
   useEffect(() => {
     setProducts(getAllProducts());
+
     const storedPurchases = localStorage.getItem("purchasedProducts");
+    let existingPurchases: PurchasedProduct[] = [];
+
     if (storedPurchases) {
-      setPurchasedProducts(JSON.parse(storedPurchases));
-    }
-    const storedQuizData = localStorage.getItem("fameChaseQuizData");
-    if (storedQuizData) {
-      const data = JSON.parse(storedQuizData);
-      setQuizData(data);
-      if (data.language) {
-        setLanguage(data.language);
+      try {
+        const parsed = JSON.parse(storedPurchases);
+        if (Array.isArray(parsed)) {
+          existingPurchases = parsed;
+          setPurchasedProducts(parsed);
+        }
+      } catch (error) {
+        console.warn("Unable to parse stored purchases", error);
       }
+    }
+
+    const storedQuizData = localStorage.getItem("fameChaseQuizData");
+    let parsedQuizData: any = null;
+
+    if (storedQuizData) {
+      try {
+        parsedQuizData = JSON.parse(storedQuizData);
+        setQuizData(parsedQuizData);
+        if (parsedQuizData.language) {
+          setLanguage(parsedQuizData.language);
+        }
+      } catch (error) {
+        console.warn("Unable to parse quiz data", error);
+      }
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const paymentStatus = urlParams.get("payment_status");
+    const pendingPurchase = localStorage.getItem("pendingProductPurchase");
+
+    if (
+      pendingPurchase &&
+      (paymentStatus === "Credit" || paymentStatus === "success")
+    ) {
+      const alreadyPurchased = existingPurchases.some(
+        (purchase) => purchase.id === pendingPurchase,
+      );
+
+      if (!alreadyPurchased) {
+        const purchase: PurchasedProduct = {
+          id: pendingPurchase,
+          purchaseDate: new Date().toISOString(),
+          customerInfo: parsedQuizData ?? {},
+        };
+        existingPurchases = [...existingPurchases, purchase];
+        setPurchasedProducts(existingPurchases);
+        localStorage.setItem(
+          "purchasedProducts",
+          JSON.stringify(existingPurchases),
+        );
+      }
+
+      localStorage.removeItem("pendingProductPurchase");
+      setShowSuccessPage(pendingPurchase);
+      window.history.replaceState({}, "", "/shop");
     }
   }, []);
 
@@ -154,45 +185,44 @@ function ShopNew() {
     }
   };
 
-  const handleBuyClick = (productId: string) => {
+  const handleBuyClick = async (productId: string) => {
     if (!checkQuizCompletion()) {
       setShowQuizRequiredPopup(true);
       return;
     }
-    setShowPaymentForm(productId);
-  };
 
-  const validatePromoCode = (code: string) => {
-    const validCodes: Record<string, number> = {
-      CREATOR20: 20,
-      LAUNCH50: 50,
-      FIRST25: 25,
-      SAVE30: 30,
-      WELCOME15: 15,
-      SPECIAL40: 40,
-    };
-
-    const upperCode = code.toUpperCase();
-    if (validCodes[upperCode]) {
-      setAppliedDiscount(validCodes[upperCode]);
-      return true;
+    const product = getProductConfig(productId);
+    if (!product) {
+      return;
     }
-    setAppliedDiscount(0);
-    return false;
+
+    const quizInfo = quizData ?? {};
+
+    localStorage.setItem("pendingProductPurchase", productId);
+
+    const checkoutUrl = buildInstamojoCheckoutUrl(
+      "https://www.instamojo.com/@famechase",
+      {
+        amount: product.price,
+        purpose: product.name,
+        name: quizInfo.name || "",
+        email: quizInfo.email || "",
+        phone: quizInfo.phone || "",
+        redirectUrl: `${window.location.origin}/shop?payment_status=Credit`,
+        notes: {
+          product_id: productId,
+          product_name: product.name,
+          preferred_language: language,
+        },
+        lockAmount: true,
+        allowRepeatedPayments: false,
+      },
+    );
+
+    await openInstamojoCheckout(checkoutUrl);
   };
 
-  const applyPromoCode = () => {
-    if (!validatePromoCode(promoCode)) {
-      alert(language === "hindi" ? "अमान्य प्रोमो कोड" : "Invalid promo code");
-    }
-  };
 
-  const calculateDiscountedPrice = (originalPrice: number) => {
-    if (appliedDiscount > 0) {
-      return Math.round(originalPrice * (1 - appliedDiscount / 100));
-    }
-    return originalPrice;
-  };
 
   const translations = {
     english: {
@@ -239,7 +269,7 @@ function ShopNew() {
     },
     hindi: {
       title: "क्रिएटर टूल्स और संसाधन",
-      subtitle: "आपकी क्रिएटर यात्रा को तेज़ करने के लिए प्रोफेशनल टूल्स",
+      subtitle: "आपकी क्रिएट��� यात्रा को तेज़ करने के लिए प्रोफेशनल टूल्स",
       premiumTools: "प्रीमियम क्रिएटर टूल्स",
       adminPanel: "एडमिन पैनल",
       toggleProduct: "प्रोडक्ट टॉगल",
@@ -271,9 +301,9 @@ function ShopNew() {
       thanksForPurchase:
         "आपकी खरीदारी के लिए धन्यवाद! आपके प्रोडक्ट्स डाउनलोड के लिए तैयार हैं।",
       backToShop: "शॉप पर वापस जाएं",
-      recentHeadline: "अभी-अभी जिन्होंने अपना किट लिया",
+      recentHeadline: "अ��ी-अभी जिन्होंने अपना किट लिया",
       adminToggleShow: "एडमिन पैनल खोलें",
-      adminToggleHide: "एडमिन पैनल बंद करें",
+      adminToggleHide: "एडमिन पैन�� बंद करें",
       instamojoNote:
         "Instamojo से भुगतान करने के बाद यहाँ लौटें और ‘Download’ पर क्लिक करें।",
       instamojoNoteShort:
@@ -285,28 +315,6 @@ function ShopNew() {
     () => sanitizeDeep(translations[language]),
     [language],
   );
-
-  const handlePurchase = async (productId: string | null) => {
-    if (!productId) {
-      return;
-    }
-    setIsSubmitting(true);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    const purchase: PurchasedProduct = {
-      id: productId,
-      purchaseDate: new Date().toISOString(),
-      customerInfo: { ...customerInfo, ...quizData },
-    };
-
-    const updated = [...purchasedProducts, purchase];
-    setPurchasedProducts(updated);
-    localStorage.setItem("purchasedProducts", JSON.stringify(updated));
-
-    setIsSubmitting(false);
-    setShowPaymentForm(null);
-    setShowSuccessPage(productId);
-  };
 
   const handleDownload = async (productId: string | null, downloadId: string) => {
     if (!productId) {
@@ -664,7 +672,7 @@ function ShopNew() {
                         {language === "hindi" && product.id === "complete-growth-kit"
                           ? "कम्प्लीट क्रिएटर ग्रोथ किट"
                           : language === "hindi" && product.id === "reels-mastery"
-                            ? "इंस्टाग्राम रील्स मास्टरी कोर्स"
+                            ? "इंस्टाग्��ाम री���्स मास्टरी कोर्स"
                             : language === "hindi" && product.id === "brand-masterclass"
                               ? "ब्रांड कोलैबोरेशन मास्टरक्लास"
                               : language === "hindi" && product.id === "complete-bundle"
@@ -725,21 +733,6 @@ function ShopNew() {
                               ₹{product.originalPrice}
                             </div>
                           )}
-                          <div className="text-sm text-blue-600 font-medium mt-2">
-                            💰{' '}
-                            {language === "hindi"
-                              ? "प्रोमो कोड से अतिरिक्त छूट प्राप्त करें"
-                              : "Get extra discount with promo codes"}
-                          </div>
-                          <div className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold mb-4">
-                            {Math.round(
-                              ((product.originalPrice - product.price) /
-                                product.originalPrice) *
-                                100,
-                            )}
-                            % OFF
-                          </div>
-
                           {isPurchased ? (
                             <button
                               onClick={() => setShowSuccessPage(product.id)}
@@ -752,21 +745,16 @@ function ShopNew() {
                             <>
                               <button
                                 onClick={() => handleBuyClick(product.id)}
-                                className="w-full bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all mb-2"
+                                className="w-full bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all mb-4"
                               >
-                                {currentLang.buyNow} - ₹{product.price}
+                                <CreditCard className="w-4 h-4 inline mr-2" />
+                                {language === "hindi" ? "Instamojo से भुगतान करें" : "Pay securely with Instamojo"}
+                                <span className="ml-2">₹{product.price}</span>
                               </button>
-                              <a
-                                href="https://www.instamojo.com/@famechase"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="w-full flex justify-center items-center gap-2 bg-blue-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-blue-700 transition-all mb-2"
-                              >
-                                <ExternalLink className="w-4 h-4" />
-                                Pay with Instamojo
-                              </a>
                               <p className="text-xs text-gray-600 mb-4 text-center">
-                                {currentLang.instamojoNote}
+                                {language === "hindi"
+                                  ? "भुगतान पूरा होने के बाद डाउनलोड अपने आप खुल जाएगा।"
+                                  : "Payment completes in a secure popup. Downloads unlock instantly."}
                               </p>
                             </>
                           )}
@@ -800,12 +788,12 @@ function ShopNew() {
             </div>
             <h3 className="text-2xl font-bold text-gray-900 mb-4">
               {language === "hindi"
-                ? "❌ पहले अपनी प्रोफाइल पूर्ण करें"
+                ? "❌ पहले अपनी प्रोफाइल पू���्ण करें"
                 : "❌ Complete Your Profile First"}
             </h3>
             <p className="text-gray-600 mb-6">
               {language === "hindi"
-                ? "प्रीमियम टूल्स खरीदने से पहले आपको केवल 2 मिनट का क्विज़ पूरा करना होगा।"
+                ? "प्रीमियम टूल्स खरीदने से पहले आ���को केवल 2 मिनट का क्विज़ पूरा करना होगा।"
                 : "Before purchasing premium tools, please finish the 2-minute creator quiz."}
             </p>
             <div className="space-y-3">
@@ -826,185 +814,6 @@ function ShopNew() {
         </div>
       )}
 
-      {showPaymentForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl p-6 max-w-sm w-full max-h-[90vh] overflow-y-auto">
-            <h3 className="text-xl font-bold text-gray-900 mb-4">
-              {currentLang.paymentForm}
-            </h3>
-            <div className="space-y-4 mb-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {currentLang.fullName}
-                </label>
-                <input
-                  type="text"
-                  value={customerInfo.name}
-                  onChange={(event) =>
-                    setCustomerInfo({ ...customerInfo, name: event.target.value })
-                  }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-gray-900"
-                  placeholder={language === "hindi" ? "अपना नाम लिखें" : "Enter your full name"}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {currentLang.emailAddress}
-                </label>
-                <input
-                  type="email"
-                  value={customerInfo.email}
-                  onChange={(event) =>
-                    setCustomerInfo({ ...customerInfo, email: event.target.value })
-                  }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-gray-900"
-                  placeholder="your@email.com"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {currentLang.phoneNumber}
-                </label>
-                <input
-                  type="tel"
-                  value={customerInfo.phone}
-                  onChange={(event) =>
-                    setCustomerInfo({ ...customerInfo, phone: event.target.value })
-                  }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-gray-900"
-                  placeholder="+91 9876543210"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {currentLang.city}
-                </label>
-                <input
-                  type="text"
-                  value={customerInfo.city}
-                  onChange={(event) =>
-                    setCustomerInfo({ ...customerInfo, city: event.target.value })
-                  }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-gray-900"
-                  placeholder={language === "hindi" ? "शहर लिखें" : "Enter your city"}
-                />
-              </div>
-
-              <div className="border-t pt-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {language === "hindi" ? "प्रोमो कोड (वैकल्पिक)" : "Promo Code (Optional)"}
-                </label>
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    value={promoCode}
-                    onChange={(event) => setPromoCode(event.target.value.toUpperCase())}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-gray-900"
-                    placeholder={language === "hindi" ? "कोड दर्ज करें" : "Enter code"}
-                  />
-                  <button
-                    type="button"
-                    onClick={applyPromoCode}
-                    className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
-                  >
-                    {language === "hindi" ? "लागू करें" : "Apply"}
-                  </button>
-                </div>
-                {appliedDiscount > 0 && (
-                  <div className="mt-2 text-green-600 text-sm font-medium">
-                    ✅ {appliedDiscount}%{' '}
-                    {language === "hindi" ? "छूट लागू की गई" : "discount applied"}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {showPaymentForm && (
-              <div className="bg-gray-50 rounded-lg p-4 mb-6">
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">
-                    {language === "hindi" ? "मूल कीमत:" : "Original Price:"}
-                  </span>
-                  <span className="text-gray-900">
-                    ₹{getProductConfig(showPaymentForm)?.price}
-                  </span>
-                </div>
-                {appliedDiscount > 0 && (
-                  <div className="flex justify-between items-center text-green-600">
-                    <span>
-                      {language === "hindi" ? "छूट:" : "Discount:"} ({appliedDiscount}%)
-                    </span>
-                    <span>
-                      -₹
-                      {(getProductConfig(showPaymentForm)?.price ?? 0) -
-                        calculateDiscountedPrice(
-                          getProductConfig(showPaymentForm)?.price ?? 0,
-                        )}
-                    </span>
-                  </div>
-                )}
-                <div className="flex justify-between items-center font-bold text-lg border-t pt-2 mt-2">
-                  <span className="text-gray-900">
-                    {language === "hindi" ? "कुल राशि:" : "Total Amount:"}
-                  </span>
-                  <span className="text-blue-600">
-                    ₹
-                    {calculateDiscountedPrice(
-                      getProductConfig(showPaymentForm)?.price ?? 0,
-                    )}
-                  </span>
-                </div>
-              </div>
-            )}
-
-            <div className="flex flex-col gap-2 mb-4">
-              <a
-                href="https://www.instamojo.com/@famechase"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full flex justify-center items-center gap-2 bg-blue-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-blue-700 transition-all"
-              >
-                <ExternalLink className="w-4 h-4" />
-                Pay with Instamojo
-              </a>
-              <p className="text-xs text-gray-600 text-center">
-                {currentLang.instamojoNoteShort}
-              </p>
-            </div>
-
-            <div className="flex gap-4">
-              <button
-                onClick={() => setShowPaymentForm(null)}
-                className="flex-1 bg-gray-100 text-gray-700 py-3 px-6 rounded-xl font-semibold hover:bg-gray-200 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => handlePurchase(showPaymentForm)}
-                disabled={
-                  isSubmitting ||
-                  !customerInfo.name ||
-                  !customerInfo.email ||
-                  !customerInfo.phone
-                }
-                className="flex-1 bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-3 px-6 rounded-xl hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="w-4 h-4 inline mr-2 animate-spin" />
-                    {currentLang.processing}
-                  </>
-                ) : (
-                  <>
-                    <CreditCard className="w-4 h-4 inline mr-2" />
-                    {currentLang.paySecure}
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       <div className="fixed bottom-4 right-4 md:hidden z-40">
         <div className="flex items-center justify-between gap-3 bg-gray-900 text-white px-4 py-3 rounded-full shadow-lg">

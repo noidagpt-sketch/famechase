@@ -437,7 +437,7 @@ function generateMediaKitContent(
 • औसत पहुंच: [आपकी पहुंच दर्ज करें]
 • एंगेजमेंट रेट: [आपका एंगेमेंट रेट]
 • मासिक इंप्रेशन्स: [आपके म���सिक इंप्रेशन्स]
-• ऑडियंस डेमोग्राफिक्स: [आपके ऑडियं�� की जानकारी]
+• ऑ��ियंस डेमोग्राफिक्स: [आपके ऑडियं�� की जानकारी]
 
 💰 सुझावित दरें (आपके ऑडियंस के आधार पर):
 📸 पो्ट दरें: ₹200 - ₹1,000
@@ -457,7 +457,7 @@ function generateMediaKitContent(
 • आयु समूह: [आपके फॉलोअर्स की आयु]
 • लिंग: [मुख्य लिं वितर]
 • स्थान: [मुख्य भौगोलिक स्थान]
-• रुचियां: [आप���े ऑडियंस की रुचियां]
+• रुचियां: [आप���े ऑडियंस की रुचि���ां]
 
 📈 क्यों मेरे साथ कोलैबोरेट करें:
 • प्रामाणिक कंटेंट और ब्रांड एलाइन���ेंट
@@ -478,7 +478,7 @@ function generateMediaKitContent(
 • पेेंट टर्म्स: 50% एडवांस, 50% डिलीवरी पर
 
 💼 मीडिया किट में शामिल:
-✅ हाई-रेज़ल्यूशन प्रोफाइल फोटोज़
+✅ हाई-रेज़ल्यूशन ��्रोफाइल फोटोज़
 ✅ कंटेंट सैंपल्स और केस स्टडी
 ✅ ऑडियंस डेमोग्राफिक्स रिप��र्ट
 ✅ पफॉर्मेंस मेट्रिक्स और एनालि��िक्स
@@ -681,7 +681,7 @@ Hi [Contact Name],
 
 Considering my engagement rates और audience quality, क्या हम rate को slightly adjust कर सकते हैं? मैं ₹[your counter] suggest क��ूंगा because:
 
-• मेरी audience का [specific demographic] match क��ता है आपके target से
+• मेरी audience क��� [specific demographic] match क��ता है आपके target से
 • मेरे recent collaborations में [specific results] मिले हैं
 • मैं additional value add कर ता हूं like [extra service]
 
@@ -723,7 +723,7 @@ ${userName}
 
 ---
 
-💝 टेम्प्लेट 6: लॉन्ग-टर्म पार्टनरशिप प्रपज़ल
+💝 टेम्���्लेट 6: लॉन्ग-टर्म पार्टनरशिप प्रपज़ल
 विषय: Long-term Partnership Proposal - ${userName} x [Brand]
 
 Dear [Decision Maker],
@@ -965,7 +965,7 @@ Minimum post rate = Followers per 1K × Base rate
 4️⃣ CONTENT TYPE PRICING:
 📸 Static Post: Base rate
 📱 Story (per slide): Base rate × 0.3
-🎥 Reels: Base rate × 1.5
+�� Reels: Base rate × 1.5
 📹 IGTV/Long form: Base rate × 1.8
 🎯 Carousel: Base rate × 1.2
 
@@ -1347,7 +1347,7 @@ Month 3: Monetization Focus
 
 🎯 ${userNiche} Content Plan for ${userPlatform}
 
-📋 MONTH 1: FOUNDATION & GROWTH
+���� MONTH 1: FOUNDATION & GROWTH
 
 WEEK 1 - BRAND INTRODUCTION
 Monday: Personal introduction post
@@ -1600,7 +1600,7 @@ ${userNiche} क्रिएटर्स के लिए विस्तृत 
 ✅ मासिक कंटेंट प्लानिंग
  इंडस्ट्री नेटवर्किंग और कोलैबोरेशन
 ✅ ब्रांड और मार्केि��ग आउटरीच
-✅ कम्युनिटी एगेजमेंट र रेस्पॉन्स
+✅ ��म्युनिटी एगेजमेंट र रेस्पॉन्स
 
 📉 मेट्रिक्स ट्रैकिंग:
 • फॉलोअर ग्रोथ रेट: ____%
@@ -1786,7 +1786,7 @@ ${userNiche} क्रिएटर्स े लि�� ${userPlatform} है
 
 ⚠️ हैशटैग की गलतियां:
 ❌ Shadow banned hashtags use न करें
-❌ हर पोस्ट में वही hashtags use न करें
+❌ हर पोस्�� में वही hashtags use न करें
 ❌ Over-saturation (बहुत ज्यदा competitive hashtags)
 ❌ Irrelevant hashtags का use
 ❌ 30 hashtag limit को exceed न करें
@@ -2026,7 +2026,7 @@ ${userPlatform} | ${userFollowers} Followers
 • विडेो एडिटिंग: +35%
 • ग्राफिक डिजाइन: +25%
 
-📋 टर्म्स और कंडीशन्स:
+📋 ���र्म्स और कंडीशन्स:
 
 💳 पेमेंट र्म्स:
 • 50% एडवांस पेमेंट
@@ -2183,7 +2183,7 @@ function generateViralReelIdeasContent(
   const userPlatform = userData?.primaryPlatform || "Instagram";
 
   if (language === "hindi") {
-    return `🎬 50+ वायरल रील आइडियाज गाइ���
+    return `🎬 50+ वाय���ल रील आइडियाज गाइ���
 
 ${userNiche} ्रिएटर्स के लिए प्रमाणित वायरल कंटेंट फॉर्मू���
 
@@ -2201,7 +2201,7 @@ ${userNiche} ्रिएटर्स के लिए प्रमाणित 
 10. "एक दिन मेरे साथ [निच] क दुनिया में"
 
 📱 HOOK फॉर्मूला (पहले 3 सेकंड):
-✅ "यह वीडियो देखना ज़रूरी है अगर आप..."
+✅ "यह वीडियो देखना ज��रूरी है अगर आप..."
 ✅ "म���ं शर्त लगाता हूं कि आप नहीं जानत��..."
 ✅ "इससे पहले कि मैं [result] पाता, मै..."
 ✅ "अगर मैं आपसे कूं कि..."
@@ -2423,7 +2423,7 @@ ${userNiche} क्रिएटर्स के लिए ायरल डिट
 • हैंड swipe - सीन चंज करें
 • Palm push - नई लोकेशन में
 
-📸 ऑब्जेक्ट ट्रांजिशन:
+📸 ��ब्जेक्ट ट्रांजिशन:
 • Phone cover - नया शॉट reveal
 • Book close/open - टाइम जंप
 • Mirror reflection - angle change
@@ -2515,7 +2515,7 @@ ${userNiche} क्रिएटर्स के लिए ायरल डिट
 [23-28s]: Way 5
 [28-30s]: CTA
 
-🔧 एडवांस्ड ट्रिक्स:
+🔧 ए��वांस्ड ट्रिक्स:
 
 ⏰ टाइमिंग टिप्स:
 • Beat के साथ cuts align करें
@@ -2523,7 +2523,7 @@ ${userNiche} क्रिएटर्स के लिए ायरल डिट
 • Fast cuts for engagement
 • Slow motion for emphasis
 
-🎨 कलर कोर्डिनेशन:
+🎨 कलर को��्डिनेशन:
 • Consistent color palette
 • Contrast for readability
 • Brand colors integration
@@ -2559,7 +2559,7 @@ ${userNiche} क्रिएटर्स के लिए ायरल डिट
 • Consistent branding elements
 • Mobile-first editing approach
 
-📊 परफॉर्मेंस मेट्रिक्स:
+📊 परफॉर्मेंस मेट���रिक्स:
 • Completion rate (aim for 70%+)
 • Engagement rate (3%+)
 • Share rate (1%+)
@@ -2865,7 +2865,7 @@ ${userNiche} क्रिएटर्स के लिए वायरल ऑड
 
 🎨 म्यूजिक सेलेक्शन टिप्स:
 
-⏱️ टाइमिंग मैटर्स:
+⏱️ टाइमिंग म��टर्स:
 • 15-30 सेकंड रील्स के लिए upbeat music
 • 1-3 मिनट videos के लिए varied tempo
 • Background music volume: 20-30%
@@ -3102,7 +3102,7 @@ Viral Audio Strategy for ${userNiche} Creators
 
 ⏱️ Timing Matters:
 • 15-30 second reels need upbeat music
-• 1-3 minute videos need varied tempo
+�� 1-3 minute videos need varied tempo
 • Background music volume: 20-30%
 • Subtle music with voiceover
 
@@ -3241,7 +3241,7 @@ ${userNiche} क्रिएटर्स के लिए एल्गोरि�
 
 🚀 वायरल होने के लिए शीर्ष रणनीतियां:
 
-1️⃣ पहले 3 सेकंड में आकर्षित करें:
+1️⃣ पहले 3 स��कंड में आकर्षित करें:
 • मजूत हुक (hook) का इस्तेमा करें
 • सवाल पू��ें या शॉकिंग statement दें
 • तेज और पैतरे movement/action दिखाएं
@@ -3260,7 +3260,7 @@ ${userNiche} क्रिएटर्स के लिए एल्गोरि�
 • ओरिजिनल sounds बनाएं (वयरल potential ज्यादा)
 
 4️⃣ कैप्श और हैशटैग ऑप्टिमाइजेशन:
-• पहली लान में hook रखें
+• पहली लान मे�� hook रखें
 • ऐक्शन वरड्स का उपयोग करें
  इमोजी और सम्बोल्स strategically use ��रें
 • Call-to-action शामिल करें
@@ -3283,7 +3283,7 @@ ${userNiche} क्रिएटर्स के लिए एल्गोरि�
 💡 प्रो टि्स और तकनीकें:
 
 1. लूप वीडिो और pattern interrupts
-2. मल्टि-लेयर्ड storytelling
+2. मल्टि-ल���यर्ड storytelling
 3. विजुअल ऑप्टिक illusions
 4. फेस focus औ��� eye contact
 5. कॉन्ट्रास्टिंग विजुअल elements
@@ -3306,7 +3306,7 @@ ${userNiche} क्रिएटर्स के लिए एल्गोरि�
 • टिकट��क viral content को adapt करें
 • YouTube Shorts trends को follow करें
 • इंटर्नेशनल trends को Indian context में adapt करें
-• पुराने viral content को नए twist के साथ recreate करें
+• पुराने viral content को नए twist के साथ recreate क���ें
 
 ⚠️ आम लतियां जिनसे बचें:
 ❌ लॉन्ग और बोरिंग intros
@@ -3459,7 +3459,7 @@ ${userNiche} क्रिएटर्स के लिए 10+ कामयाब
 
 📈 सफलता के आंकडे:
 • 6.8M+ यूट्यूब सब्सक्राइबर्स
-• 6.5M+ इंस्टाग्राम फॉलोअर्स
+• 6.5M+ इंस्टाग्��ाम फॉलोअर्स
 • Netflix series lead role
 • Multiple brand endorsements (₹1-2 करोड+ सालना)
 
@@ -3491,7 +3491,7 @@ ${userNiche} क्रिएटर्स के लिए 10+ कामयाब
 • High energy और aggressive presentation style
 • Trending topics पर quick response
 
-⚡ रीप्लिकेट करने योगय तकनीकें:
+⚡ रीप्लि���ेट करने योगय तकनीकें:
 • High energy presentation
 • Trend-jacking quickly
 • Unique commentary style
@@ -3529,7 +3529,7 @@ ${userNiche} क्रिएटर्स के लिए 10+ कामयाब
 • Multiple fitness businesses
 • अनुमानित आय: ₹3-5 करोड+ सालाना
 
-🎆 क्या किया ठीक:
+🎆 क्य��� किया ठीक:
 • Personal life और family vlogs
 • Fitness expertise के साथ entertainment
 • Honest product reviews और myth-busting
@@ -3699,7 +3699,7 @@ ${userNiche} क्रिएटर्स के लिए 10+ कामयाब
 
 ---
 
-🔥 CASE STUDY #6: @thefoodie___ (Nikunj Lotia)
+��� CASE STUDY #6: @thefoodie___ (Nikunj Lotia)
 
 📈 SUCCESS METRICS:
 • 2.1M+ Instagram followers
@@ -3852,7 +3852,7 @@ ${userNiche} क्रिएटर्स के लिए 10+ कामयाब
 
 4️⃣ VALUE CREATION:
 • Entertainment + education mix
-• Actionable tips and advice
+��� Actionable tips and advice
 • Problem-solving content
 
 5️⃣ COMMUNITY ENGAGEMENT:
@@ -3887,7 +3887,7 @@ function generateBrandOutreachScriptsContent(
 
 ${userName} - ${userNiche} के लिए 25+ प्रोवन ईमेल टेम्प्लेट्स
 
-🎯 स्क्रि्ट #1: र्स्ट कॉन्टैक्ट (कोल्ड आउटरीच)
+🎯 स्क्रि्ट #1: र्स्ट क��न्टैक्ट (कोल्ड आउटरीच)
 विषय: ${userNiche} Creator ${userName} - Collaboration Opportunity
 
 प्रिय [Brand Name] Team,
@@ -4014,7 +4014,7 @@ Hi [Contact Name],
 • Cross-platform promotion at no extra cost
 • Post-campaign performance analysis
 
-मुझे एक mutually beneficial partnership नाने में believe है। आपके thoughts?
+मुझे एक mutually beneficial partnership नाने में believe ���ै। आपके thoughts?
 
 Best regards,
 ${userName}
@@ -4908,7 +4908,7 @@ ${userNiche} क्रिएटर्स के लिए 50+ प्रोवन
 🧠 THUMBNAIL PSYCHOLOGY:
 
 👁️ VISUAL ATTENTION हैक्स:
-• हाई कन्ट्रास्ट कलर्स (Red vs White, Blue vs Orange)
+• हाई कन्���्रास्ट कलर्स (Red vs White, Blue vs Orange)
 • Face expressions जो emotions convey करें
 • Arrow या pointing elements
 • Bright backgrounds (नॉन-cluttered)
@@ -5052,7 +5052,7 @@ Best for: Premium content, mysterious topics, creative arts
  ALL CAPS for important words
 • Numbers को बड़ा और prominent करें
 
-❌ TEXT MISTAKES से बचें:
+❌ TEXT MISTAKES से बच���ं:
 • छोटी fonts जो mobile पर readable नहीं
 • Background के सथ blend होने वाला text
 • बहुत ज्य��दा text (information overload)
@@ -5352,7 +5352,7 @@ Best for: Premium content, mysterious topics, creative arts
 
 👗 FASHION/LIFESTYLE:
 • Bright, vibrant colors
-• High-quality photography
+�� High-quality photography
 • Trendy typography
 • Lifestyle imagery
 • Before/after comparisons
@@ -5862,7 +5862,7 @@ ${userNiche} क्िएटर्स के लिए ऑर्गेनिक 
 
 💬 MEANINGFUL CONVERSATIONS:
 • Questions पूछें जो detailed answers encourage करें
-• Controversial (लकिन respectful) topics raise करें
+�� Controversial (लकिन respectful) topics raise करें
 • Personal stories share करें
 • Community के saath relate करने वाले posts
 • "Tag someone who..." type posts create करें
@@ -6385,7 +6385,7 @@ Solution: अपना solution provide करें
 🔥 HOOK FORMULAS:
 
 ❓ Question Hooks:
-• "आपको पता है [surprising fact]?"
+• "आपको प��ा है [surprising fact]?"
 • "कभी सोचा ै कि [common situation] क्यों होत है?"
 • "क्या होगा अगर मैं कहूं [controversial statement]?"
 
@@ -6999,7 +6999,7 @@ Pricing Strategy:
 🔧 SCALING STRATEGIES:
 
 📈 GROWTH HACKS:
-• Current members को invite करने के लिए encourage ��रं
+• Current members को invite करने के लिए encourage ��र���
 • Cross-promotion with related groups
 • Content repurposing from other platforms
 • SEO-optimized group description
@@ -7046,7 +7046,7 @@ Pricing Strategy:
 
 🎓 MASTERMIND GROUPS:
 • Small, exclusive groups (10-20 members)
-• Higher price point (₹5,000-25,000/month)
+• Higher price point (���5,000-25,000/month)
 • Intensive coaching और support
 • Peer accountability
 • Result-oriented approach
@@ -7098,7 +7098,7 @@ Examples:
 • Featured posts section setup
 • Admin introduction post
 
-📜 GROUP RULES TEMPLATE:
+�� GROUP RULES TEMPLATE:
 "Welcome to [Group Name]! Here are our community guidelines:
 
 1️⃣ Respectful communication only
@@ -7149,7 +7149,7 @@ Violation leads to warning → removal"
 
 Pricing Strategy:
 • Group members: 20-30% discount
-• Early bird offers
+��� Early bird offers
 • Payment plans
 • Bundle deals
 • Referral rewards
@@ -7204,7 +7204,7 @@ Pricing Strategy:
 ⚡ ENGAGEMENT TACTICS:
 
 🔥 DAILY ENGAGEMENT:
-• Morning motivation posts
+�� Morning motivation posts
 • Question of the day
 • Tip sharing
 • Resource recommendations
@@ -7961,7 +7961,7 @@ function generateMediaKitDesignsContent(
   const userFollowers = userData?.followerCount || "10K+";
 
   if (language === "hindi") {
-    return `📱 10 प्रोफेशनल मीडिया किट डिजाइन टेम्प्लेट्स
+    return `📱 10 प्रोफेशनल मीडिया किट डिजाइन टेम्प्ल���ट्स
 
 ${userName} - ${userNiche} के लिए स्टाइलिश मीडया किट कलेक्शन
 
@@ -8054,7 +8054,7 @@ Manager: [if applicable]
 
 ══════════════════════════════════════
 
-🎨 DESIGN TEMPLATE #4: CREATIVE ARTISTIC
+���� DESIGN TEMPLATE #4: CREATIVE ARTISTIC
 ═════════════════════════════════���═════
 
 ✨ ${userName} ✨
@@ -8333,7 +8333,7 @@ Content Grade: Premium Quality
 • Luxury lifestyle authority
 • Exclusive event access
 
-💰 PREMIUM AUDIENCE METRICS:
+�� PREMIUM AUDIENCE METRICS:
 • Average Income: [income bracket]
 • Luxury Purchase Intent: [%]
 • Brand Loyalty: [%]
@@ -8417,7 +8417,7 @@ ${userNiche} Creator | ${userPlatform} | ${userFollowers} Followers
 📧 Contact: ${userName.toLowerCase().replace(" ", ".")}@gmail.com
 🌐 Website: [Your website]
 
-══════════════════════════════════════
+═════════════════════════���════════════
 
 🎨 DESIGN TEMPLATE #2: BOLD & COLORFUL
 ═════════════════════════════════════
@@ -8597,12 +8597,12 @@ I work with brands that align with my values and genuinely benefit my audience. 
 🌟 Story Takeover Package
 🌟 Long-term Ambassador Program
 
-📞 Let's Connect:
+��� Let's Connect:
 Email: [Email]
 Instagram: @${userName.toLowerCase()}
 Website: [Website]
 
-══════════════════════════════════════
+═════════════════════════════════════��
 
 [Continue with Templates 7-10...]
 
@@ -8675,7 +8675,7 @@ ${userNiche} क्रिएटर्स के लिए ब्रांड न
 
 2⃣ VALUE STACKING:
 • Rate के साथ-साथ additional value highlight करें
-• "₹10K में आपको मिलेगा: post + 3 stories + reel + analytics report"
+• "₹10K में आपको मिल��गा: post + 3 stories + reel + analytics report"
 • Free extras की value calculate करके दिखाएं
 
 3️⃣ SCARCITY PRINCIPLE:
@@ -8696,7 +8696,7 @@ You: "मेरे rates depend करते हैं collaboration के scop
 
 💬 SCRIPT 2: WHEN BUDGET IS TOO LOW
 Brand: "Our budget is ₹5K"
-You: "मैं appreciate करता हू आपक transparency। ₹5K में हम एक story series create कर सकते हैं, लेकिन complete post integration के लिए मेरा standard rate ₹10K है क्योंकि इसमें professional photography, content creation, और guaranteed engagement included है। क्या हम middle ground find कर सकते हैं?"
+You: "मैं appreciate करता हू आपक transparency। ₹5K में हम एक story series create कर सकते हैं, लेकिन complete post integration ���े लिए मेरा standard rate ₹10K है क्योंकि इसमें professional photography, content creation, और guaranteed engagement included है। क्या हम middle ground find कर सकते हैं?"
 
 💬 SCRIPT 3: ADDING VALUE TO JUSTIFY RATE
 Brand: "This rate seems high"
@@ -8744,7 +8744,7 @@ Premium Package (₹12K):
 ✅ Response: "मैं समझता हूं। क्या हम phased approach कर सकते हैं? पहले smaller collaboration से start करते हैं, और अगर results अच्छे आएं तो next quarter bigger campaign plan करते हैं।"
 
 ❌ "Other influencers cheaper rates देते हैं"
-✅ Response: "Absolutely! Market में different price points होते हैं। मेरी rates मेरी [specific strengths] को reflect करती हैं। आइए results के basis पर compare करते हैं - ROI, engagement quality, और brand alignment।"
+✅ Response: "Absolutely! Market में different price points होते हैं। मेरी rates म���री [specific strengths] को reflect करती हैं। आइए results के basis पर compare करते हैं - ROI, engagement quality, और brand alignment।"
 
 ❌ "Free product के बदले में post कर दो"
 ✅ Response: "Product collaboration मैं definitely consider करता हूं, लेकिन product value के अनुपात ��ें। ₹[product value] के product के लिए story mention appropriate होगा। Full post के िए हमें monetary compensation भी चाहिए।"
@@ -8806,7 +8806,7 @@ YouTube Integration: [Base Rate × 2.5]
 📦 CAMPAIGN PACKAGES:
 
 Starter Campaign: ₹[Base Rate × 1.5]
-• 1 Feed post + 3 Stories
+�� 1 Feed post + 3 Stories
 • Basic analytics report
 
 Growth Campaign: ₹[Base Rate × 2.5]
@@ -9098,7 +9098,7 @@ ${userNiche} क्रिएटर्स के लिए आवश्यक फ
 • Adobe Creative Suite ($20.99/month) - प्रोफेशनल एडिटिंग
 • CapCut (FREE) - मोबाइल वीडियो एिटिंग
 • Figma (FREE/Pro $12/month) - UI/UX डिजाइन
-• Unsplash (FREE) - हाई-क्वालिटी स्टॉक फोटोस
+• Unsplash (FREE) - हाई-क्वालिटी स्टॉक फो���ोस
 
 🗺️ कंटेंट प्लानिंग टूल्स:
 • Notion (FREE/Pro $8/month) - कंटेंट प्लानिंग
@@ -9272,6 +9272,91 @@ export function toggleProductAvailability(
   }
 }
 
+function hasDownloadContent(
+  product: ProductConfig,
+  download: ProductDownload,
+): boolean {
+  const languagesToCheck: Array<"english" | "hindi"> =
+    download.language === "both"
+      ? ["english", "hindi"]
+      : [download.language];
+
+  return languagesToCheck.every((lang) => {
+    try {
+      const value =
+        typeof download.content === "function"
+          ? download.content(lang, undefined)
+          : download.content;
+      return Boolean(value && value.toString().trim());
+    } catch (error) {
+      console.warn(
+        `Removing download for ${product.id}/${download.id} due to content generation failure`,
+        error,
+      );
+      return false;
+    }
+  });
+}
+
+function sanitizeProductDownloads(): void {
+  productConfigs.forEach((product) => {
+    product.downloads = product.downloads.filter((download) => {
+      const valid = hasDownloadContent(product, download);
+      if (!valid) {
+        console.warn(
+          `Omitting empty download from product ${product.id}: ${download.id}`,
+        );
+      }
+      return valid;
+    });
+  });
+}
+
+sanitizeProductDownloads();
+
+function buildFallbackDownloadContent(
+  product: ProductConfig,
+  download: ProductDownload,
+  language: "english" | "hindi",
+): string {
+  const copy =
+    language === "hindi"
+      ? {
+          heading: "📘 तैयार डाउनलोड सारांश",
+          productLabel: "प्रोडक्ट",
+          downloadLabel: "डाउनलोड",
+          descriptionIntro:
+            "मूल सामग्री उपलब्ध नहीं थी, इसलिए यह सारांश तैयार किया गया है। इसमें उत्पाद का संक्षिप्त विवरण शामिल है।",
+          featuresHeading: "✨ मुख्य विशेषताएँ",
+          instructions:
+            "आपको विस्तृत और व्यक्तिगत सामग्री जल्द ही प्रदान की जाएगी। फिलहाल इस मार्गदर्शिका का उपयोग करके शुरुआत करें।",
+          noFeatures:
+            "यह उत्पाद किसी अतिरिक्त विशेषता सूची के बिना आता है, फिर भी यह आपकी क्रिएटर यात्रा में मदद करेगा।",
+        }
+      : {
+          heading: "📘 Prepared Download Summary",
+          productLabel: "Product",
+          downloadLabel: "Download",
+          descriptionIntro:
+            "The original detailed content was unavailable. This summary has been generated to keep the download useful, highlighting the product promise.",
+          featuresHeading: "✨ Key Highlights",
+          instructions:
+            "A richer, more tailored file will be added soon. Use this overview to start implementing the product insights today.",
+          noFeatures:
+            "This product does not include an additional feature list yet, but it still delivers high-impact guidance for your creator journey.",
+        };
+
+  const featuresList = product.features
+    .map((feature, index) => `${index + 1}. ${feature}`)
+    .join("\n");
+
+  const featuresSection = featuresList
+    ? `${copy.featuresHeading}\n${featuresList}`
+    : copy.noFeatures;
+
+  return `${copy.heading}\n\n${copy.productLabel}: ${product.name}\n${copy.downloadLabel}: ${download.name}\n\n${copy.descriptionIntro}\n${product.description}\n\n${featuresSection}\n\n${copy.instructions}`.trim();
+}
+
 export function generateProductDownload(
   productId: string,
   downloadId: string,
@@ -9279,16 +9364,35 @@ export function generateProductDownload(
   userData?: any,
 ): string {
   const product = getProductConfig(productId);
-  if (!product) return "";
-
-  const download = product.downloads.find((d) => d.id === downloadId);
-  if (!download) return "";
-
-  if (typeof download.content === "function") {
-    return download.content(language, userData);
+  if (!product) {
+    return "";
   }
 
-  return download.content;
+  const download = product.downloads.find((entry) => entry.id === downloadId);
+  if (!download) {
+    return "";
+  }
+
+  const fallback = () => buildFallbackDownloadContent(product, download, language);
+
+  try {
+    const result =
+      typeof download.content === "function"
+        ? download.content(language, userData)
+        : download.content;
+
+    if (!result || !result.toString().trim()) {
+      return fallback();
+    }
+
+    return result;
+  } catch (error) {
+    console.warn(
+      `Falling back to generated summary for ${productId}/${downloadId}`,
+      error,
+    );
+    return fallback();
+  }
 }
 
 export async function downloadFile(
