@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Lock, Eye, EyeOff } from 'lucide-react';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 
 export default function AdminLogin() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
@@ -15,15 +16,42 @@ export default function AdminLogin() {
     setIsLoading(true);
     setError('');
 
-    // Simple admin credentials (in production, use proper authentication)
-    if (username === 'admin' && password === 'famechase2025') {
-      localStorage.setItem('famechase_admin_logged_in', 'true');
-      localStorage.setItem('famechase_admin_login_time', Date.now().toString());
-      navigate('/admin');
-    } else {
-      setError('Invalid credentials. Please try again.');
+    try {
+      if (isSupabaseConfigured() && supabase) {
+        const { data, error: queryError } = await supabase
+          .rpc('verify_admin_login', {
+            user_email: email,
+            user_password: password
+          });
+
+        if (queryError) {
+          setError('Database error. Please check your Supabase configuration.');
+          setIsLoading(false);
+          return;
+        }
+
+        if (data && data.length > 0 && data[0].is_valid) {
+          localStorage.setItem('famechase_admin_logged_in', 'true');
+          localStorage.setItem('famechase_admin_email', email);
+          localStorage.setItem('famechase_admin_login_time', Date.now().toString());
+          navigate('/admin');
+        } else {
+          setError('Invalid email or password. Please try again.');
+        }
+      } else {
+        if (email === 'admin@famechase.com' && password === 'Admin@123') {
+          localStorage.setItem('famechase_admin_logged_in', 'true');
+          localStorage.setItem('famechase_admin_email', email);
+          localStorage.setItem('famechase_admin_login_time', Date.now().toString());
+          navigate('/admin');
+        } else {
+          setError('Invalid credentials. Please try again.');
+        }
+      }
+    } catch (err) {
+      setError('An error occurred. Please try again.');
     }
-    
+
     setIsLoading(false);
   };
 
@@ -44,14 +72,14 @@ export default function AdminLogin() {
           <form onSubmit={handleLogin} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Username
+                Email
               </label>
               <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
-                placeholder="Enter admin username"
+                placeholder="admin@famechase.com"
                 required
               />
             </div>
@@ -101,11 +129,11 @@ export default function AdminLogin() {
             </button>
           </form>
 
-          {/* Demo Credentials */}
+          {/* Admin Credentials */}
           <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-            <h3 className="text-sm font-semibold text-gray-700 mb-2">Demo Credentials:</h3>
-            <p className="text-sm text-gray-600">Username: <code className="bg-gray-200 px-1 rounded">admin</code></p>
-            <p className="text-sm text-gray-600">Password: <code className="bg-gray-200 px-1 rounded">famechase2025</code></p>
+            <h3 className="text-sm font-semibold text-gray-700 mb-2">Admin Credentials:</h3>
+            <p className="text-sm text-gray-600">Email: <code className="bg-gray-200 px-1 rounded">admin@famechase.com</code></p>
+            <p className="text-sm text-gray-600">Password: <code className="bg-gray-200 px-1 rounded">Admin@123</code></p>
           </div>
         </div>
 
