@@ -44,7 +44,7 @@ export async function generatePersonalizedPDF(
   page = pdfDoc.addPage([width, height]);
   drawMediaKitPreview(page, analysis);
 
-  return await pdfDoc.save();
+  return Buffer.from(await pdfDoc.save());
 }
 
 function drawCoverPage(page: PDFPage, analysis: AIAgentAnalysisResponse) {

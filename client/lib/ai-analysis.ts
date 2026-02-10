@@ -2590,7 +2590,7 @@ export const analyzeQuizData = (data: QuizData): FameScoreAnalysis => {
     confidenceScore,
     confidenceExplanation,
     // Proprietary FameChase Metrics - Competitive Advantage
-    famePotentialIndex: Math.round(famePotentialIndex),
+    famePotentialIndex: Math.round(famePotentialIndex || 0),
     monetizationReadinessIndex: Math.round(monetizationReadinessIndex),
     experienceLevel: getExperienceLevelDescription(
       data.experience,

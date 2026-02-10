@@ -9442,7 +9442,7 @@ export async function downloadFile(
       return { success: false, error: "Failed to generate PDF content" };
     }
 
-    const blob = new Blob([pdfBytes], { type: "application/pdf" });
+    const blob = new Blob([pdfBytes as any], { type: "application/pdf" });
 
     // Verify blob was created
     if (!blob || blob.size === 0) {
