@@ -628,49 +628,34 @@ export default function Quiz() {
       const finalQuizData = { ...quizData, language };
       localStorage.setItem("fameChaseQuizData", JSON.stringify(finalQuizData));
 
+      try {
+        await fetch("/api/user-analytics/quiz", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ quizData: finalQuizData }),
+        });
+      } catch (apiErr) {
+        console.warn("Quiz data API save failed (non-blocking):", apiErr);
+      }
+
       if (isSupabaseConfigured() && supabase) {
-        const userData = {
-          name: quizData.name,
-          email: quizData.email,
-          phone: quizData.phone || null,
-          city: quizData.city,
-          niche: quizData.niche,
-          primary_platform: quizData.primaryPlatform,
-          follower_count: quizData.followerCount,
-          goals: quizData.goals,
-          quiz_data: finalQuizData,
-        };
-
-        const logError = (label: string, err: any) => {
-          const detailed = JSON.stringify(err, Object.getOwnPropertyNames(err));
-          console.error(label, detailed);
-        };
-
         try {
-          const { error: upsertError } = await supabase
+          await supabase
             .from("users")
-            .upsert([userData], { onConflict: "email" })
+            .upsert([{
+              name: quizData.name,
+              email: quizData.email,
+              phone: quizData.phone || null,
+              city: quizData.city,
+              niche: quizData.niche,
+              primary_platform: quizData.primaryPlatform,
+              follower_count: quizData.followerCount,
+              goals: quizData.goals,
+              quiz_data: finalQuizData,
+            }], { onConflict: "email" })
             .select();
-
-          if (upsertError) {
-            logError("Supabase upsert error", upsertError);
-            const { error: updateError } = await supabase
-              .from("users")
-              .update(userData)
-              .eq("email", userData.email)
-              .select();
-            if (updateError) {
-              logError("Supabase update fallback error", updateError);
-              const { error: insertError } = await supabase
-                .from("users")
-                .insert([userData])
-                .select();
-              if (insertError)
-                logError("Supabase insert fallback error", insertError);
-            }
-          }
         } catch (e) {
-          logError("Unexpected Supabase error", e);
+          console.warn("Supabase save failed (non-blocking):", e);
         }
       }
 

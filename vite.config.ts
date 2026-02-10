@@ -2,17 +2,18 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 
-// Note: do NOT import server at top-level. Dynamically import createServer only when
-// running the dev server (apply: 'serve') so bundlers (esbuild) won't try to parse
-// server/package.json during production builds.
-
-// https://vitejs.dev/config/
 export default defineConfig({
   server: {
     host: "0.0.0.0",
     port: 5000,
     strictPort: true,
     allowedHosts: true,
+    proxy: {
+      "/api": {
+        target: "http://localhost:3001",
+        changeOrigin: true,
+      },
+    },
   },
   build: {
     outDir: "dist/spa",

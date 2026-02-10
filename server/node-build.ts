@@ -10,7 +10,7 @@ const indexModule = require("./index");
 const createServer = (indexModule && (indexModule.createServer || indexModule.default || indexModule)) as any;
 
 const app = createServer();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 // In production, serve the built SPA files
 const __dirname = import.meta.dirname;

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Lock, Eye, EyeOff } from 'lucide-react';
 
 export default function AdminLogin() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
@@ -15,22 +15,34 @@ export default function AdminLogin() {
     setIsLoading(true);
     setError('');
 
-    // Simple admin credentials (in production, use proper authentication)
-    if (username === 'admin' && password === 'famechase2025') {
-      localStorage.setItem('famechase_admin_logged_in', 'true');
-      localStorage.setItem('famechase_admin_login_time', Date.now().toString());
-      navigate('/admin');
-    } else {
-      setError('Invalid credentials. Please try again.');
+    try {
+      const response = await fetch('/api/auth/admin-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (data.success && data.token) {
+        localStorage.setItem('famechase_admin_token', data.token);
+        localStorage.setItem('famechase_admin_logged_in', 'true');
+        localStorage.setItem('famechase_admin_login_time', Date.now().toString());
+        localStorage.setItem('famechase_admin_user', JSON.stringify(data.user));
+        navigate('/admin');
+      } else {
+        setError(data.message || 'Invalid credentials. Please try again.');
+      }
+    } catch (err) {
+      setError('Unable to connect to server. Please try again.');
     }
-    
+
     setIsLoading(false);
   };
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center">
       <div className="max-w-md w-full mx-4">
-        {/* Header */}
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
             <Lock className="w-8 h-8 text-white" />
@@ -39,19 +51,18 @@ export default function AdminLogin() {
           <p className="text-gray-600 mt-2">Access FameChase Admin Dashboard</p>
         </div>
 
-        {/* Login Form */}
         <div className="bg-white rounded-2xl shadow-lg p-8">
           <form onSubmit={handleLogin} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Username
+                Email
               </label>
               <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
-                placeholder="Enter admin username"
+                placeholder="Enter admin email"
                 required
               />
             </div>
@@ -100,22 +111,11 @@ export default function AdminLogin() {
               )}
             </button>
           </form>
-
-          {/* Demo Credentials */}
-          <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-            <h3 className="text-sm font-semibold text-gray-700 mb-2">Demo Credentials:</h3>
-            <p className="text-sm text-gray-600">Username: <code className="bg-gray-200 px-1 rounded">admin</code></p>
-            <p className="text-sm text-gray-600">Password: <code className="bg-gray-200 px-1 rounded">famechase2025</code></p>
-          </div>
         </div>
 
-        {/* Back to Site */}
         <div className="text-center mt-6">
-          <a
-            href="/"
-            className="text-blue-600 hover:text-blue-700 font-medium"
-          >
-            ← Back to FameChase.com
+          <a href="/" className="text-blue-600 hover:text-blue-700 font-medium">
+            &larr; Back to FameChase.com
           </a>
         </div>
       </div>

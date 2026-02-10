@@ -1,66 +1,71 @@
 import { RequestHandler } from "express";
-import {
-  CaptureQuizDataRequest,
-  CaptureQuizDataResponse,
-  CaptureDownloadRequest,
-  CaptureDownloadResponse,
-  GetUserAnalyticsRequest,
-  GetUserAnalyticsResponse,
-  UserQuizData,
-  UserDownloadRecord,
-  UserAnalyticsSummary,
-} from "@shared/api";
+import { query } from "../db.js";
 
-/**
- * In-memory storage for user data (replace with database like Supabase)
- * This is a simple implementation - in production, connect to Supabase or any DB
- */
-const userDatabase = new Map<string, UserQuizData>();
-const downloadDatabase = new Map<string, UserDownloadRecord[]>();
-
-/**
- * POST /api/user-analytics/quiz
- * Capture user quiz data and personal information
- */
 export const handleCaptureQuizData: RequestHandler = async (req, res) => {
   try {
-    const { quizData } = req.body as CaptureQuizDataRequest;
+    const { quizData } = req.body;
 
-    // Validate required fields
-    if (!quizData || !quizData.userId || !quizData.email || !quizData.name) {
+    if (!quizData || !quizData.email || !quizData.name) {
       return res.status(400).json({
         success: false,
-        userId: quizData?.userId || "unknown",
-        message: "Missing required fields: userId, email, name",
+        userId: "unknown",
+        message: "Missing required fields: email, name",
       });
     }
 
-    // Add timestamps
-    const dataToStore: UserQuizData = {
-      ...quizData,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
+    const result = await query(
+      `INSERT INTO quiz_data (
+        guest_email, name, email, phone, age, city,
+        primary_platform, secondary_platforms, follower_count,
+        engagement_rate, niche, content_type, posting_frequency,
+        experience, monthly_income, biggest_challenge, goals,
+        social_links, bio, language, analysis_data
+      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21)
+      RETURNING id`,
+      [
+        quizData.email,
+        quizData.name,
+        quizData.email,
+        quizData.phone || null,
+        quizData.age || null,
+        quizData.city || null,
+        quizData.primaryPlatform || null,
+        quizData.secondaryPlatforms || [],
+        String(quizData.followerCount || ""),
+        String(quizData.engagementRate || ""),
+        quizData.niche || null,
+        quizData.contentType || null,
+        quizData.postingFrequency || null,
+        quizData.experience || [],
+        quizData.monthlyIncome || null,
+        quizData.biggestChallenge || [],
+        quizData.goals || [],
+        JSON.stringify(quizData.socialLinks || {}),
+        quizData.bio || null,
+        quizData.language || "english",
+        quizData.analysisData ? JSON.stringify(quizData.analysisData) : null,
+      ]
+    );
 
-    // Store in memory (TODO: Replace with Supabase or your database)
-    userDatabase.set(quizData.userId, dataToStore);
+    await query(
+      `INSERT INTO submissions (guest_email, form_type, form_data, ip_address, user_agent)
+       VALUES ($1, $2, $3, $4, $5)`,
+      [
+        quizData.email,
+        "quiz",
+        JSON.stringify(quizData),
+        req.ip || req.socket.remoteAddress,
+        req.get("user-agent") || null,
+      ]
+    );
 
-    // TODO: Connect to Supabase
-    // const { data, error } = await supabase
-    //   .from('user_quiz_data')
-    //   .upsert([dataToStore])
-    //   .select()
-    //   .single();
+    console.log(`Quiz data saved to DB for: ${quizData.email}`);
 
-    console.log(`✅ Quiz data captured for user: ${quizData.userId}`);
-
-    const response: CaptureQuizDataResponse = {
+    return res.json({
       success: true,
-      userId: quizData.userId,
+      userId: `quiz_${result.rows[0].id}`,
       message: "Quiz data captured successfully",
-    };
-
-    return res.json(response);
+    });
   } catch (error) {
     console.error("Error capturing quiz data:", error);
     return res.status(500).json({
@@ -71,59 +76,38 @@ export const handleCaptureQuizData: RequestHandler = async (req, res) => {
   }
 };
 
-/**
- * POST /api/user-analytics/download
- * Track when a user downloads a file
- */
 export const handleCaptureDownload: RequestHandler = async (req, res) => {
   try {
-    const { userId, downloadType, fileName, productId } =
-      req.body as CaptureDownloadRequest;
+    const { userId, downloadType, fileName, productId } = req.body;
 
-    // Validate required fields
-    if (!userId || !downloadType || !fileName) {
+    if (!downloadType || !fileName) {
       return res.status(400).json({
         success: false,
         downloadId: "unknown",
-        message: "Missing required fields: userId, downloadType, fileName",
+        message: "Missing required fields: downloadType, fileName",
       });
     }
 
-    const downloadRecord: UserDownloadRecord = {
-      id: `download_${userId}_${Date.now()}`,
-      userId,
-      downloadType,
-      fileName,
-      downloadedAt: new Date().toISOString(),
-      productId,
-      metadata: {
-        downloadedAt: new Date().toISOString(),
-        userAgent: req.get("user-agent"),
-      },
-    };
+    const result = await query(
+      `INSERT INTO downloads (guest_email, download_type, file_name, product_id, metadata)
+       VALUES ($1, $2, $3, $4, $5)
+       RETURNING id`,
+      [
+        userId || null,
+        downloadType,
+        fileName,
+        productId || null,
+        JSON.stringify({ userAgent: req.get("user-agent"), downloadedAt: new Date().toISOString() }),
+      ]
+    );
 
-    // Store in memory (TODO: Replace with Supabase or your database)
-    if (!downloadDatabase.has(userId)) {
-      downloadDatabase.set(userId, []);
-    }
-    downloadDatabase.get(userId)!.push(downloadRecord);
+    console.log(`Download tracked: ${fileName}`);
 
-    // TODO: Connect to Supabase
-    // const { data, error } = await supabase
-    //   .from('user_downloads')
-    //   .insert([downloadRecord])
-    //   .select()
-    //   .single();
-
-    console.log(`✅ Download tracked for user: ${userId}, file: ${fileName}`);
-
-    const response: CaptureDownloadResponse = {
+    return res.json({
       success: true,
-      downloadId: downloadRecord.id,
+      downloadId: `dl_${result.rows[0].id}`,
       message: "Download tracked successfully",
-    };
-
-    return res.json(response);
+    });
   } catch (error) {
     console.error("Error tracking download:", error);
     return res.status(500).json({
@@ -134,183 +118,223 @@ export const handleCaptureDownload: RequestHandler = async (req, res) => {
   }
 };
 
-/**
- * GET /api/user-analytics/:userId
- * Retrieve comprehensive user analytics and data
- */
 export const handleGetUserAnalytics: RequestHandler = async (req, res) => {
   try {
     const { userId } = req.params;
 
     if (!userId) {
-      return res.status(400).json({
-        success: false,
-        message: "userId is required",
-      });
+      return res.status(400).json({ success: false, message: "userId is required" });
     }
 
-    // Retrieve from memory (TODO: Replace with Supabase or your database)
-    const quizData = userDatabase.get(userId);
-    const downloads = downloadDatabase.get(userId) || [];
-
-    if (!quizData) {
-      return res.status(404).json({
-        success: false,
-        message: `No data found for user: ${userId}`,
-      });
-    }
-
-    // Calculate analytics
-    const totalDownloadSize = downloads.reduce(
-      (sum, d) => sum + (d.fileSize || 0),
-      0,
+    const quizResult = await query(
+      "SELECT * FROM quiz_data WHERE email = $1 OR guest_email = $1 ORDER BY created_at DESC LIMIT 5",
+      [userId]
     );
-    const engagementScore = calculateEngagementScore(quizData);
 
-    const analytics: UserAnalyticsSummary = {
-      userId,
-      totalQuizzes: 1, // Could track multiple quizzes
-      totalDownloads: downloads.length,
-      totalDownloadSize,
-      lastActivityAt: new Date().toISOString(),
-      quizHistory: [quizData],
-      downloadHistory: downloads,
-      engagementScore,
-      platformDistribution: calculatePlatformDistribution(quizData),
-    };
+    const downloadResult = await query(
+      "SELECT * FROM downloads WHERE guest_email = $1 ORDER BY created_at DESC LIMIT 20",
+      [userId]
+    );
 
-    // TODO: Connect to Supabase for retrieval
-    // const { data, error } = await supabase
-    //   .from('user_quiz_data')
-    //   .select('*')
-    //   .eq('user_id', userId)
-    //   .single();
-
-    console.log(`✅ Analytics retrieved for user: ${userId}`);
-
-    const response: GetUserAnalyticsResponse = {
-      success: true,
-      analytics,
-      message: "User analytics retrieved successfully",
-    };
-
-    return res.json(response);
-  } catch (error) {
-    console.error("Error retrieving user analytics:", error);
-    return res.status(500).json({
-      success: false,
-      message: "Failed to retrieve user analytics",
-    });
-  }
-};
-
-/**
- * Helper Functions
- */
-
-function calculateEngagementScore(quizData: UserQuizData): number {
-  /**
-   * Calculate engagement score based on:
-   * - Follower count (0-30 pts)
-   * - Engagement rate (0-35 pts)
-   * - Posting frequency (0-20 pts)
-   * - Experience level (0-15 pts)
-   */
-
-  let score = 0;
-
-  // Follower score (max 30)
-  const followers = quizData.followerCount || 0;
-  const followerScore = Math.min(30, (followers / 100000) * 30);
-  score += followerScore;
-
-  // Engagement rate (max 35)
-  const engagementScore = Math.min(
-    35,
-    (quizData.engagementRate || 0) * 100 * 3.5,
-  );
-  score += engagementScore;
-
-  // Posting frequency (max 20)
-  const frequencyMap: Record<string, number> = {
-    daily: 20,
-    multiple_times: 18,
-    once: 15,
-    few_times: 12,
-    rarely: 5,
-  };
-  score += frequencyMap[quizData.postingFrequency] || 10;
-
-  // Experience level (max 15)
-  const experienceScore = quizData.experience
-    ? quizData.experience.length * 3
-    : 5;
-  score += Math.min(15, experienceScore);
-
-  return Math.min(100, Math.round(score));
-}
-
-function calculatePlatformDistribution(
-  quizData: UserQuizData,
-): Record<string, number> {
-  const distribution: Record<string, number> = {};
-
-  distribution[quizData.primaryPlatform] = 1;
-
-  quizData.secondaryPlatforms?.forEach((platform) => {
-    distribution[platform] = (distribution[platform] || 0) + 1;
-  });
-
-  return distribution;
-}
-
-/**
- * Helper function to get all users (for admin dashboard)
- * GET /api/user-analytics/admin/all
- */
-export const handleGetAllUsersAnalytics: RequestHandler = async (_req, res) => {
-  try {
-    // Convert map to array for response
-    const allUsers = Array.from(userDatabase.values());
-
-    const allAnalytics = allUsers.map((user) => {
-      const downloads = downloadDatabase.get(user.userId) || [];
-      const totalDownloadSize = downloads.reduce(
-        (sum, d) => sum + (d.fileSize || 0),
-        0,
-      );
-
-      return {
-        userId: user.userId,
-        name: user.name,
-        email: user.email,
-        niche: user.niche,
-        followers: user.followerCount,
-        totalDownloads: downloads.length,
-        totalDownloadSize,
-        createdAt: user.createdAt,
-        engagementScore: calculateEngagementScore(user),
-      };
-    });
-
-    // TODO: Connect to Supabase for admin dashboard
-    // const { data } = await supabase
-    //   .from('user_quiz_data')
-    //   .select('*')
-    //   .order('created_at', { ascending: false });
-
-    console.log(`✅ Retrieved analytics for ${allAnalytics.length} users`);
+    if (quizResult.rows.length === 0) {
+      return res.status(404).json({ success: false, message: `No data found for: ${userId}` });
+    }
 
     return res.json({
       success: true,
-      totalUsers: allAnalytics.length,
-      users: allAnalytics,
+      analytics: {
+        userId,
+        totalQuizzes: quizResult.rows.length,
+        totalDownloads: downloadResult.rows.length,
+        quizHistory: quizResult.rows,
+        downloadHistory: downloadResult.rows,
+      },
+      message: "User analytics retrieved successfully",
+    });
+  } catch (error) {
+    console.error("Error retrieving user analytics:", error);
+    return res.status(500).json({ success: false, message: "Failed to retrieve user analytics" });
+  }
+};
+
+export const handleGetAllUsersAnalytics: RequestHandler = async (req, res) => {
+  try {
+    const usersResult = await query(`
+      SELECT
+        q.id, q.name, q.email, q.phone, q.city, q.niche,
+        q.primary_platform, q.follower_count, q.engagement_rate,
+        q.created_at,
+        (SELECT COUNT(*) FROM downloads d WHERE d.guest_email = q.email) as total_downloads
+      FROM quiz_data q
+      ORDER BY q.created_at DESC
+      LIMIT 500
+    `);
+
+    const statsResult = await query(`
+      SELECT
+        (SELECT COUNT(*) FROM quiz_data) as total_quizzes,
+        (SELECT COUNT(*) FROM users) as total_users,
+        (SELECT COUNT(*) FROM downloads) as total_downloads,
+        (SELECT COUNT(*) FROM purchases) as total_purchases,
+        (SELECT COALESCE(SUM(amount), 0) FROM purchases WHERE payment_status = 'success') as total_revenue,
+        (SELECT COUNT(*) FROM purchases WHERE payment_status = 'success') as successful_payments
+    `);
+
+    const stats = statsResult.rows[0];
+
+    return res.json({
+      success: true,
+      totalUsers: parseInt(stats.total_quizzes) || 0,
+      totalRegisteredUsers: parseInt(stats.total_users) || 0,
+      totalDownloads: parseInt(stats.total_downloads) || 0,
+      totalPurchases: parseInt(stats.total_purchases) || 0,
+      totalRevenue: parseFloat(stats.total_revenue) || 0,
+      successfulPayments: parseInt(stats.successful_payments) || 0,
+      users: usersResult.rows.map((u: any) => ({
+        id: u.id,
+        name: u.name,
+        email: u.email,
+        phone: u.phone,
+        city: u.city,
+        niche: u.niche,
+        primary_platform: u.primary_platform,
+        follower_count: u.follower_count,
+        totalDownloads: parseInt(u.total_downloads) || 0,
+        created_at: u.created_at,
+      })),
     });
   } catch (error) {
     console.error("Error retrieving all users analytics:", error);
-    return res.status(500).json({
-      success: false,
-      message: "Failed to retrieve user analytics",
+    return res.status(500).json({ success: false, message: "Failed to retrieve user analytics" });
+  }
+};
+
+export const handleSavePurchase: RequestHandler = async (req, res) => {
+  try {
+    const {
+      productId, productName, amount, paymentStatus,
+      paymentId, paymentMethod, customerName, customerEmail,
+      customerPhone, customerCity, metadata,
+    } = req.body;
+
+    if (!productId || !amount || !customerEmail) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing required fields: productId, amount, customerEmail",
+      });
+    }
+
+    const result = await query(
+      `INSERT INTO purchases (
+        guest_email, product_id, product_name, amount, payment_status,
+        payment_id, payment_method, customer_name, customer_email,
+        customer_phone, customer_city, metadata
+      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
+      RETURNING id`,
+      [
+        customerEmail,
+        productId,
+        productName || null,
+        amount,
+        paymentStatus || "pending",
+        paymentId || null,
+        paymentMethod || null,
+        customerName || null,
+        customerEmail,
+        customerPhone || null,
+        customerCity || null,
+        metadata ? JSON.stringify(metadata) : "{}",
+      ]
+    );
+
+    await query(
+      `INSERT INTO submissions (guest_email, form_type, form_data, ip_address, user_agent)
+       VALUES ($1, $2, $3, $4, $5)`,
+      [
+        customerEmail,
+        "purchase",
+        JSON.stringify(req.body),
+        req.ip || req.socket.remoteAddress,
+        req.get("user-agent") || null,
+      ]
+    );
+
+    return res.json({
+      success: true,
+      purchaseId: result.rows[0].id,
+      message: "Purchase recorded successfully",
     });
+  } catch (error) {
+    console.error("Error saving purchase:", error);
+    return res.status(500).json({ success: false, message: "Failed to record purchase" });
+  }
+};
+
+export const handleSaveSubmission: RequestHandler = async (req, res) => {
+  try {
+    const { formType, formData, email } = req.body;
+
+    if (!formType || !formData) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing required fields: formType, formData",
+      });
+    }
+
+    const result = await query(
+      `INSERT INTO submissions (guest_email, form_type, form_data, ip_address, user_agent)
+       VALUES ($1, $2, $3, $4, $5)
+       RETURNING id`,
+      [
+        email || null,
+        formType,
+        JSON.stringify(formData),
+        req.ip || req.socket.remoteAddress,
+        req.get("user-agent") || null,
+      ]
+    );
+
+    return res.json({
+      success: true,
+      submissionId: result.rows[0].id,
+      message: "Submission saved successfully",
+    });
+  } catch (error) {
+    console.error("Error saving submission:", error);
+    return res.status(500).json({ success: false, message: "Failed to save submission" });
+  }
+};
+
+export const handleGetAdminPurchases: RequestHandler = async (_req, res) => {
+  try {
+    const result = await query(`
+      SELECT id, product_id, product_name, amount, payment_status,
+             payment_id, customer_name, customer_email, customer_phone,
+             customer_city, created_at
+      FROM purchases
+      ORDER BY created_at DESC
+      LIMIT 500
+    `);
+
+    return res.json({ success: true, purchases: result.rows });
+  } catch (error) {
+    console.error("Error getting purchases:", error);
+    return res.status(500).json({ success: false, message: "Failed to get purchases" });
+  }
+};
+
+export const handleGetAdminDownloads: RequestHandler = async (_req, res) => {
+  try {
+    const result = await query(`
+      SELECT id, guest_email, download_type, file_name, product_id, created_at
+      FROM downloads
+      ORDER BY created_at DESC
+      LIMIT 500
+    `);
+
+    return res.json({ success: true, downloads: result.rows });
+  } catch (error) {
+    console.error("Error getting downloads:", error);
+    return res.status(500).json({ success: false, message: "Failed to get downloads" });
   }
 };

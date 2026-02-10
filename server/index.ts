@@ -7,31 +7,54 @@ import {
   handleCaptureDownload,
   handleGetUserAnalytics,
   handleGetAllUsersAnalytics,
+  handleSavePurchase,
+  handleSaveSubmission,
+  handleGetAdminPurchases,
+  handleGetAdminDownloads,
 } from "./routes/user-analytics.js";
+import {
+  handleSignup,
+  handleLogin,
+  handleAdminLogin,
+  handleGetMe,
+} from "./routes/auth.js";
+import { authMiddleware, adminMiddleware } from "./middleware/auth.js";
+import { initializeDatabase } from "./db-init.js";
 
 export function createServer() {
   const app = express();
 
-  // Middleware
   app.use(cors());
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 
-  // Example API routes
   app.get("/api/ping", (_req, res) => {
-    res.json({ message: "Hello from Express server v2!" });
+    res.json({ message: "FameChase API is running!" });
   });
 
   app.get("/api/demo", handleDemo);
 
-  // AI Agent Analysis Route
+  app.post("/api/auth/signup", handleSignup);
+  app.post("/api/auth/login", handleLogin);
+  app.post("/api/auth/admin-login", handleAdminLogin);
+  app.get("/api/auth/me", authMiddleware, handleGetMe);
+
   app.post("/api/ai-agent-analysis", handleAIAgentAnalysis);
 
-  // User Analytics Routes
   app.post("/api/user-analytics/quiz", handleCaptureQuizData);
   app.post("/api/user-analytics/download", handleCaptureDownload);
+  app.post("/api/user-analytics/purchase", handleSavePurchase);
+  app.post("/api/user-analytics/submission", handleSaveSubmission);
   app.get("/api/user-analytics/:userId", handleGetUserAnalytics);
+
+  app.get("/api/admin/users", authMiddleware, adminMiddleware, handleGetAllUsersAnalytics);
+  app.get("/api/admin/purchases", authMiddleware, adminMiddleware, handleGetAdminPurchases);
+  app.get("/api/admin/downloads", authMiddleware, adminMiddleware, handleGetAdminDownloads);
   app.get("/api/user-analytics/admin/all", handleGetAllUsersAnalytics);
+
+  initializeDatabase().catch((err) => {
+    console.error("Database initialization failed:", err);
+  });
 
   return app;
 }

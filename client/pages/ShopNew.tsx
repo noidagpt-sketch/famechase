@@ -279,7 +279,28 @@ function ShopNew() {
       return;
     }
     setIsSubmitting(true);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    const product = getProductConfig(productId);
+
+    try {
+      await fetch("/api/user-analytics/purchase", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          productId,
+          productName: product?.name || productId,
+          amount: product?.price || 0,
+          paymentStatus: "success",
+          paymentMethod: "free_promo",
+          customerName: customerInfo.name,
+          customerEmail: customerInfo.email,
+          customerPhone: customerInfo.phone,
+          customerCity: customerInfo.city,
+        }),
+      });
+    } catch (err) {
+      console.warn("Purchase API save failed (non-blocking):", err);
+    }
 
     const purchase: PurchasedProduct = {
       id: productId,
@@ -316,18 +337,16 @@ function ShopNew() {
       const localizedFileName = `${download.fileName}_${language}.pdf`;
       await downloadFile(content, localizedFileName);
       try {
-        if (isSupabaseConfigured() && supabase) {
-          const { data } = await supabase.auth.getUser();
-          const userId = data.user?.id;
-          if (userId) {
-            await dbHelpers.recordDownload({
-              user_id: userId,
-              product_id: productId,
-              download_id: downloadId,
-              downloaded_at: new Date().toISOString(),
-            });
-          }
-        }
+        await fetch("/api/user-analytics/download", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: customerInfo.email || quizData?.email || "anonymous",
+            downloadType: download.type,
+            fileName: localizedFileName,
+            productId,
+          }),
+        });
       } catch (error) {
         console.warn("Unable to record download", error);
       }

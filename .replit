@@ -37,3 +37,11 @@ externalPort = 80
 [[ports]]
 localPort = 5173
 externalPort = 5173
+
+[userenv]
+
+[userenv.shared]
+ADMIN_EMAIL = "famechase.com@gmail.com"
+ADMIN_PASSWORD = "Jackyu@62"
+JWT_SECRET = "famechase-jwt-secret-2025-secure-key"
+API_PORT = "3001"
