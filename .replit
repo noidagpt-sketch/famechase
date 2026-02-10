@@ -45,3 +45,8 @@ ADMIN_EMAIL = "famechase.com@gmail.com"
 ADMIN_PASSWORD = "Jackyu@62"
 JWT_SECRET = "famechase-jwt-secret-2025-secure-key"
 API_PORT = "3001"
+
+[deployment]
+deploymentTarget = "autoscale"
+run = ["npx", "tsx", "server/production.ts"]
+build = ["npm", "run", "build"]

@@ -7,7 +7,7 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, "server/node-build.ts"),
       name: "server",
-      fileName: "production",
+      fileName: "node-build",
       formats: ["es"],
     },
     outDir: "dist/server",
@@ -15,7 +15,7 @@ export default defineConfig({
     ssr: true,
     rollupOptions: {
       external: [
-        // Node.js built-ins
+        /^node:.*/,
         "fs",
         "path",
         "url",
@@ -29,9 +29,22 @@ export default defineConfig({
         "buffer",
         "querystring",
         "child_process",
-        // External dependencies that should not be bundled
+        "net",
+        "tls",
+        "dns",
+        "module",
+        "zlib",
+        "string_decoder",
+        "assert",
         "express",
         "cors",
+        "pg",
+        "pg-pool",
+        "pg-protocol",
+        "pg-types",
+        "pgpass",
+        "bcryptjs",
+        "jsonwebtoken",
       ],
       output: {
         format: "es",
