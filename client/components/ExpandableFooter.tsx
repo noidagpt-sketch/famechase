@@ -16,7 +16,7 @@ Our mission is to make influencer success accessible, strategic, and profitable 
 We're here to help!
 
 📧 Email us at: mail@famechase.com
-📍 Address: A1471/9, Indira Nagar Lucknow, UP
+📍 Address: E- Block, 1406, Fusion Tower, GBN
 📱 Mobile: 8009785785`,
   },
   privacy: {

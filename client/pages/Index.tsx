@@ -356,7 +356,7 @@ Our mission is to make influencer success accessible, strategic, and profitable 
       content: `Have a question, feedback, or partnership inquiry? We're here to help!
 
 📧 Email us at: mail@famechase.com
-📍 Address: A1471/9, Indira Nagar Lucknow, UP
+📍 Address: E- Block, 1406, Fusion Tower, GBN
 📱 Mobile: 8009785785`,
     },
     privacy: {
@@ -426,7 +426,7 @@ AI-powered रिपोर्ट्स, कस्टम ग्रोथ स्�
       content: `कोई प्रश्न, फीडबैक, या पार्टनरशिप पूछताछ है? हम मदद के लिए यहाँ हैं!
 
 📧 हमें ईमेल करें: mail@famechase.com
-📍 Address: A1471/9, Indira Nagar Lucknow, UP
+📍 Address: E- Block, 1406, Fusion Tower, GBN
 📱 Mobile: 8009785785`,
     },
     privacy: {
