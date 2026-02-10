@@ -161,8 +161,10 @@ export const handleGetAllUsersAnalytics: RequestHandler = async (req, res) => {
   try {
     const usersResult = await query(`
       SELECT
-        q.id, q.name, q.email, q.phone, q.city, q.niche,
-        q.primary_platform, q.follower_count, q.engagement_rate,
+        q.id, q.name, q.email, q.phone, q.age, q.city, q.niche,
+        q.primary_platform, q.secondary_platforms, q.follower_count, q.engagement_rate,
+        q.content_type, q.posting_frequency, q.experience,
+        q.monthly_income, q.biggest_challenge, q.goals, q.bio, q.language,
         q.created_at,
         (SELECT COUNT(*) FROM downloads d WHERE d.guest_email = q.email) as total_downloads
       FROM quiz_data q
@@ -195,10 +197,21 @@ export const handleGetAllUsersAnalytics: RequestHandler = async (req, res) => {
         name: u.name,
         email: u.email,
         phone: u.phone,
+        age: u.age,
         city: u.city,
         niche: u.niche,
         primary_platform: u.primary_platform,
+        secondary_platforms: u.secondary_platforms,
         follower_count: u.follower_count,
+        engagement_rate: u.engagement_rate,
+        content_type: u.content_type,
+        posting_frequency: u.posting_frequency,
+        experience: u.experience,
+        monthly_income: u.monthly_income,
+        biggest_challenge: u.biggest_challenge,
+        goals: u.goals,
+        bio: u.bio,
+        language: u.language,
         totalDownloads: parseInt(u.total_downloads) || 0,
         created_at: u.created_at,
       })),
