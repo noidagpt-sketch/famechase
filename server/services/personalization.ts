@@ -175,6 +175,7 @@ export function generatePersonalizedGrowthPlan(
   profile: {
     followers: number;
     engagementRate: number;
+    monthlyViews: number;
     goals: string;
     challenges: string;
   },

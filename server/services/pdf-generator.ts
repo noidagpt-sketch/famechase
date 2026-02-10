@@ -10,10 +10,10 @@ export async function generatePersonalizedPDF(
   analysis: AIAgentAnalysisResponse,
 ): Promise<Buffer> {
   const pdfDoc = await PDFDocument.create();
-  const { width, height } = PDFDocument.A4;
-
+  
   // Page 1: Cover
-  let page = pdfDoc.addPage([width, height]);
+  let page = pdfDoc.addPage();
+  const { width, height } = page.getSize();
   drawCoverPage(page, analysis);
 
   // Page 2: Executive Summary
@@ -386,7 +386,7 @@ function drawMonetizationStrategy(
       y: y - 50,
       width: width - 100,
       height: 45,
-      color: rgb(0.05, 0.65, 0.42, 0.1),
+      color: rgb(0.05, 0.65, 0.42),
     });
 
     page.drawText(`${opp.type}`, {

@@ -48,6 +48,7 @@ interface FameScoreAnalysis {
     };
   };
   personalizedRecommendations: string[];
+  famePotentialIndex?: number;
   contentStrategy: {
     posting: string;
     contentTypes: string[];
