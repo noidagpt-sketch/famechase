@@ -8,6 +8,16 @@ FameChase is a creator growth platform that helps aspiring influencers discover 
 
 Preferred communication style: Simple, everyday language.
 
+## Recent Changes
+
+- **2026-02-10**: Built production-ready Express backend with PostgreSQL integration:
+  - JWT authentication (signup, login, admin login) with bcrypt password hashing
+  - Auto-created 6 database tables (users, admins, quiz_data, downloads, submissions, purchases)
+  - Admin account auto-seeded from ADMIN_EMAIL/ADMIN_PASSWORD env vars on startup
+  - All frontend forms (quiz, shop purchases, downloads) now save data to PostgreSQL via REST API
+  - Admin dashboard fetches real data from PostgreSQL with JWT-authenticated endpoints
+  - Vite proxy configured to route `/api` requests to Express server on port 3001
+
 ## System Architecture
 
 ### Frontend (React SPA)
@@ -17,80 +27,91 @@ Preferred communication style: Simple, everyday language.
 - **State Management**: TanStack React Query for server state, local React state otherwise
 - **Path aliases**: `@/` maps to `./client/`, `@shared/` maps to `./shared/`
 - **Entry point**: `client/App.tsx` renders into `index.html`'s `#root` div
-- **Key pages**: Index (landing), QuizStart → Quiz → Results (main user flow), ShopNew (product store), PaymentSuccess/PaymentFailure, AdminLogin → AdminDashboard/AdminAnalytics, TestSupabase (debug)
+- **Key pages**: Index (landing), QuizStart -> Quiz -> Results (main user flow), ShopNew (product store), PaymentSuccess/PaymentFailure, AdminLogin -> AdminDashboard/AdminAnalytics, TestSupabase (debug)
 - **Routes**: All defined in `client/App.tsx`. Add new routes above the catch-all `*` route.
 
-### Backend (Express + Netlify Functions)
+### Backend (Express API)
 
-- **Express server**: `server/index.ts` creates the Express app with API routes. Used in dev via Vite and in production via `server/node-build.ts`. Only create server endpoints when strictly necessary (e.g., private key handling, server-side-only logic).
-- **Netlify Functions**: `netlify/functions/` contains serverless functions for payment processing (`payu-initiate.js`, `payu-return.js`, `payu-webhook.js`, `api.ts`). These handle PayU hash generation, payment verification, and webhook processing.
-- **Separate backend**: There's also a standalone `backend/` directory with its own `server.js` and `package.json` — this is an alternative Express server for PayU payment processing with direct Supabase integration. It runs independently on its own port.
+- **Express server**: `server/index.ts` creates the Express app with API routes. Runs standalone on port 3001 via `server/standalone.ts`.
+- **Database init**: `server/db-init.ts` auto-creates all 6 PostgreSQL tables on startup and seeds admin account from environment variables.
+- **Auth system**: `server/middleware/auth.ts` provides JWT token generation/verification, `authMiddleware` and `adminMiddleware` for role-based access control.
+- **Auth routes**: `server/routes/auth.ts` handles user signup, login, admin login with bcrypt password hashing.
+- **User analytics routes**: `server/routes/user-analytics.ts` handles quiz data capture, download tracking, purchase recording, and admin data retrieval.
+- **Vite proxy**: In development, Vite proxies `/api` requests to `http://localhost:3001`.
 
-### Database (Supabase / PostgreSQL)
+### Database (Replit PostgreSQL + Optional Supabase)
 
-- **Supabase** is used as the primary database and auth provider. Client-side access is through `client/lib/supabase.ts` which validates environment variables and provides helper functions (`dbHelpers`, `authHelpers`).
-- **Environment variables**: `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` for client-side; `SUPABASE_URL` and `SUPABASE_ANON_KEY` (or `SUPABASE_SERVICE_ROLE_KEY`) for server-side.
-- **Graceful degradation**: The app runs in "demo mode" with mock/local data when Supabase is not configured. The `isSupabaseConfigured()` function checks for valid credentials.
-- **Database setup**: SQL scripts are expected at `scripts/setup-database.sql` (referenced but not present in repo).
-- **Tables used**: `users`, `purchases`, `products`, `user_quiz_data` (based on code references).
+- **Primary database**: Replit PostgreSQL (Neon-backed), accessed via `server/db.ts` using the `pg` package with connection pooling via `DATABASE_URL`.
+- **Tables**: `users` (registered users), `admins` (admin accounts), `quiz_data` (quiz submissions), `downloads` (download tracking), `submissions` (form submissions), `purchases` (payment records).
+- **Auto-initialization**: Tables are created automatically on server startup via `server/db-init.ts`. Admin account is seeded from `ADMIN_EMAIL` and `ADMIN_PASSWORD` environment variables.
+- **Supabase (optional)**: Still configured as a fallback for client-side operations via `client/lib/supabase.ts`. The app gracefully degrades to "demo mode" when Supabase is not configured.
+
+### Authentication & Authorization
+
+- **JWT tokens**: 7-day expiration, stored in `localStorage` on frontend as `famechase_admin_token`.
+- **Password hashing**: bcrypt with salt rounds of 12.
+- **Admin login**: Separate `/api/auth/admin-login` endpoint checks `admins` table.
+- **User login**: `/api/auth/login` and `/api/auth/signup` endpoints check `users` table.
+- **Middleware**: `authMiddleware` validates JWT on protected routes, `adminMiddleware` checks for admin role.
+- **Admin session**: 24-hour session timeout enforced on frontend.
 
 ### Payment System (PayU)
 
-- **PayU gateway** is integrated for processing payments in Indian Rupees (₹).
-- **Flow**: Client initiates payment → Netlify function generates hash → Redirect to PayU → PayU posts back to success/failure URLs → Webhook records transaction in Supabase.
+- **PayU gateway** is integrated for processing payments in Indian Rupees.
+- **Flow**: Client initiates payment -> Netlify function generates hash -> Redirect to PayU -> PayU posts back to success/failure URLs -> Webhook records transaction.
 - **Environment variables**: `PAYU_KEY`, `PAYU_SALT`, `VITE_PAYU_MERCHANT_KEY`, `VITE_PAYU_SALT`, `VITE_PAYU_MODE` (test/production).
-- **Client-side hash**: `client/lib/payu.ts` uses CryptoJS for hash generation (note: salt on client side is only for test mode).
 
 ### AI Agent System
 
-- **Multi-provider LLM**: Supports OpenAI, Anthropic, and Google Gemini via environment variables (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GOOGLE_API_KEY`).
-- **Services** in `server/services/`: `ai-agent.ts` (provider abstraction), `market-research.ts` (market analysis), `personalization.ts` (user-specific scoring), `pdf-generator.ts` (PDF reports using pdf-lib), `dynamic-ai-analysis.ts`, `real-time-market-research.ts`, `commercial-viability.ts`.
+- **Multi-provider LLM**: Supports OpenAI, Anthropic, and Google Gemini via environment variables.
+- **Services** in `server/services/`: `ai-agent.ts`, `market-research.ts`, `personalization.ts`, `pdf-generator.ts`, `dynamic-ai-analysis.ts`, `real-time-market-research.ts`, `commercial-viability.ts`.
 - **API route**: `POST /api/ai-agent-analysis` triggers comprehensive creator analysis.
-- **Client hook**: `client/hooks/useAIAgentAnalysis.ts` provides React hook for calling the analysis API.
 
 ### Build & Dev
 
-- **Dev server**: `npm run dev` runs Vite dev server on port 5000.
-- **Production build**: `npm run build` builds both client (`dist/spa/`) and server (`dist/server/`). Production server serves the SPA and handles API routes.
-- **Server build config**: `vite.config.server.ts` builds the Express server as an ES module targeting Node 22.
+- **Dev workflow**: Runs `npx tsx server/standalone.ts` (API on port 3001) and `vite` (frontend on port 5000) concurrently.
+- **Vite proxy**: `/api` requests are proxied to `http://localhost:3001` during development.
+- **Production build**: `npm run build` builds both client (`dist/spa/`) and server (`dist/server/`).
 - **Testing**: Vitest (`npm test`), test files use `.spec.ts` suffix.
 - **TypeScript**: Strict mode is OFF. Path mapping configured in `tsconfig.json`.
 
-### Shared Code
+### API Endpoints
 
-- `shared/api.ts` contains TypeScript interfaces shared between client and server (request/response types for AI analysis, market research, user analytics).
+| Method | Path | Auth | Description |
+|--------|------|------|-------------|
+| GET | /api/ping | None | Health check |
+| POST | /api/auth/signup | None | User registration |
+| POST | /api/auth/login | None | User login |
+| POST | /api/auth/admin-login | None | Admin login |
+| GET | /api/auth/me | JWT | Get current user info |
+| POST | /api/user-analytics/quiz | None | Save quiz submission |
+| POST | /api/user-analytics/download | None | Track file download |
+| POST | /api/user-analytics/purchase | None | Record purchase |
+| POST | /api/user-analytics/submission | None | Save form submission |
+| GET | /api/user-analytics/:userId | None | Get user analytics |
+| GET | /api/admin/users | JWT+Admin | Get all users (admin) |
+| GET | /api/admin/purchases | JWT+Admin | Get all purchases (admin) |
+| GET | /api/admin/downloads | JWT+Admin | Get all downloads (admin) |
 
-### Admin System
+### Environment Variables
 
-- Simple credential-based admin login (username/password stored client-side, not secure for production).
-- Admin dashboard shows user data, purchases, and analytics from Supabase.
-- Admin analytics page fetches from `/api/user-analytics/admin/all`.
-
-### Product System
-
-- Digital products defined in `client/lib/products.ts` with PDF generation using `pdf-lib`.
-- Products: Creator Growth Kit (₹99), Instagram Reels Mastery (₹197), Brand Collaboration Masterclass (₹149), Complete Bundle (₹297).
-- Client-side PDF generation for product downloads.
-
-## External Dependencies
-
-### Services & APIs
-- **Supabase**: Database (PostgreSQL), authentication, real-time subscriptions. Required env vars: `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`/`SUPABASE_SERVICE_ROLE_KEY`.
-- **PayU Payment Gateway**: Payment processing for Indian market. Required env vars: `PAYU_KEY`, `PAYU_SALT`. Test mode URL: `https://test.payu.in/_payment`.
-- **OpenAI API**: GPT-4 for AI analysis. Env var: `OPENAI_API_KEY`.
-- **Anthropic API**: Claude for reasoning/analysis. Env var: `ANTHROPIC_API_KEY`.
-- **Google Gemini API**: Trend analysis. Env var: `GOOGLE_API_KEY`.
-- **Netlify**: Hosting and serverless functions. Functions in `netlify/functions/`.
+| Variable | Purpose |
+|----------|---------|
+| DATABASE_URL | PostgreSQL connection string (auto-set by Replit) |
+| ADMIN_EMAIL | Auto-seeded admin email (famechase.com@gmail.com) |
+| ADMIN_PASSWORD | Auto-seeded admin password |
+| JWT_SECRET | Secret key for JWT token signing |
+| API_PORT | Express API server port (default: 3001) |
 
 ### Key NPM Packages
-- `express` — Backend API server
-- `@supabase/supabase-js` — Supabase client
-- `pdf-lib` — PDF generation (both client and server)
-- `crypto-js` — Client-side cryptographic hashing (PayU)
-- `zod` — Schema validation
-- `@tanstack/react-query` — Data fetching/caching
-- `react-router-dom` — Client-side routing
-- `@radix-ui/*` — Accessible UI primitives (via shadcn/ui)
-- `lucide-react` — Icon library
-- `tailwind-merge` + `clsx` — Class name utilities
-- `sonner` — Toast notifications
+- `express` + `cors` - Backend API server
+- `pg` - PostgreSQL client
+- `bcryptjs` - Password hashing
+- `jsonwebtoken` - JWT authentication
+- `@supabase/supabase-js` - Supabase client (optional)
+- `pdf-lib` - PDF generation
+- `@tanstack/react-query` - Data fetching/caching
+- `react-router-dom` - Client-side routing
+- `@radix-ui/*` - Accessible UI primitives (via shadcn/ui)
+- `lucide-react` - Icon library
+- `tailwind-merge` + `clsx` - Class name utilities

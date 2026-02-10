@@ -50,7 +50,6 @@ export function createServer() {
   app.get("/api/admin/users", authMiddleware, adminMiddleware, handleGetAllUsersAnalytics);
   app.get("/api/admin/purchases", authMiddleware, adminMiddleware, handleGetAdminPurchases);
   app.get("/api/admin/downloads", authMiddleware, adminMiddleware, handleGetAdminDownloads);
-  app.get("/api/user-analytics/admin/all", handleGetAllUsersAnalytics);
 
   initializeDatabase().catch((err) => {
     console.error("Database initialization failed:", err);
