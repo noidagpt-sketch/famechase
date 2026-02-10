@@ -10,8 +10,9 @@ import path from "path";
 export default defineConfig({
   server: {
     host: "0.0.0.0",
-    port: parseInt(process.env.PORT || "5173"),
+    port: 5000,
     strictPort: true,
+    allowedHosts: true,
   },
   build: {
     outDir: "dist/spa",
