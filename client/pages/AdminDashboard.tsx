@@ -13,6 +13,8 @@ import {
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
+import * as XLSX from "xlsx";
+import { downloadFile } from "@/lib/products";
 
 interface UserData {
   id: number;
@@ -225,6 +227,66 @@ export default function AdminDashboard() {
     return arr.join(", ");
   };
 
+  const exportToExcel = () => {
+    let dataToExport: any[] = [];
+    let fileName = "famechase_data.xlsx";
+
+    if (activeTab === "users") {
+      dataToExport = filteredUsers.map(u => ({
+        Name: u.name,
+        Email: u.email,
+        Phone: u.phone,
+        Age: u.age,
+        City: u.city,
+        Niche: u.niche,
+        Platform: u.primary_platform,
+        Followers: u.follower_count,
+        Engagement: u.engagement_rate,
+        "Content Type": u.content_type,
+        Frequency: u.posting_frequency,
+        Income: u.monthly_income,
+        Date: formatDate(u.created_at)
+      }));
+      fileName = "famechase_users.xlsx";
+    } else if (activeTab === "purchases") {
+      dataToExport = filteredPurchases.map(p => ({
+        Customer: p.customer_name,
+        Email: p.customer_email,
+        Product: p.product_name || p.product_id,
+        Amount: p.amount,
+        Status: p.payment_status,
+        "Payment ID": p.payment_id,
+        Date: formatDate(p.created_at)
+      }));
+      fileName = "famechase_purchases.xlsx";
+    } else if (activeTab === "downloads") {
+      dataToExport = filteredDownloads.map(d => ({
+        User: d.guest_email,
+        File: d.file_name,
+        Type: d.download_type,
+        Product: d.product_id,
+        Date: formatDate(d.created_at)
+      }));
+      fileName = "famechase_downloads.xlsx";
+    }
+
+    if (dataToExport.length === 0) return;
+
+    const ws = XLSX.utils.json_to_sheet(dataToExport);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Data");
+    XLSX.writeFile(wb, fileName);
+  };
+
+  const handleDownloadPDF = async (fileName: string, userData?: any) => {
+    try {
+      const content = `PDF Content for ${fileName}\n\nGenerated for: ${userData?.name || userData?.customer_name || userData?.guest_email || 'User'}`;
+      await downloadFile(content, fileName);
+    } catch (error) {
+      console.error("Error downloading PDF:", error);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -362,6 +424,13 @@ export default function AdminDashboard() {
                     <option value="failed">Failed</option>
                   </select>
                 )}
+                <button
+                  onClick={exportToExcel}
+                  className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
+                >
+                  <Download className="w-4 h-4" />
+                  Export to Excel
+                </button>
               </div>
             )}
 
@@ -569,7 +638,17 @@ export default function AdminDashboard() {
                             </div>
                           </td>
                           <td className="py-3 px-4">
-                            <p className="font-medium text-gray-900">{purchase.product_name || purchase.product_id}</p>
+                            <div className="flex flex-col">
+                              <p className="font-medium text-gray-900">{purchase.product_name || purchase.product_id}</p>
+                              {purchase.payment_status === "success" && (
+                                <button
+                                  onClick={() => handleDownloadPDF(purchase.product_id + ".pdf", purchase)}
+                                  className="flex items-center gap-1 text-xs text-blue-600 hover:underline mt-1"
+                                >
+                                  <Download className="w-3 h-3" /> Download PDF
+                                </button>
+                              )}
+                            </div>
                           </td>
                           <td className="py-3 px-4">
                             <p className="font-semibold text-gray-900">{formatCurrency(purchase.amount)}</p>
@@ -613,7 +692,15 @@ export default function AdminDashboard() {
                             <p className="text-sm text-gray-900">{dl.guest_email || "Unknown"}</p>
                           </td>
                           <td className="py-3 px-4">
-                            <p className="text-sm font-medium text-gray-900">{dl.file_name || "N/A"}</p>
+                            <div className="flex flex-col">
+                              <p className="text-sm font-medium text-gray-900">{dl.file_name || "N/A"}</p>
+                              <button
+                                onClick={() => handleDownloadPDF(dl.file_name || "download.pdf", dl)}
+                                className="flex items-center gap-1 text-xs text-blue-600 hover:underline mt-1"
+                              >
+                                <Download className="w-3 h-3" /> Download Link
+                              </button>
+                            </div>
                           </td>
                           <td className="py-3 px-4">
                             <span className="inline-block bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">
