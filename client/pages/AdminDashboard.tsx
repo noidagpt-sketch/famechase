@@ -12,6 +12,7 @@ import {
   LogOut,
   ChevronDown,
   ChevronUp,
+  Globe,
 } from "lucide-react";
 import * as XLSX from "xlsx";
 import { downloadFile } from "@/lib/products";
@@ -63,12 +64,25 @@ interface DownloadData {
   created_at: string;
 }
 
+interface TrafficData {
+  id: number;
+  ip_address?: string;
+  city?: string;
+  region?: string;
+  country?: string;
+  user_agent?: string;
+  path?: string;
+  referrer?: string;
+  created_at: string;
+}
+
 interface StatsData {
   totalUsers: number;
   totalPurchases: number;
   totalRevenue: number;
   successfulPayments: number;
   totalDownloads: number;
+  totalVisits: number;
 }
 
 function getAdminToken(): string | null {
@@ -90,15 +104,17 @@ export default function AdminDashboard() {
   const [users, setUsers] = useState<UserData[]>([]);
   const [purchases, setPurchases] = useState<PurchaseData[]>([]);
   const [downloads, setDownloads] = useState<DownloadData[]>([]);
+  const [traffic, setTraffic] = useState<TrafficData[]>([]);
   const [stats, setStats] = useState<StatsData>({
     totalUsers: 0,
     totalPurchases: 0,
     totalRevenue: 0,
     successfulPayments: 0,
     totalDownloads: 0,
+    totalVisits: 0,
   });
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<"overview" | "users" | "purchases" | "downloads">("overview");
+  const [activeTab, setActiveTab] = useState<"overview" | "users" | "purchases" | "downloads" | "traffic">("overview");
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
   const [expandedUserId, setExpandedUserId] = useState<number | null>(null);
@@ -136,15 +152,17 @@ export default function AdminDashboard() {
     try {
       setLoading(true);
 
-      const [usersRes, purchasesRes, downloadsRes] = await Promise.all([
+      const [usersRes, purchasesRes, downloadsRes, trafficRes] = await Promise.all([
         adminFetch("/api/admin/users"),
         adminFetch("/api/admin/purchases"),
         adminFetch("/api/admin/downloads"),
+        adminFetch("/api/admin/traffic"),
       ]);
 
       const usersData = await usersRes.json();
       const purchasesData = await purchasesRes.json();
       const downloadsData = await downloadsRes.json();
+      const trafficData = await trafficRes.json();
 
       if (!usersRes.ok && usersRes.status === 401) {
         handleLogout();
@@ -159,6 +177,7 @@ export default function AdminDashboard() {
           totalRevenue: usersData.totalRevenue || 0,
           successfulPayments: usersData.successfulPayments || 0,
           totalDownloads: usersData.totalDownloads || 0,
+          totalVisits: trafficData.traffic?.length || 0,
         });
       }
 
@@ -168,6 +187,10 @@ export default function AdminDashboard() {
 
       if (downloadsData.success) {
         setDownloads(downloadsData.downloads || []);
+      }
+
+      if (trafficData.success) {
+        setTraffic(trafficData.traffic || []);
       }
     } catch (error) {
       console.error("Error loading dashboard data:", error);
@@ -199,6 +222,13 @@ export default function AdminDashboard() {
       dl.guest_email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       dl.file_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       dl.product_id?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const filteredTraffic = traffic.filter(
+    (t) =>
+      t.ip_address?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      t.city?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      t.country?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const formatDate = (dateString: string) => {
@@ -241,10 +271,6 @@ export default function AdminDashboard() {
         Niche: u.niche,
         Platform: u.primary_platform,
         Followers: u.follower_count,
-        Engagement: u.engagement_rate,
-        "Content Type": u.content_type,
-        Frequency: u.posting_frequency,
-        Income: u.monthly_income,
         Date: formatDate(u.created_at)
       }));
       fileName = "famechase_users.xlsx";
@@ -255,7 +281,6 @@ export default function AdminDashboard() {
         Product: p.product_name || p.product_id,
         Amount: p.amount,
         Status: p.payment_status,
-        "Payment ID": p.payment_id,
         Date: formatDate(p.created_at)
       }));
       fileName = "famechase_purchases.xlsx";
@@ -264,10 +289,20 @@ export default function AdminDashboard() {
         User: d.guest_email,
         File: d.file_name,
         Type: d.download_type,
-        Product: d.product_id,
         Date: formatDate(d.created_at)
       }));
       fileName = "famechase_downloads.xlsx";
+    } else if (activeTab === "traffic") {
+      dataToExport = filteredTraffic.map(t => ({
+        IP: t.ip_address,
+        City: t.city,
+        Region: t.region,
+        Country: t.country,
+        Path: t.path,
+        Referrer: t.referrer,
+        Date: formatDate(t.created_at)
+      }));
+      fileName = "famechase_traffic.xlsx";
     }
 
     if (dataToExport.length === 0) return;
@@ -327,73 +362,47 @@ export default function AdminDashboard() {
       </header>
 
       <div className="container mx-auto px-4 py-8">
-        <div className="grid md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600 mb-1">Total Users</p>
-                <p className="text-3xl font-bold text-gray-900">{stats.totalUsers}</p>
-              </div>
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                <Users className="w-6 h-6 text-blue-600" />
-              </div>
-            </div>
+        <div className="grid md:grid-cols-5 gap-4 mb-8">
+          <div className="bg-white rounded-xl p-4 border border-gray-200">
+            <p className="text-xs text-gray-600 mb-1">Total Users</p>
+            <p className="text-2xl font-bold text-gray-900">{stats.totalUsers}</p>
           </div>
-
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600 mb-1">Total Purchases</p>
-                <p className="text-3xl font-bold text-gray-900">{stats.totalPurchases}</p>
-              </div>
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                <ShoppingCart className="w-6 h-6 text-green-600" />
-              </div>
-            </div>
+          <div className="bg-white rounded-xl p-4 border border-gray-200">
+            <p className="text-xs text-gray-600 mb-1">Total Purchases</p>
+            <p className="text-2xl font-bold text-gray-900">{stats.totalPurchases}</p>
           </div>
-
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600 mb-1">Successful Payments</p>
-                <p className="text-3xl font-bold text-gray-900">{stats.successfulPayments}</p>
-              </div>
-              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                <TrendingUp className="w-6 h-6 text-purple-600" />
-              </div>
-            </div>
+          <div className="bg-white rounded-xl p-4 border border-gray-200">
+            <p className="text-xs text-gray-600 mb-1">Total Revenue</p>
+            <p className="text-2xl font-bold text-gray-900">{formatCurrency(stats.totalRevenue)}</p>
           </div>
-
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600 mb-1">Total Revenue</p>
-                <p className="text-3xl font-bold text-gray-900">{formatCurrency(stats.totalRevenue)}</p>
-              </div>
-              <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-                <DollarSign className="w-6 h-6 text-yellow-600" />
-              </div>
-            </div>
+          <div className="bg-white rounded-xl p-4 border border-gray-200">
+            <p className="text-xs text-gray-600 mb-1">Downloads</p>
+            <p className="text-2xl font-bold text-gray-900">{stats.totalDownloads}</p>
+          </div>
+          <div className="bg-white rounded-xl p-4 border border-gray-200">
+            <p className="text-xs text-gray-600 mb-1">Site Visits</p>
+            <p className="text-2xl font-bold text-gray-900">{stats.totalVisits}</p>
           </div>
         </div>
 
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
           <div className="border-b border-gray-200">
-            <nav className="flex">
-              {(["overview", "users", "purchases", "downloads"] as const).map((tab) => (
+            <nav className="flex overflow-x-auto">
+              {(["overview", "users", "purchases", "downloads", "traffic"] as const).map((tab) => (
                 <button
                   key={tab}
                   onClick={() => { setActiveTab(tab); setSearchTerm(""); }}
-                  className={`px-6 py-4 text-sm font-medium border-b-2 ${
+                  className={`px-6 py-4 text-sm font-medium border-b-2 whitespace-nowrap ${
                     activeTab === tab
                       ? "border-blue-500 text-blue-600"
                       : "border-transparent text-gray-500 hover:text-gray-700"
                   }`}
                 >
                   {tab === "overview" ? "Overview" :
-                   tab === "users" ? `Users (${stats.totalUsers})` :
-                   tab === "purchases" ? `Purchases (${stats.totalPurchases})` :
-                   `Downloads (${stats.totalDownloads})`}
+                   tab === "users" ? "Users" :
+                   tab === "purchases" ? "Purchases" :
+                   tab === "downloads" ? "Downloads" :
+                   "Traffic Log"}
                 </button>
               ))}
             </nav>
@@ -412,24 +421,12 @@ export default function AdminDashboard() {
                     className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
                   />
                 </div>
-                {activeTab === "purchases" && (
-                  <select
-                    value={filterStatus}
-                    onChange={(e) => setFilterStatus(e.target.value)}
-                    className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-                  >
-                    <option value="all">All Status</option>
-                    <option value="success">Success</option>
-                    <option value="pending">Pending</option>
-                    <option value="failed">Failed</option>
-                  </select>
-                )}
                 <button
                   onClick={exportToExcel}
                   className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
                 >
                   <Download className="w-4 h-4" />
-                  Export to Excel
+                  Excel Export
                 </button>
               </div>
             )}
@@ -489,231 +486,171 @@ export default function AdminDashboard() {
               </div>
             )}
 
+            {activeTab === "traffic" && (
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-gray-200 text-left">
+                      <th className="py-3 px-4">IP Address</th>
+                      <th className="py-3 px-4">Location</th>
+                      <th className="py-3 px-4">Path</th>
+                      <th className="py-3 px-4">Referrer</th>
+                      <th className="py-3 px-4">Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredTraffic.map((t) => (
+                      <tr key={t.id} className="border-b border-gray-100 hover:bg-gray-50">
+                        <td className="py-3 px-4 font-mono text-sm">{t.ip_address}</td>
+                        <td className="py-3 px-4 text-sm">
+                          {t.city ? `${t.city}, ${t.region || ""}, ${t.country}` : "Unknown"}
+                        </td>
+                        <td className="py-3 px-4 text-sm">{t.path}</td>
+                        <td className="py-3 px-4 text-sm text-gray-500 truncate max-w-xs" title={t.referrer}>
+                          {t.referrer || "Direct"}
+                        </td>
+                        <td className="py-3 px-4 text-sm text-gray-600">{formatDate(t.created_at)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
             {activeTab === "users" && (
               <div className="overflow-x-auto">
-                {filteredUsers.length === 0 ? (
-                  <p className="text-gray-500">No users found.</p>
-                ) : (
-                  <div className="space-y-0">
-                    <table className="w-full">
-                      <thead>
-                        <tr className="border-b border-gray-200">
-                          <th className="text-left py-3 px-4 font-semibold text-gray-900">User</th>
-                          <th className="text-left py-3 px-4 font-semibold text-gray-900">Contact</th>
-                          <th className="text-left py-3 px-4 font-semibold text-gray-900">Age</th>
-                          <th className="text-left py-3 px-4 font-semibold text-gray-900">Niche</th>
-                          <th className="text-left py-3 px-4 font-semibold text-gray-900">Platform</th>
-                          <th className="text-left py-3 px-4 font-semibold text-gray-900">Followers</th>
-                          <th className="text-left py-3 px-4 font-semibold text-gray-900">Downloads</th>
-                          <th className="text-left py-3 px-4 font-semibold text-gray-900">Date</th>
-                          <th className="text-left py-3 px-4 font-semibold text-gray-900">Details</th>
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-gray-200">
+                      <th className="text-left py-3 px-4">User</th>
+                      <th className="text-left py-3 px-4">Contact</th>
+                      <th className="text-left py-3 px-4">Age</th>
+                      <th className="text-left py-3 px-4">Niche</th>
+                      <th className="text-left py-3 px-4">Downloads</th>
+                      <th className="text-left py-3 px-4">Date</th>
+                      <th className="text-left py-3 px-4">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredUsers.map((user) => (
+                      <React.Fragment key={user.id}>
+                        <tr className="border-b border-gray-100 hover:bg-gray-50">
+                          <td className="py-3 px-4 font-medium">{user.name}</td>
+                          <td className="py-3 px-4 text-sm">{user.email}</td>
+                          <td className="py-3 px-4 text-sm">{user.age || "N/A"}</td>
+                          <td className="py-3 px-4 text-sm">{user.niche || "N/A"}</td>
+                          <td className="py-3 px-4 text-sm">{user.totalDownloads || 0}</td>
+                          <td className="py-3 px-4 text-sm">{formatDate(user.created_at)}</td>
+                          <td className="py-3 px-4">
+                            <button
+                              onClick={() => setExpandedUserId(expandedUserId === user.id ? null : user.id)}
+                              className="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1"
+                            >
+                              {expandedUserId === user.id ? <><ChevronUp className="w-4 h-4" /> Hide</> : <><ChevronDown className="w-4 h-4" /> View</>}
+                            </button>
+                          </td>
                         </tr>
-                      </thead>
-                      <tbody>
-                        {filteredUsers.map((user) => (
-                          <React.Fragment key={user.id}>
-                            <tr className="border-b border-gray-100 hover:bg-gray-50">
-                              <td className="py-3 px-4">
-                                <div>
-                                  <p className="font-medium text-gray-900">{user.name}</p>
-                                  <p className="text-sm text-gray-600">{user.city || "N/A"}</p>
-                                </div>
-                              </td>
-                              <td className="py-3 px-4">
-                                <div>
-                                  <p className="text-sm text-gray-900">{user.email}</p>
-                                  <p className="text-sm text-gray-600">{user.phone || "No phone"}</p>
-                                </div>
-                              </td>
-                              <td className="py-3 px-4 text-sm text-gray-900">{user.age || "N/A"}</td>
-                              <td className="py-3 px-4">
-                                <span className="inline-block bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">
-                                  {user.niche || "N/A"}
-                                </span>
-                              </td>
-                              <td className="py-3 px-4 text-sm text-gray-900">{user.primary_platform || "N/A"}</td>
-                              <td className="py-3 px-4 text-sm text-gray-900">{user.follower_count || "N/A"}</td>
-                              <td className="py-3 px-4 text-sm text-gray-900">{user.totalDownloads || 0}</td>
-                              <td className="py-3 px-4 text-sm text-gray-600">{formatDate(user.created_at)}</td>
-                              <td className="py-3 px-4">
-                                <button
-                                  onClick={() => setExpandedUserId(expandedUserId === user.id ? null : user.id)}
-                                  className="flex items-center gap-1 text-blue-600 hover:text-blue-800 text-sm font-medium"
-                                >
-                                  {expandedUserId === user.id ? (
-                                    <><ChevronUp className="w-4 h-4" /> Hide</>
-                                  ) : (
-                                    <><ChevronDown className="w-4 h-4" /> View</>
-                                  )}
-                                </button>
-                              </td>
-                            </tr>
-                            {expandedUserId === user.id && (
-                              <tr className="bg-blue-50">
-                                <td colSpan={9} className="px-4 py-4">
-                                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm">
-                                    <div>
-                                      <p className="font-semibold text-gray-700">Content Type</p>
-                                      <p className="text-gray-600">{user.content_type || "N/A"}</p>
-                                    </div>
-                                    <div>
-                                      <p className="font-semibold text-gray-700">Posting Frequency</p>
-                                      <p className="text-gray-600">{user.posting_frequency || "N/A"}</p>
-                                    </div>
-                                    <div>
-                                      <p className="font-semibold text-gray-700">Engagement Rate</p>
-                                      <p className="text-gray-600">{user.engagement_rate || "N/A"}</p>
-                                    </div>
-                                    <div>
-                                      <p className="font-semibold text-gray-700">Monthly Income</p>
-                                      <p className="text-gray-600">{user.monthly_income || "N/A"}</p>
-                                    </div>
-                                    <div>
-                                      <p className="font-semibold text-gray-700">Experience</p>
-                                      <p className="text-gray-600">{formatArray(user.experience)}</p>
-                                    </div>
-                                    <div>
-                                      <p className="font-semibold text-gray-700">Goals</p>
-                                      <p className="text-gray-600">{formatArray(user.goals)}</p>
-                                    </div>
-                                    <div>
-                                      <p className="font-semibold text-gray-700">Biggest Challenge</p>
-                                      <p className="text-gray-600">{formatArray(user.biggest_challenge)}</p>
-                                    </div>
-                                    <div>
-                                      <p className="font-semibold text-gray-700">Language</p>
-                                      <p className="text-gray-600">{user.language || "N/A"}</p>
-                                    </div>
-                                    {user.secondary_platforms && user.secondary_platforms.length > 0 && (
-                                      <div>
-                                        <p className="font-semibold text-gray-700">Other Platforms</p>
-                                        <p className="text-gray-600">{formatArray(user.secondary_platforms)}</p>
-                                      </div>
-                                    )}
-                                    {user.bio && (
-                                      <div className="col-span-2">
-                                        <p className="font-semibold text-gray-700">Bio</p>
-                                        <p className="text-gray-600">{user.bio}</p>
-                                      </div>
-                                    )}
-                                  </div>
-                                </td>
-                              </tr>
-                            )}
-                          </React.Fragment>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
+                        {expandedUserId === user.id && (
+                          <tr className="bg-blue-50/50">
+                            <td colSpan={7} className="px-4 py-4">
+                              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                                <div><p className="font-semibold">Phone</p><p>{user.phone || "N/A"}</p></div>
+                                <div><p className="font-semibold">City</p><p>{user.city || "N/A"}</p></div>
+                                <div><p className="font-semibold">Platform</p><p>{user.primary_platform || "N/A"}</p></div>
+                                <div><p className="font-semibold">Followers</p><p>{user.follower_count || "N/A"}</p></div>
+                                <div><p className="font-semibold">Monthly Income</p><p>{user.monthly_income || "N/A"}</p></div>
+                                <div><p className="font-semibold">Engagement</p><p>{user.engagement_rate || "N/A"}</p></div>
+                                <div><p className="font-semibold">Content Type</p><p>{user.content_type || "N/A"}</p></div>
+                                <div><p className="font-semibold">Frequency</p><p>{user.posting_frequency || "N/A"}</p></div>
+                                <div className="col-span-2"><p className="font-semibold">Experience</p><p>{formatArray(user.experience)}</p></div>
+                                <div className="col-span-2"><p className="font-semibold">Goals</p><p>{formatArray(user.goals)}</p></div>
+                                <div className="col-span-2"><p className="font-semibold">Biggest Challenge</p><p>{formatArray(user.biggest_challenge)}</p></div>
+                                <div className="col-span-2"><p className="font-semibold">Bio</p><p>{user.bio || "N/A"}</p></div>
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+                      </React.Fragment>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             )}
 
             {activeTab === "purchases" && (
               <div className="overflow-x-auto">
-                {filteredPurchases.length === 0 ? (
-                  <p className="text-gray-500">No purchases found.</p>
-                ) : (
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b border-gray-200">
-                        <th className="text-left py-3 px-4 font-semibold text-gray-900">Customer</th>
-                        <th className="text-left py-3 px-4 font-semibold text-gray-900">Product</th>
-                        <th className="text-left py-3 px-4 font-semibold text-gray-900">Amount</th>
-                        <th className="text-left py-3 px-4 font-semibold text-gray-900">Status</th>
-                        <th className="text-left py-3 px-4 font-semibold text-gray-900">Payment ID</th>
-                        <th className="text-left py-3 px-4 font-semibold text-gray-900">Date</th>
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-gray-200 text-left">
+                      <th className="py-3 px-4">Customer</th>
+                      <th className="py-3 px-4">Product</th>
+                      <th className="py-3 px-4">Amount</th>
+                      <th className="py-3 px-4">Status</th>
+                      <th className="py-3 px-4">Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredPurchases.map((p) => (
+                      <tr key={p.id} className="border-b border-gray-100 hover:bg-gray-50">
+                        <td className="py-3 px-4">
+                          <div className="font-medium">{p.customer_name}</div>
+                          <div className="text-xs text-gray-500">{p.customer_email}</div>
+                        </td>
+                        <td className="py-3 px-4">
+                          <div className="font-medium">{p.product_name || p.product_id}</div>
+                          {p.payment_status === "success" && (
+                            <button
+                              onClick={() => handleDownloadPDF(p.product_id + ".pdf", p)}
+                              className="text-blue-600 hover:underline text-xs flex items-center gap-1 mt-1"
+                            >
+                              <Download className="w-3 h-3" /> Download PDF
+                            </button>
+                          )}
+                        </td>
+                        <td className="py-3 px-4 font-semibold">{formatCurrency(p.amount)}</td>
+                        <td className="py-3 px-4">
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(p.payment_status)}`}>
+                            {p.payment_status.toUpperCase()}
+                          </span>
+                        </td>
+                        <td className="py-3 px-4 text-sm text-gray-600">{formatDate(p.created_at)}</td>
                       </tr>
-                    </thead>
-                    <tbody>
-                      {filteredPurchases.map((purchase) => (
-                        <tr key={purchase.id} className="border-b border-gray-100 hover:bg-gray-50">
-                          <td className="py-3 px-4">
-                            <div>
-                              <p className="font-medium text-gray-900">{purchase.customer_name}</p>
-                              <p className="text-sm text-gray-600">{purchase.customer_email}</p>
-                              {purchase.customer_phone && (
-                                <p className="text-sm text-gray-500">{purchase.customer_phone}</p>
-                              )}
-                            </div>
-                          </td>
-                          <td className="py-3 px-4">
-                            <div className="flex flex-col">
-                              <p className="font-medium text-gray-900">{purchase.product_name || purchase.product_id}</p>
-                              {purchase.payment_status === "success" && (
-                                <button
-                                  onClick={() => handleDownloadPDF(purchase.product_id + ".pdf", purchase)}
-                                  className="flex items-center gap-1 text-xs text-blue-600 hover:underline mt-1"
-                                >
-                                  <Download className="w-3 h-3" /> Download PDF
-                                </button>
-                              )}
-                            </div>
-                          </td>
-                          <td className="py-3 px-4">
-                            <p className="font-semibold text-gray-900">{formatCurrency(purchase.amount)}</p>
-                          </td>
-                          <td className="py-3 px-4">
-                            <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(purchase.payment_status)}`}>
-                              {purchase.payment_status.toUpperCase()}
-                            </span>
-                          </td>
-                          <td className="py-3 px-4">
-                            <p className="font-mono text-sm text-gray-900">{purchase.payment_id || "N/A"}</p>
-                          </td>
-                          <td className="py-3 px-4 text-sm text-gray-600">{formatDate(purchase.created_at)}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                )}
+                    ))}
+                  </tbody>
+                </table>
               </div>
             )}
 
             {activeTab === "downloads" && (
               <div className="overflow-x-auto">
-                {filteredDownloads.length === 0 ? (
-                  <p className="text-gray-500">No downloads found.</p>
-                ) : (
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b border-gray-200">
-                        <th className="text-left py-3 px-4 font-semibold text-gray-900">User</th>
-                        <th className="text-left py-3 px-4 font-semibold text-gray-900">File Name</th>
-                        <th className="text-left py-3 px-4 font-semibold text-gray-900">Type</th>
-                        <th className="text-left py-3 px-4 font-semibold text-gray-900">Product</th>
-                        <th className="text-left py-3 px-4 font-semibold text-gray-900">Date</th>
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-gray-200 text-left">
+                      <th className="py-3 px-4">User</th>
+                      <th className="py-3 px-4">File</th>
+                      <th className="py-3 px-4">Product</th>
+                      <th className="py-3 px-4">Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredDownloads.map((d) => (
+                      <tr key={d.id} className="border-b border-gray-100 hover:bg-gray-50">
+                        <td className="py-3 px-4 text-sm">{d.guest_email}</td>
+                        <td className="py-3 px-4">
+                          <div className="font-medium">{d.file_name}</div>
+                          <button
+                            onClick={() => handleDownloadPDF(d.file_name || "download.pdf", d)}
+                            className="text-blue-600 hover:underline text-xs flex items-center gap-1 mt-1"
+                          >
+                            <Download className="w-3 h-3" /> Download Link
+                          </button>
+                        </td>
+                        <td className="py-3 px-4 text-sm">{d.product_id}</td>
+                        <td className="py-3 px-4 text-sm text-gray-600">{formatDate(d.created_at)}</td>
                       </tr>
-                    </thead>
-                    <tbody>
-                      {filteredDownloads.map((dl) => (
-                        <tr key={dl.id} className="border-b border-gray-100 hover:bg-gray-50">
-                          <td className="py-3 px-4">
-                            <p className="text-sm text-gray-900">{dl.guest_email || "Unknown"}</p>
-                          </td>
-                          <td className="py-3 px-4">
-                            <div className="flex flex-col">
-                              <p className="text-sm font-medium text-gray-900">{dl.file_name || "N/A"}</p>
-                              <button
-                                onClick={() => handleDownloadPDF(dl.file_name || "download.pdf", dl)}
-                                className="flex items-center gap-1 text-xs text-blue-600 hover:underline mt-1"
-                              >
-                                <Download className="w-3 h-3" /> Download Link
-                              </button>
-                            </div>
-                          </td>
-                          <td className="py-3 px-4">
-                            <span className="inline-block bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">
-                              {dl.download_type || "file"}
-                            </span>
-                          </td>
-                          <td className="py-3 px-4 text-sm text-gray-900">{dl.product_id || "N/A"}</td>
-                          <td className="py-3 px-4 text-sm text-gray-600">{formatDate(dl.created_at)}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                )}
+                    ))}
+                  </tbody>
+                </table>
               </div>
             )}
           </div>

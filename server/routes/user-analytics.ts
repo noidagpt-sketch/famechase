@@ -157,6 +157,46 @@ export const handleGetUserAnalytics: RequestHandler = async (req, res) => {
   }
 };
 
+export const handleTrackVisit: RequestHandler = async (req, res) => {
+  try {
+    const { path, referrer, location } = req.body;
+    const ip = req.ip || req.socket.remoteAddress;
+
+    await query(
+      `INSERT INTO traffic_log (ip_address, city, region, country, user_agent, path, referrer)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      [
+        ip,
+        location?.city || null,
+        location?.region || null,
+        location?.country || null,
+        req.get("user-agent") || null,
+        path || "/",
+        referrer || null,
+      ]
+    );
+
+    return res.json({ success: true });
+  } catch (error) {
+    console.error("Error tracking visit:", error);
+    return res.status(500).json({ success: false });
+  }
+};
+
+export const handleGetTrafficAnalytics: RequestHandler = async (_req, res) => {
+  try {
+    const result = await query(`
+      SELECT * FROM traffic_log
+      ORDER BY created_at DESC
+      LIMIT 1000
+    `);
+    return res.json({ success: true, traffic: result.rows });
+  } catch (error) {
+    console.error("Error getting traffic analytics:", error);
+    return res.status(500).json({ success: false });
+  }
+};
+
 export const handleGetAllUsersAnalytics: RequestHandler = async (req, res) => {
   try {
     const usersResult = await query(`

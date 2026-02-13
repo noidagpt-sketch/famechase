@@ -11,6 +11,8 @@ import {
   handleSaveSubmission,
   handleGetAdminPurchases,
   handleGetAdminDownloads,
+  handleTrackVisit,
+  handleGetTrafficAnalytics,
 } from "./routes/user-analytics.js";
 import {
   handleSignup,
@@ -50,6 +52,8 @@ export function createServer() {
   app.get("/api/admin/users", authMiddleware, adminMiddleware, handleGetAllUsersAnalytics);
   app.get("/api/admin/purchases", authMiddleware, adminMiddleware, handleGetAdminPurchases);
   app.get("/api/admin/downloads", authMiddleware, adminMiddleware, handleGetAdminDownloads);
+  app.get("/api/admin/traffic", authMiddleware, adminMiddleware, handleGetTrafficAnalytics);
+  app.post("/api/track-visit", handleTrackVisit);
 
   initializeDatabase().catch((err) => {
     console.error("Database initialization failed:", err);

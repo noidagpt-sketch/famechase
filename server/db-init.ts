@@ -107,6 +107,20 @@ export async function initializeDatabase() {
     )
   `);
 
+  await query(`
+    CREATE TABLE IF NOT EXISTS traffic_log (
+      id SERIAL PRIMARY KEY,
+      ip_address VARCHAR(100),
+      city VARCHAR(255),
+      region VARCHAR(255),
+      country VARCHAR(255),
+      user_agent TEXT,
+      path VARCHAR(255),
+      referrer TEXT,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    )
+  `);
+
   console.log("All database tables created successfully.");
 
   await seedAdminAccount();

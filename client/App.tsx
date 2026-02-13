@@ -5,7 +5,8 @@ import { createRoot } from "react-dom/client";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
 import Index from "./pages/Index";
 import QuizStart from "./pages/QuizStart";
 import Quiz from "./pages/Quiz";
@@ -21,12 +22,48 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
+const TrafficTracker = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    const trackVisit = async () => {
+      try {
+        const geoRes = await fetch("https://ipapi.co/json/").catch(() => null);
+        const geoData = geoRes ? await geoRes.json() : null;
+
+        await fetch("/api/track-visit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            path: location.pathname,
+            referrer: document.referrer,
+            location: geoData ? {
+              city: geoData.city,
+              region: geoData.region,
+              country: geoData.country_name
+            } : null
+          }),
+        });
+      } catch (err) {
+        console.warn("Traffic tracking failed", err);
+      }
+    };
+
+    if (!location.pathname.startsWith("/admin")) {
+      trackVisit();
+    }
+  }, [location.pathname]);
+
+  return null;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <TrafficTracker />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route
