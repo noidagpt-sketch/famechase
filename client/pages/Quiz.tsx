@@ -1493,6 +1493,13 @@ export default function Quiz() {
                           if (file) {
                             setDnaReport(file);
                             setDnaOption("upload");
+                            // Auto-move for Option 1: DNA Upload
+                            setTimeout(() => {
+                              if (currentStep < totalSteps) {
+                                setCurrentStep(currentStep + 1);
+                                window.scrollTo({ top: 0, behavior: "smooth" });
+                              }
+                            }, 500);
                           }
                         }}
                         accept=".pdf,.txt,image/*"
@@ -1529,6 +1536,13 @@ export default function Quiz() {
                         onClick={() => {
                           setDnaOption("have_no_upload");
                           setDnaReport(null);
+                          // Auto-move for other options
+                          setTimeout(() => {
+                            if (currentStep < totalSteps) {
+                              setCurrentStep(currentStep + 1);
+                              window.scrollTo({ top: 0, behavior: "smooth" });
+                            }
+                          }, 300);
                         }}
                         className={`w-full flex items-center justify-between p-4 rounded-xl border-2 transition-all ${
                           dnaOption === "have_no_upload"
@@ -1551,6 +1565,13 @@ export default function Quiz() {
                         onClick={() => {
                           setDnaOption("no_report");
                           setDnaReport(null);
+                          // Auto-move for other options
+                          setTimeout(() => {
+                            if (currentStep < totalSteps) {
+                              setCurrentStep(currentStep + 1);
+                              window.scrollTo({ top: 0, behavior: "smooth" });
+                            }
+                          }, 300);
                         }}
                         className={`w-full flex items-center justify-between p-4 rounded-xl border-2 transition-all ${
                           dnaOption === "no_report"
