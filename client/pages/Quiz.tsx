@@ -451,7 +451,7 @@ export default function Quiz() {
   );
 
   const t = sanitizeDeep(languages[language]);
-  const totalSteps = 13;
+  const totalSteps = 20;
 
   // Save language preference and update quiz data when language changes
   useEffect(() => {
@@ -459,6 +459,9 @@ export default function Quiz() {
     setQuizData((prev) => ({ ...prev, language: language }));
     setPlatforms(languages[language].options.platforms);
   }, [language]);
+
+  const [dnaReport, setDnaReport] = useState<File | null>(null);
+  const [dnaOption, setDnaOption] = useState<string>("");
 
   // Try loading platform options from API with graceful fallback
   useEffect(() => {
@@ -584,8 +587,11 @@ export default function Quiz() {
         return quizData.engagementRate;
       case 13:
         return quizData.name && quizData.email && quizData.city;
+      case 20:
+        if (dnaOption === "upload") return !!dnaReport;
+        return !!dnaOption;
       default:
-        return false;
+        return true;
     }
   };
 
@@ -1455,6 +1461,113 @@ export default function Quiz() {
                           placeholder="City"
                         />
                       </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Step 20: DNA Report Upload */}
+                {currentStep === 20 && (
+                  <div className="space-y-6">
+                    <div className="text-center mb-6">
+                      <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                        DNA Report for Deeper Analysis?
+                      </h2>
+                      <p className="text-gray-600">
+                        Optional: Upload your DNA report for 99% accurate personalization
+                      </p>
+                    </div>
+
+                    <div className="bg-white rounded-xl border-2 border-dashed border-purple-200 p-8 text-center transition-all hover:border-purple-400">
+                      <div className="w-16 h-16 bg-purple-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Download className="w-8 h-8 text-purple-500" />
+                      </div>
+                      <p className="text-gray-900 font-semibold mb-1">Upload DNA Report</p>
+                      <p className="text-xs text-gray-500 mb-4">PDF, TXT, or Image files supported</p>
+                      
+                      <input
+                        type="file"
+                        id="dna-upload"
+                        className="hidden"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            setDnaReport(file);
+                            setDnaOption("upload");
+                          }
+                        }}
+                        accept=".pdf,.txt,image/*"
+                      />
+                      <label
+                        htmlFor="dna-upload"
+                        className="cursor-pointer bg-purple-50 text-purple-600 px-6 py-2 rounded-lg font-medium hover:bg-purple-100 transition-colors inline-block"
+                      >
+                        {dnaReport ? dnaReport.name : "Choose File"}
+                      </label>
+                    </div>
+
+                    <div className="space-y-3">
+                      <button
+                        onClick={() => setDnaOption("upload")}
+                        className={`w-full flex items-center justify-between p-4 rounded-xl border-2 transition-all ${
+                          dnaOption === "upload"
+                            ? "border-purple-500 bg-purple-50 shadow-md"
+                            : "border-gray-100 hover:border-purple-200 bg-white"
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className="text-xl">🧬</span>
+                          <span className="font-semibold text-gray-900">Yes, I want to upload my DNA report</span>
+                        </div>
+                        <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
+                          dnaOption === "upload" ? "bg-purple-500 border-purple-500" : "border-gray-200"
+                        }`}>
+                          {dnaOption === "upload" && <div className="w-2 h-2 bg-white rounded-full" />}
+                        </div>
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          setDnaOption("have_no_upload");
+                          setDnaReport(null);
+                        }}
+                        className={`w-full flex items-center justify-between p-4 rounded-xl border-2 transition-all ${
+                          dnaOption === "have_no_upload"
+                            ? "border-purple-500 bg-purple-50 shadow-md"
+                            : "border-gray-100 hover:border-purple-200 bg-white"
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className="text-xl">🔒</span>
+                          <span className="font-semibold text-gray-900">I have it but prefer not to upload</span>
+                        </div>
+                        <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
+                          dnaOption === "have_no_upload" ? "bg-purple-500 border-purple-500" : "border-gray-200"
+                        }`}>
+                          {dnaOption === "have_no_upload" && <div className="w-2 h-2 bg-white rounded-full" />}
+                        </div>
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          setDnaOption("no_report");
+                          setDnaReport(null);
+                        }}
+                        className={`w-full flex items-center justify-between p-4 rounded-xl border-2 transition-all ${
+                          dnaOption === "no_report"
+                            ? "border-purple-500 bg-purple-50 shadow-md"
+                            : "border-gray-100 hover:border-purple-200 bg-white"
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className="text-xl">🧘‍♀️</span>
+                          <span className="font-semibold text-gray-900">I don't have a DNA report</span>
+                        </div>
+                        <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
+                          dnaOption === "no_report" ? "bg-purple-500 border-purple-500" : "border-gray-200"
+                        }`}>
+                          {dnaOption === "no_report" && <div className="w-2 h-2 bg-white rounded-full" />}
+                        </div>
+                      </button>
                     </div>
                   </div>
                 )}
