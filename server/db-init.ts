@@ -117,7 +117,22 @@ export async function initializeDatabase() {
       user_agent TEXT,
       path VARCHAR(255),
       referrer TEXT,
+      is_bot BOOLEAN DEFAULT FALSE,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    )
+  `);
+
+  await query(`
+    ALTER TABLE traffic_log ADD COLUMN IF NOT EXISTS is_bot BOOLEAN DEFAULT FALSE
+  `);
+
+  await query(`
+    CREATE TABLE IF NOT EXISTS product_settings (
+      id SERIAL PRIMARY KEY,
+      product_id VARCHAR(255) UNIQUE NOT NULL,
+      is_visible BOOLEAN DEFAULT TRUE,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+      updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
     )
   `);
 

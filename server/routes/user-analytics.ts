@@ -157,22 +157,42 @@ export const handleGetUserAnalytics: RequestHandler = async (req, res) => {
   }
 };
 
+function detectBot(userAgent: string | undefined): boolean {
+  if (!userAgent) return true;
+  const ua = userAgent.toLowerCase();
+  const botPatterns = [
+    'bot', 'crawler', 'spider', 'scraper', 'curl', 'wget', 'python-requests',
+    'http-client', 'java/', 'go-http-client', 'node-fetch', 'axios',
+    'googlebot', 'bingbot', 'yandexbot', 'baiduspider', 'duckduckbot',
+    'slurp', 'facebookexternalhit', 'twitterbot', 'linkedinbot',
+    'whatsapp', 'telegrambot', 'discordbot', 'applebot', 'semrushbot',
+    'ahrefsbot', 'mj12bot', 'dotbot', 'petalbot', 'bytespider',
+    'gptbot', 'claudebot', 'ccbot', 'chatgpt', 'headlesschrome',
+    'phantomjs', 'selenium', 'puppeteer', 'playwright',
+    'uptimerobot', 'pingdom', 'statuspage', 'monitor',
+  ];
+  return botPatterns.some(pattern => ua.includes(pattern));
+}
+
 export const handleTrackVisit: RequestHandler = async (req, res) => {
   try {
     const { path, referrer, location } = req.body;
     const ip = req.ip || req.socket.remoteAddress;
+    const userAgent = req.get("user-agent") || null;
+    const isBot = detectBot(userAgent ?? undefined);
 
     await query(
-      `INSERT INTO traffic_log (ip_address, city, region, country, user_agent, path, referrer)
-       VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      `INSERT INTO traffic_log (ip_address, city, region, country, user_agent, path, referrer, is_bot)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
       [
         ip,
         location?.city || null,
         location?.region || null,
         location?.country || null,
-        req.get("user-agent") || null,
+        userAgent,
         path || "/",
         referrer || null,
+        isBot,
       ]
     );
 
@@ -376,12 +396,51 @@ export const handleGetAdminPurchases: RequestHandler = async (_req, res) => {
   }
 };
 
+export const handleGetProductSettings: RequestHandler = async (_req, res) => {
+  try {
+    const result = await query(`
+      SELECT product_id, is_visible FROM product_settings
+    `);
+    const settings: Record<string, boolean> = {};
+    result.rows.forEach((r: any) => {
+      settings[r.product_id] = r.is_visible;
+    });
+    return res.json({ success: true, settings });
+  } catch {
+    return res.json({ success: true, settings: {} });
+  }
+};
+
+export const handleUpdateProductVisibility: RequestHandler = async (req, res) => {
+  try {
+    const { productId, isVisible } = req.body;
+    if (!productId) {
+      return res.status(400).json({ success: false, message: "Missing productId" });
+    }
+
+    await query(`
+      INSERT INTO product_settings (product_id, is_visible)
+      VALUES ($1, $2)
+      ON CONFLICT (product_id) DO UPDATE SET is_visible = $2, updated_at = NOW()
+    `, [productId, isVisible !== false]);
+
+    return res.json({ success: true });
+  } catch (error) {
+    console.error("Error updating product visibility:", error);
+    return res.status(500).json({ success: false });
+  }
+};
+
 export const handleGetAdminDownloads: RequestHandler = async (_req, res) => {
   try {
     const result = await query(`
-      SELECT id, guest_email, download_type, file_name, product_id, created_at
-      FROM downloads
-      ORDER BY created_at DESC
+      SELECT d.id, d.guest_email, d.download_type, d.file_name, d.product_id, d.created_at,
+             q.name as user_name, q.phone as user_phone, q.city as user_city,
+             q.niche as user_niche, q.primary_platform as user_platform,
+             q.follower_count as user_followers
+      FROM downloads d
+      LEFT JOIN quiz_data q ON d.guest_email = q.email
+      ORDER BY d.created_at DESC
       LIMIT 500
     `);
 

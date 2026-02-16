@@ -61,6 +61,12 @@ interface DownloadData {
   download_type?: string;
   file_name?: string;
   product_id?: string;
+  user_name?: string;
+  user_phone?: string;
+  user_city?: string;
+  user_niche?: string;
+  user_platform?: string;
+  user_followers?: string;
   created_at: string;
 }
 
@@ -73,6 +79,7 @@ interface TrafficData {
   user_agent?: string;
   path?: string;
   referrer?: string;
+  is_bot?: boolean;
   created_at: string;
 }
 
@@ -114,7 +121,8 @@ export default function AdminDashboard() {
     totalVisits: 0,
   });
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<"overview" | "users" | "purchases" | "downloads" | "traffic">("overview");
+  const [activeTab, setActiveTab] = useState<"overview" | "users" | "purchases" | "downloads" | "traffic" | "products">("overview");
+  const [productSettings, setProductSettings] = useState<Record<string, boolean>>({});
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
   const [expandedUserId, setExpandedUserId] = useState<number | null>(null);
@@ -152,17 +160,19 @@ export default function AdminDashboard() {
     try {
       setLoading(true);
 
-      const [usersRes, purchasesRes, downloadsRes, trafficRes] = await Promise.all([
+      const [usersRes, purchasesRes, downloadsRes, trafficRes, productSettingsRes] = await Promise.all([
         adminFetch("/api/admin/users"),
         adminFetch("/api/admin/purchases"),
         adminFetch("/api/admin/downloads"),
         adminFetch("/api/admin/traffic"),
+        adminFetch("/api/admin/product-settings"),
       ]);
 
       const usersData = await usersRes.json();
       const purchasesData = await purchasesRes.json();
       const downloadsData = await downloadsRes.json();
       const trafficData = await trafficRes.json();
+      const productSettingsData = await productSettingsRes.json();
 
       if (!usersRes.ok && usersRes.status === 401) {
         handleLogout();
@@ -191,6 +201,10 @@ export default function AdminDashboard() {
 
       if (trafficData.success) {
         setTraffic(trafficData.traffic || []);
+      }
+
+      if (productSettingsData.success) {
+        setProductSettings(productSettingsData.settings || {});
       }
     } catch (error) {
       console.error("Error loading dashboard data:", error);
@@ -286,14 +300,22 @@ export default function AdminDashboard() {
       fileName = "famechase_purchases.xlsx";
     } else if (activeTab === "downloads") {
       dataToExport = filteredDownloads.map(d => ({
-        User: d.guest_email,
+        Name: d.user_name || "",
+        Email: d.guest_email,
+        Phone: d.user_phone || "",
+        City: d.user_city || "",
+        Niche: d.user_niche || "",
+        Platform: d.user_platform || "",
+        Followers: d.user_followers || "",
         File: d.file_name,
+        Product: d.product_id,
         Type: d.download_type,
         Date: formatDate(d.created_at)
       }));
       fileName = "famechase_downloads.xlsx";
     } else if (activeTab === "traffic") {
       dataToExport = filteredTraffic.map(t => ({
+        Type: t.is_bot ? "Bot" : "Human",
         IP: t.ip_address,
         City: t.city,
         Region: t.region,
@@ -388,7 +410,7 @@ export default function AdminDashboard() {
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
           <div className="border-b border-gray-200">
             <nav className="flex overflow-x-auto">
-              {(["overview", "users", "purchases", "downloads", "traffic"] as const).map((tab) => (
+              {(["overview", "users", "purchases", "downloads", "traffic", "products"] as const).map((tab) => (
                 <button
                   key={tab}
                   onClick={() => { setActiveTab(tab); setSearchTerm(""); }}
@@ -402,7 +424,8 @@ export default function AdminDashboard() {
                    tab === "users" ? "Users" :
                    tab === "purchases" ? "Purchases" :
                    tab === "downloads" ? "Downloads" :
-                   "Traffic Log"}
+                   tab === "traffic" ? "Traffic Log" :
+                   "Products"}
                 </button>
               ))}
             </nav>
@@ -491,6 +514,7 @@ export default function AdminDashboard() {
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-gray-200 text-left">
+                      <th className="py-3 px-4">Type</th>
                       <th className="py-3 px-4">IP Address</th>
                       <th className="py-3 px-4">Location</th>
                       <th className="py-3 px-4">Path</th>
@@ -500,7 +524,14 @@ export default function AdminDashboard() {
                   </thead>
                   <tbody>
                     {filteredTraffic.map((t) => (
-                      <tr key={t.id} className="border-b border-gray-100 hover:bg-gray-50">
+                      <tr key={t.id} className={`border-b border-gray-100 hover:bg-gray-50 ${t.is_bot ? 'bg-red-50/40' : ''}`}>
+                        <td className="py-3 px-4">
+                          {t.is_bot ? (
+                            <span className="bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-xs font-medium">Bot</span>
+                          ) : (
+                            <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-xs font-medium">Human</span>
+                          )}
+                        </td>
                         <td className="py-3 px-4 font-mono text-sm">{t.ip_address}</td>
                         <td className="py-3 px-4 text-sm">
                           {t.city ? `${t.city}, ${t.region || ""}, ${t.country}` : "Unknown"}
@@ -627,17 +658,26 @@ export default function AdminDashboard() {
                   <thead>
                     <tr className="border-b border-gray-200 text-left">
                       <th className="py-3 px-4">User</th>
+                      <th className="py-3 px-4">Contact</th>
                       <th className="py-3 px-4">File</th>
                       <th className="py-3 px-4">Product</th>
+                      <th className="py-3 px-4">Profile</th>
                       <th className="py-3 px-4">Date</th>
                     </tr>
                   </thead>
                   <tbody>
                     {filteredDownloads.map((d) => (
                       <tr key={d.id} className="border-b border-gray-100 hover:bg-gray-50">
-                        <td className="py-3 px-4 text-sm">{d.guest_email}</td>
                         <td className="py-3 px-4">
-                          <div className="font-medium">{d.file_name}</div>
+                          <div className="font-medium text-sm">{d.user_name || "—"}</div>
+                          <div className="text-xs text-gray-500">{d.guest_email}</div>
+                        </td>
+                        <td className="py-3 px-4 text-sm">
+                          {d.user_phone && <div>{d.user_phone}</div>}
+                          {d.user_city && <div className="text-xs text-gray-500">{d.user_city}</div>}
+                        </td>
+                        <td className="py-3 px-4">
+                          <div className="font-medium text-sm">{d.file_name}</div>
                           <button
                             onClick={() => handleDownloadPDF(d.file_name || "download.pdf", d)}
                             className="text-blue-600 hover:underline text-xs flex items-center gap-1 mt-1"
@@ -646,11 +686,66 @@ export default function AdminDashboard() {
                           </button>
                         </td>
                         <td className="py-3 px-4 text-sm">{d.product_id}</td>
+                        <td className="py-3 px-4 text-xs text-gray-600">
+                          {d.user_niche && <div>{d.user_niche}</div>}
+                          {d.user_platform && <div>{d.user_platform}</div>}
+                          {d.user_followers && <div>{d.user_followers}</div>}
+                        </td>
                         <td className="py-3 px-4 text-sm text-gray-600">{formatDate(d.created_at)}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
+              </div>
+            )}
+
+            {activeTab === "products" && (
+              <div>
+                <h3 className="text-lg font-semibold mb-4">Product Visibility Controls</h3>
+                <p className="text-sm text-gray-500 mb-6">Toggle which products are visible on the shop page. Hidden products will not appear for customers.</p>
+                <div className="space-y-3">
+                  {[
+                    { id: "complete-growth-kit", name: "Complete Creator Growth Kit", price: 99 },
+                    { id: "reels-mastery", name: "Instagram Reels Mastery Course", price: 197 },
+                    { id: "brand-masterclass", name: "Brand Collaboration Masterclass", price: 149 },
+                    { id: "youtube-mastery", name: "YouTube Mastery Course", price: 297 },
+                    { id: "facebook-posting-mastery", name: "Facebook Posting Mastery Course", price: 197 },
+                    { id: "complete-bundle", name: "Complete Creator Bundle", price: 497 },
+                  ].map((product) => {
+                    const isVisible = productSettings[product.id] !== false;
+                    return (
+                      <div key={product.id} className="flex items-center justify-between bg-gray-50 rounded-lg p-4 border border-gray-200">
+                        <div>
+                          <p className="font-medium text-gray-900">{product.name}</p>
+                          <p className="text-sm text-gray-500">Rs {product.price}</p>
+                        </div>
+                        <button
+                          onClick={async () => {
+                            const newValue = !isVisible;
+                            setProductSettings(prev => ({ ...prev, [product.id]: newValue }));
+                            try {
+                              const token = getAdminToken();
+                              await fetch("/api/admin/product-settings", {
+                                method: "POST",
+                                headers: {
+                                  "Content-Type": "application/json",
+                                  Authorization: `Bearer ${token}`,
+                                },
+                                body: JSON.stringify({ productId: product.id, isVisible: newValue }),
+                              });
+                            } catch (err) {
+                              console.warn("Failed to update product visibility", err);
+                              setProductSettings(prev => ({ ...prev, [product.id]: isVisible }));
+                            }
+                          }}
+                          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${isVisible ? 'bg-green-500' : 'bg-gray-300'}`}
+                        >
+                          <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${isVisible ? 'translate-x-6' : 'translate-x-1'}`} />
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             )}
           </div>

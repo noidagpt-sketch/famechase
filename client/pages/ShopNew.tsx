@@ -9,9 +9,7 @@ import {
   Home,
   Loader2,
   Shield,
-  Star,
   Target,
-  Zap,
 } from "lucide-react";
 import {
   getAllProducts,
@@ -49,7 +47,6 @@ function ShopNew() {
   const [promoCode, setPromoCode] = useState("");
   const [appliedDiscount, setAppliedDiscount] = useState(0);
   const [timeLeft, setTimeLeft] = useState(86400);
-  const [recentPurchases, setRecentPurchases] = useState<string[]>([]);
   const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({
     name: "",
     email: "",
@@ -94,36 +91,6 @@ function ShopNew() {
     return () => clearInterval(timer);
   }, []);
 
-  useEffect(() => {
-    const names = [
-      "Rahul from Mumbai",
-      "Priya from Delhi",
-      "Arjun from Bengaluru",
-      "Sneha from Pune",
-      "Vikash from Hyderabad",
-      "Anita from Chennai",
-      "Rohit from Kolkata",
-      "Kavya from Ahmedabad",
-      "Amit from Jaipur",
-    ];
-
-    const addRecentPurchase = () => {
-      const randomName = names[Math.floor(Math.random() * names.length)];
-      setRecentPurchases((prev) => [randomName, ...prev.slice(0, 4)]);
-    };
-
-    addRecentPurchase();
-    const interval = setInterval(
-      () => {
-        if (Math.random() > 0.3) {
-          addRecentPurchase();
-        }
-      },
-      Math.random() * 15000 + 15000,
-    );
-
-    return () => clearInterval(interval);
-  }, []);
 
   const formatTimeLeft = () => {
     const hours = Math.floor(timeLeft / 3600);
@@ -554,24 +521,6 @@ function ShopNew() {
           </p>
         </div>
 
-        {recentPurchases.length > 0 && (
-          <div className="bg-gray-100 border border-gray-200 rounded-2xl p-4 mb-10">
-            <div className="flex items-center gap-2 text-gray-700 font-semibold mb-3">
-              <Zap className="w-4 h-4 text-neon-green" />
-              <span>{currentLang.recentHeadline}</span>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {recentPurchases.map((item, index) => (
-                <span
-                  key={`${item}-${index}`}
-                  className="bg-white border border-gray-200 rounded-full px-3 py-1 text-sm text-gray-700"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
 
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
@@ -634,17 +583,15 @@ function ShopNew() {
                         {product.description}
                       </p>
 
-                      <div className="flex items-center gap-4 mb-4">
-                        <div className="flex items-center gap-1">
-                          <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                          <span className="font-semibold">4.9</span>
-                        </div>
-                        <span className="text-gray-600">
-                          2,547 {currentLang.downloads}
+                      <div className="flex items-center gap-4 mb-4 flex-wrap">
+                        <span className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-3 py-1 rounded-full text-sm font-bold animate-pulse">
+                          {language === "hindi"
+                            ? "45 दिन फ्री (लॉन्च ऑफर)"
+                            : "Get Free for 45 Days (Launch Offer)"}
                         </span>
                         {isPurchased && (
                           <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
-                            ✅ Purchased
+                            ✅ {language === "hindi" ? "खरीदा गया" : "Purchased"}
                           </span>
                         )}
                       </div>

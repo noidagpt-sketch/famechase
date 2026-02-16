@@ -1696,7 +1696,7 @@ const generateProductRecommendations = (data: QuizData, fameScore: number) => {
     recommendations.push({
       name: "Facebook Posting Mastery Course",
       reason:
-        "Facebook's algorithm changes in 2024 create massive opportunities. Learn the secrets to organic reach and community monetization strategies.",
+        `Facebook's latest algorithm changes create massive opportunities. Learn the secrets to organic reach and community monetization strategies.`,
       priority: "medium" as const,
     });
   }
@@ -1756,7 +1756,7 @@ const generateProductRecommendations = (data: QuizData, fameScore: number) => {
     recommendations.push({
       name: "Facebook Posting Mastery Course",
       reason:
-        "Master Facebook's 2024 algorithm secrets and organic reach strategies. Perfect for diversifying your platform presence and reducing algorithm dependency risk.",
+        `Master Facebook's latest algorithm secrets and organic reach strategies. Perfect for diversifying your platform presence and reducing algorithm dependency risk.`,
       priority: "medium" as const,
     });
   }
@@ -1798,7 +1798,7 @@ const generateProductRecommendations = (data: QuizData, fameScore: number) => {
       {
         name: "Facebook Posting Mastery Course",
         reason:
-          "Master Facebook's 2024 algorithm for organic reach and community monetization.",
+          "Master Facebook's latest algorithm for organic reach and community monetization.",
         priority: "medium" as const,
       },
     ];
@@ -2347,7 +2347,7 @@ const generateTrendPredictions = (data: QuizData) => {
     ],
     platformGrowthPrediction: `${data.primaryPlatform} expected 23% creator revenue growth in ${currentYear + 1}`,
     nicheOpportunities: `${data.niche} shows 31% increase in brand budget allocation`,
-    timingAdvantage: "Q4 2024 - highest brand partnership season",
+    timingAdvantage: `Q4 ${new Date().getFullYear()} - highest brand partnership season`,
   };
 };
 

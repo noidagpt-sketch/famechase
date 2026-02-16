@@ -13,6 +13,8 @@ import {
   handleGetAdminDownloads,
   handleTrackVisit,
   handleGetTrafficAnalytics,
+  handleGetProductSettings,
+  handleUpdateProductVisibility,
 } from "./routes/user-analytics.js";
 import {
   handleSignup,
@@ -53,6 +55,9 @@ export function createServer() {
   app.get("/api/admin/purchases", authMiddleware, adminMiddleware, handleGetAdminPurchases);
   app.get("/api/admin/downloads", authMiddleware, adminMiddleware, handleGetAdminDownloads);
   app.get("/api/admin/traffic", authMiddleware, adminMiddleware, handleGetTrafficAnalytics);
+  app.get("/api/admin/product-settings", authMiddleware, adminMiddleware, handleGetProductSettings);
+  app.post("/api/admin/product-settings", authMiddleware, adminMiddleware, handleUpdateProductVisibility);
+  app.get("/api/product-settings", handleGetProductSettings);
   app.post("/api/track-visit", handleTrackVisit);
 
   initializeDatabase().catch((err) => {
