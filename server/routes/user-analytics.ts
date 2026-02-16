@@ -399,34 +399,77 @@ export const handleGetAdminPurchases: RequestHandler = async (_req, res) => {
 export const handleGetProductSettings: RequestHandler = async (_req, res) => {
   try {
     const result = await query(`
-      SELECT product_id, is_visible FROM product_settings
+      SELECT product_id, is_visible, product_name, price, original_price, description, category, features
+      FROM product_settings
     `);
     const settings: Record<string, boolean> = {};
+    const products: any[] = result.rows.map((r: any) => ({
+      product_id: r.product_id,
+      is_visible: r.is_visible,
+      product_name: r.product_name,
+      price: r.price ? parseFloat(r.price) : null,
+      original_price: r.original_price ? parseFloat(r.original_price) : null,
+      description: r.description,
+      category: r.category,
+      features: r.features,
+    }));
     result.rows.forEach((r: any) => {
       settings[r.product_id] = r.is_visible;
     });
-    return res.json({ success: true, settings });
+    return res.json({ success: true, settings, products });
   } catch {
-    return res.json({ success: true, settings: {} });
+    return res.json({ success: true, settings: {}, products: [] });
   }
 };
 
-export const handleUpdateProductVisibility: RequestHandler = async (req, res) => {
+export const handleUpdateProductSettings: RequestHandler = async (req, res) => {
   try {
-    const { productId, isVisible } = req.body;
+    const { productId, isVisible, productName, price, originalPrice, description, category, features } = req.body;
     if (!productId) {
       return res.status(400).json({ success: false, message: "Missing productId" });
     }
 
     await query(`
-      INSERT INTO product_settings (product_id, is_visible)
-      VALUES ($1, $2)
-      ON CONFLICT (product_id) DO UPDATE SET is_visible = $2, updated_at = NOW()
-    `, [productId, isVisible !== false]);
+      INSERT INTO product_settings (product_id, is_visible, product_name, price, original_price, description, category, features)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      ON CONFLICT (product_id) DO UPDATE SET
+        is_visible = COALESCE($2, product_settings.is_visible),
+        product_name = COALESCE($3, product_settings.product_name),
+        price = COALESCE($4, product_settings.price),
+        original_price = COALESCE($5, product_settings.original_price),
+        description = COALESCE($6, product_settings.description),
+        category = COALESCE($7, product_settings.category),
+        features = COALESCE($8, product_settings.features),
+        updated_at = NOW()
+    `, [
+      productId,
+      isVisible !== undefined ? isVisible : true,
+      productName || null,
+      price || null,
+      originalPrice || null,
+      description || null,
+      category || null,
+      features || null,
+    ]);
 
     return res.json({ success: true });
   } catch (error) {
-    console.error("Error updating product visibility:", error);
+    console.error("Error updating product settings:", error);
+    return res.status(500).json({ success: false });
+  }
+};
+
+export const handleDeleteProduct: RequestHandler = async (req, res) => {
+  try {
+    const { productId } = req.body;
+    if (!productId) {
+      return res.status(400).json({ success: false, message: "Missing productId" });
+    }
+
+    await query(`DELETE FROM product_settings WHERE product_id = $1`, [productId]);
+    return res.json({ success: true });
+  } catch (error) {
+    console.error("Error deleting product:", error);
     return res.status(500).json({ success: false });
   }
 };

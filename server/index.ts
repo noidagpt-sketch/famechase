@@ -14,7 +14,8 @@ import {
   handleTrackVisit,
   handleGetTrafficAnalytics,
   handleGetProductSettings,
-  handleUpdateProductVisibility,
+  handleUpdateProductSettings,
+  handleDeleteProduct,
 } from "./routes/user-analytics.js";
 import {
   handleSignup,
@@ -28,6 +29,7 @@ import { initializeDatabase } from "./db-init.js";
 export function createServer() {
   const app = express();
 
+  app.set("trust proxy", true);
   app.use(cors());
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ extended: true, limit: "50mb" }));
@@ -56,7 +58,8 @@ export function createServer() {
   app.get("/api/admin/downloads", authMiddleware, adminMiddleware, handleGetAdminDownloads);
   app.get("/api/admin/traffic", authMiddleware, adminMiddleware, handleGetTrafficAnalytics);
   app.get("/api/admin/product-settings", authMiddleware, adminMiddleware, handleGetProductSettings);
-  app.post("/api/admin/product-settings", authMiddleware, adminMiddleware, handleUpdateProductVisibility);
+  app.post("/api/admin/product-settings", authMiddleware, adminMiddleware, handleUpdateProductSettings);
+  app.delete("/api/admin/product-settings", authMiddleware, adminMiddleware, handleDeleteProduct);
   app.get("/api/product-settings", handleGetProductSettings);
   app.post("/api/track-visit", handleTrackVisit);
 

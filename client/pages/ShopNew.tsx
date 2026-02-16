@@ -10,6 +10,7 @@ import {
   Loader2,
   Shield,
   Target,
+  Zap,
 } from "lucide-react";
 import {
   getAllProducts,
@@ -359,7 +360,7 @@ function ShopNew() {
     }
 
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white text-gray-900">
         <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
           <div className="container mx-auto px-4 py-4">
             <div className="flex justify-between items-center">
@@ -458,7 +459,7 @@ function ShopNew() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white text-gray-900">
       <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
@@ -965,7 +966,7 @@ function ShopNew() {
 
       <footer className="bg-gray-900 text-white py-8">
         <div className="container mx-auto px-4 text-center">
-          <p>&copy; 2025 FameChase.com. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} FameChase.com. All rights reserved.</p>
         </div>
       </footer>
     </div>

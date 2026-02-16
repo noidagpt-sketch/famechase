@@ -136,6 +136,25 @@ export async function initializeDatabase() {
     )
   `);
 
+  await query(`
+    ALTER TABLE product_settings ADD COLUMN IF NOT EXISTS product_name VARCHAR(500)
+  `);
+  await query(`
+    ALTER TABLE product_settings ADD COLUMN IF NOT EXISTS price DECIMAL(10,2)
+  `);
+  await query(`
+    ALTER TABLE product_settings ADD COLUMN IF NOT EXISTS original_price DECIMAL(10,2)
+  `);
+  await query(`
+    ALTER TABLE product_settings ADD COLUMN IF NOT EXISTS description TEXT
+  `);
+  await query(`
+    ALTER TABLE product_settings ADD COLUMN IF NOT EXISTS category VARCHAR(100)
+  `);
+  await query(`
+    ALTER TABLE product_settings ADD COLUMN IF NOT EXISTS features TEXT
+  `);
+
   console.log("All database tables created successfully.");
 
   await seedAdminAccount();
