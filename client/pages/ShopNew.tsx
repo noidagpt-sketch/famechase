@@ -585,11 +585,6 @@ function ShopNew() {
                       </p>
 
                       <div className="flex items-center gap-4 mb-4 flex-wrap">
-                        <span className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-3 py-1 rounded-full text-sm font-bold animate-pulse">
-                          {language === "hindi"
-                            ? "45 दिन फ्री (लॉन्च ऑफर)"
-                            : "Get Free for 45 Days (Launch Offer)"}
-                        </span>
                         {isPurchased && (
                           <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
                             ✅ {language === "hindi" ? "खरीदा गया" : "Purchased"}
@@ -666,7 +661,7 @@ function ShopNew() {
                                 {currentLang.buyNow} - ₹{product.price}
                               </button>
                               <a
-                                href="https://www.instamojo.com/@famechase"
+                                href={`https://www.instamojo.com/@famechase/?purpose=${encodeURIComponent(product.name + ' - FameChase Creator Tool')}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="w-full flex justify-center items-center gap-2 bg-blue-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-blue-700 transition-all mb-2"
@@ -677,6 +672,12 @@ function ShopNew() {
                               <p className="text-xs text-gray-600 mb-4 text-center">
                                 {currentLang.instamojoNote}
                               </p>
+                              <button
+                                onClick={() => handlePurchase(product.id)}
+                                className="w-full flex justify-center items-center gap-2 bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold py-3 px-6 rounded-xl hover:from-orange-600 hover:to-red-600 transition-all animate-pulse"
+                              >
+                                {language === "hindi" ? "45 दिन फ्री पाएं (लॉन्च ऑफर)" : "Get Free for 45 Days (Launch Offer)"}
+                              </button>
                             </>
                           )}
 
@@ -897,7 +898,7 @@ function ShopNew() {
 
             <div className="flex flex-col gap-2 mb-4">
               <a
-                href="https://www.instamojo.com/@famechase"
+                href={`https://www.instamojo.com/@famechase/?purpose=${encodeURIComponent((getProductConfig(showPaymentForm)?.name || '') + ' - FameChase Creator Tool')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full flex justify-center items-center gap-2 bg-blue-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-blue-700 transition-all"
@@ -908,6 +909,12 @@ function ShopNew() {
               <p className="text-xs text-gray-600 text-center">
                 {currentLang.instamojoNoteShort}
               </p>
+              <button
+                onClick={() => handlePurchase(showPaymentForm)}
+                className="w-full flex justify-center items-center gap-2 bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold py-3 px-6 rounded-xl hover:from-orange-600 hover:to-red-600 transition-all animate-pulse"
+              >
+                {language === "hindi" ? "45 दिन फ्री पाएं (लॉन्च ऑफर)" : "Get Free for 45 Days (Launch Offer)"}
+              </button>
             </div>
 
             <div className="flex gap-4">

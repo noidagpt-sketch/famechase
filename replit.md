@@ -10,6 +10,15 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
 
+- **2026-02-17**: Major UI/UX improvements:
+  - Restored quiz to 13 steps (removed Q20 DNA report upload)
+  - Added "Get Free for 45 Days (Launch Offer)" button below Instamojo payment in shop
+  - Enhanced PDF downloads with colored headers, branded footer, visual formatting
+  - Added collapsible HIDE/View toggle for all admin dashboard sections
+  - Created /login page for user registration and login
+  - Added Instamojo payment purpose descriptions in links
+  - Added phone/city display in admin purchases table
+  - Light theme with proper text visibility
 - **2026-02-10**: Built production-ready Express backend with PostgreSQL integration:
   - JWT authentication (signup, login, admin login) with bcrypt password hashing
   - Auto-created 6 database tables (users, admins, quiz_data, downloads, submissions, purchases)
@@ -27,7 +36,7 @@ Preferred communication style: Simple, everyday language.
 - **State Management**: TanStack React Query for server state, local React state otherwise
 - **Path aliases**: `@/` maps to `./client/`, `@shared/` maps to `./shared/`
 - **Entry point**: `client/App.tsx` renders into `index.html`'s `#root` div
-- **Key pages**: Index (landing), QuizStart -> Quiz -> Results (main user flow), ShopNew (product store), PaymentSuccess/PaymentFailure, AdminLogin -> AdminDashboard/AdminAnalytics, TestSupabase (debug)
+- **Key pages**: Index (landing), QuizStart -> Quiz (13 steps) -> Results (main user flow), ShopNew (product store), UserLogin (user auth), PaymentSuccess/PaymentFailure, AdminLogin -> AdminDashboard/AdminAnalytics, TestSupabase (debug)
 - **Routes**: All defined in `client/App.tsx`. Add new routes above the catch-all `*` route.
 
 ### Backend (Express API)

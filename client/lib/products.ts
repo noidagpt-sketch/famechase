@@ -1,5 +1,5 @@
 // Product Management System
-import { PDFDocument, StandardFonts, type PDFFont } from "pdf-lib";
+import { PDFDocument, StandardFonts, type PDFFont, rgb } from "pdf-lib";
 
 // Sanitize content for PDF rendering by removing unsupported Unicode characters
 function sanitizeContentForPDF(content: string): string {
@@ -9373,57 +9373,155 @@ export async function downloadFile(
 
         (async () => {
           try {
-            // Create PDF document
             const pdfDoc = await PDFDocument.create();
-            const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-            const fontSize = 12;
-            const lineHeight = fontSize * 1.4;
-            const margin = 48;
+            const fontRegular = await pdfDoc.embedFont(StandardFonts.Helvetica);
+            const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+            const margin = 50;
+            const bodySize = 11;
+            const headingSize = 16;
+            const subHeadingSize = 13;
+            const bodyLineHeight = bodySize * 1.5;
+            const brandColor = rgb(0.13, 0.59, 0.95);
+            const headingColor = rgb(0.1, 0.1, 0.3);
+            const bodyColor = rgb(0.2, 0.2, 0.2);
+            const accentColor = rgb(0.18, 0.8, 0.44);
+            const lightGray = rgb(0.93, 0.93, 0.93);
 
             let page = pdfDoc.addPage();
             let pageSize = page.getSize();
             const maxWidth = pageSize.width - margin * 2;
             let yPosition = pageSize.height - margin;
 
-            // Sanitize and process content
+            const addHeaderBar = (pg: typeof page) => {
+              pg.drawRectangle({
+                x: 0, y: pageSize.height - 36,
+                width: pageSize.width, height: 36,
+                color: brandColor,
+              });
+              pg.drawText("FameChase.com", {
+                x: margin, y: pageSize.height - 26,
+                size: 14, font: fontBold, color: rgb(1, 1, 1),
+              });
+              pg.drawText("Creator Growth Platform", {
+                x: pageSize.width - margin - 140, y: pageSize.height - 26,
+                size: 10, font: fontRegular, color: rgb(1, 1, 1),
+              });
+            };
+
+            const addFooter = (pg: typeof page, pageNum: number) => {
+              pg.drawRectangle({
+                x: 0, y: 0,
+                width: pageSize.width, height: 28,
+                color: lightGray,
+              });
+              pg.drawText(`Page ${pageNum}  |  www.famechase.com  |  All Rights Reserved`, {
+                x: margin, y: 10,
+                size: 8, font: fontRegular, color: rgb(0.5, 0.5, 0.5),
+              });
+            };
+
+            let pageNum = 1;
+            addHeaderBar(page);
+            yPosition = pageSize.height - 56;
+
+            const ensureSpace = (needed: number) => {
+              if (yPosition < margin + 28 + needed) {
+                addFooter(page, pageNum);
+                pageNum++;
+                page = pdfDoc.addPage();
+                pageSize = page.getSize();
+                addHeaderBar(page);
+                yPosition = pageSize.height - 56;
+              }
+            };
+
             const sanitizedContent = sanitizeContentForPDF(content);
             const normalizedContent = sanitizedContent.replace(/\r\n/g, "\n");
             const paragraphs = normalizedContent.split("\n");
 
             for (const paragraph of paragraphs) {
-              const lines = wrapTextToLines(
-                paragraph,
-                font,
-                fontSize,
-                maxWidth,
-              );
+              const trimmed = paragraph.trim();
 
-              if (lines.length === 0) {
-                yPosition -= lineHeight;
+              const isMainHeading = /^[A-Z][A-Z\s\-:&,]{5,}$/.test(trimmed) || /^#{1,2}\s/.test(trimmed);
+              const isSubHeading = /^#{3,}\s/.test(trimmed) || /^[A-Z][A-Za-z\s\-:&,]{3,}:$/.test(trimmed) || /^\d+\.\s+[A-Z]/.test(trimmed);
+              const isBullet = /^\s*[-*+]\s/.test(paragraph) || /^\s*[0-9]+\.\s/.test(paragraph);
+              const isSeparator = /^[-=_]{3,}$/.test(trimmed);
+
+              if (isSeparator) {
+                ensureSpace(10);
+                page.drawRectangle({
+                  x: margin, y: yPosition - 2,
+                  width: maxWidth, height: 1.5,
+                  color: brandColor,
+                });
+                yPosition -= 14;
                 continue;
               }
 
-              for (const line of lines) {
-                if (yPosition < margin) {
-                  page = pdfDoc.addPage();
-                  pageSize = page.getSize();
-                  yPosition = pageSize.height - margin;
-                }
+              const cleanText = trimmed.replace(/^#{1,6}\s*/, "");
 
-                page.drawText(line, {
-                  x: margin,
-                  y: yPosition,
-                  size: fontSize,
-                  font,
+              if (isMainHeading && cleanText.length > 0) {
+                ensureSpace(headingSize * 2.5);
+                yPosition -= 8;
+                page.drawRectangle({
+                  x: margin - 4, y: yPosition - 6,
+                  width: maxWidth + 8, height: headingSize + 12,
+                  color: rgb(0.93, 0.95, 1),
                 });
-
-                yPosition -= lineHeight;
+                page.drawRectangle({
+                  x: margin - 4, y: yPosition - 6,
+                  width: 4, height: headingSize + 12,
+                  color: brandColor,
+                });
+                const headLines = wrapTextToLines(cleanText, fontBold, headingSize, maxWidth - 10);
+                for (const hl of headLines) {
+                  page.drawText(hl, { x: margin + 6, y: yPosition, size: headingSize, font: fontBold, color: headingColor });
+                  yPosition -= headingSize * 1.4;
+                }
+                yPosition -= 6;
+                continue;
               }
 
-              yPosition -= lineHeight * 0.5;
+              if (isSubHeading && cleanText.length > 0) {
+                ensureSpace(subHeadingSize * 2);
+                yPosition -= 4;
+                const subLines = wrapTextToLines(cleanText, fontBold, subHeadingSize, maxWidth);
+                for (const sl of subLines) {
+                  page.drawText(sl, { x: margin, y: yPosition, size: subHeadingSize, font: fontBold, color: brandColor });
+                  yPosition -= subHeadingSize * 1.4;
+                }
+                yPosition -= 4;
+                continue;
+              }
+
+              if (isBullet) {
+                ensureSpace(bodyLineHeight);
+                const bulletText = cleanText.replace(/^\s*[-*+]\s*/, "").replace(/^\s*[0-9]+\.\s*/, "");
+                page.drawText("\u2022", { x: margin + 6, y: yPosition, size: bodySize, font: fontBold, color: accentColor });
+                const bLines = wrapTextToLines(bulletText, fontRegular, bodySize, maxWidth - 20);
+                for (const bl of bLines) {
+                  ensureSpace(bodyLineHeight);
+                  page.drawText(bl, { x: margin + 18, y: yPosition, size: bodySize, font: fontRegular, color: bodyColor });
+                  yPosition -= bodyLineHeight;
+                }
+                continue;
+              }
+
+              if (!cleanText) {
+                yPosition -= bodyLineHeight * 0.6;
+                continue;
+              }
+
+              const lines = wrapTextToLines(cleanText, fontRegular, bodySize, maxWidth);
+              for (const line of lines) {
+                ensureSpace(bodyLineHeight);
+                page.drawText(line, { x: margin, y: yPosition, size: bodySize, font: fontRegular, color: bodyColor });
+                yPosition -= bodyLineHeight;
+              }
+              yPosition -= bodyLineHeight * 0.3;
             }
 
-            // Save and download
+            addFooter(page, pageNum);
             const pdfBytes = await pdfDoc.save();
             clearTimeout(timeoutId);
             resolve(pdfBytes);

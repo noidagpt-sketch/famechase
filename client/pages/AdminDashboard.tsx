@@ -135,6 +135,11 @@ export default function AdminDashboard() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
   const [expandedUserId, setExpandedUserId] = useState<number | null>(null);
+  const [hiddenSections, setHiddenSections] = useState<Record<string, boolean>>({});
+
+  const toggleSection = (section: string) => {
+    setHiddenSections(prev => ({ ...prev, [section]: !prev[section] }));
+  };
 
   useEffect(() => {
     const token = getAdminToken();
@@ -497,7 +502,17 @@ export default function AdminDashboard() {
           </div>
 
           <div className="p-6">
-            {activeTab !== "overview" && (
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-gray-900 capitalize">{activeTab === "traffic" ? "Traffic Log" : activeTab}</h3>
+              <button
+                onClick={() => toggleSection(activeTab)}
+                className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
+              >
+                {hiddenSections[activeTab] ? <><ChevronDown className="w-4 h-4" /> View</> : <><ChevronUp className="w-4 h-4" /> Hide</>}
+              </button>
+            </div>
+
+            {!hiddenSections[activeTab] && activeTab !== "overview" && (
               <div className="flex gap-4 mb-6">
                 <div className="relative flex-1">
                   <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -519,7 +534,11 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {activeTab === "overview" && (
+            {hiddenSections[activeTab] && (
+              <p className="text-gray-400 text-sm italic">Section hidden. Click "View" to expand.</p>
+            )}
+
+            {!hiddenSections[activeTab] && activeTab === "overview" && (
               <div className="space-y-6">
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Purchases</h3>
@@ -574,7 +593,7 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {activeTab === "traffic" && (
+            {!hiddenSections[activeTab] && activeTab === "traffic" && (
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
@@ -613,7 +632,7 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {activeTab === "users" && (
+            {!hiddenSections[activeTab] && activeTab === "users" && (
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
@@ -673,7 +692,7 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {activeTab === "purchases" && (
+            {!hiddenSections[activeTab] && activeTab === "purchases" && (
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
@@ -691,6 +710,8 @@ export default function AdminDashboard() {
                         <td className="py-3 px-4">
                           <div className="font-medium">{p.customer_name}</div>
                           <div className="text-xs text-gray-500">{p.customer_email}</div>
+                          {p.customer_phone && <div className="text-xs text-gray-400">{p.customer_phone}</div>}
+                          {p.customer_city && <div className="text-xs text-gray-400">{p.customer_city}</div>}
                         </td>
                         <td className="py-3 px-4">
                           <div className="font-medium">{p.product_name || p.product_id}</div>
@@ -717,7 +738,7 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {activeTab === "downloads" && (
+            {!hiddenSections[activeTab] && activeTab === "downloads" && (
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
@@ -764,7 +785,7 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {activeTab === "products" && (
+            {!hiddenSections[activeTab] && activeTab === "products" && (
               <div>
                 <div className="flex items-center justify-between mb-6">
                   <div>
