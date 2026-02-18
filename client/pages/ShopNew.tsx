@@ -58,7 +58,11 @@ function ShopNew() {
     }
   }, []);
 
-  const checkQuizCompletion = () => quizData && quizData.name && quizData.email && quizData.niche && quizData.goals;
+  const checkQuizCompletion = () => {
+    if (!quizData) return false;
+    // Strict check for name, email, niche, and goals
+    return Boolean(quizData.name && quizData.email && quizData.niche && quizData.goals);
+  };
 
   const handleBuyClick = (productId: string) => {
     if (!checkQuizCompletion()) { setShowQuizRequiredPopup(true); return; }
@@ -179,54 +183,59 @@ function ShopNew() {
         <p className="text-gray-500 text-center mb-10 max-w-2xl mx-auto">Professional growth kits and courses to accelerate your influencer journey.</p>
         
         <div className="grid gap-8">
-          {products.map(p => (
-            <div key={p.id} className="p-6 md:p-8 border-2 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 border-gray-100 bg-white group">
-              <div className="flex flex-col lg:flex-row gap-8">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="bg-blue-50 text-blue-600 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">{p.category}</span>
-                    {p.id === "complete-growth-kit" && <span className="bg-yellow-100 text-yellow-700 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Bestseller</span>}
+          {products.map(p => {
+            const isPurchased = isProductPurchased(p.id);
+            const needsQuiz = !checkQuizCompletion();
+            
+            return (
+              <div key={p.id} className="p-6 md:p-8 border-2 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 border-gray-100 bg-white group">
+                <div className="flex flex-col lg:flex-row gap-8">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="bg-blue-50 text-blue-600 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">{p.category}</span>
+                      {p.id === "complete-growth-kit" && <span className="bg-yellow-100 text-yellow-700 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Bestseller</span>}
+                    </div>
+                    <h3 className="text-2xl md:text-3xl font-bold mb-3 group-hover:text-blue-600 transition-colors">{p.name}</h3>
+                    <p className="text-gray-600 mb-6 text-base leading-relaxed">{p.description}</p>
+                    <div className="grid sm:grid-cols-2 gap-3 mb-8">
+                      {p.features.map(f => (
+                        <li key={f} className="flex items-start gap-3 text-sm text-gray-700 list-none">
+                          <CheckCircle className="w-5 h-5 text-green-500 shrink-0 mt-0.5"/> 
+                          <span>{f}</span>
+                        </li>
+                      ))}
+                    </div>
                   </div>
-                  <h3 className="text-2xl md:text-3xl font-bold mb-3 group-hover:text-blue-600 transition-colors">{p.name}</h3>
-                  <p className="text-gray-600 mb-6 text-base leading-relaxed">{p.description}</p>
-                  <div className="grid sm:grid-cols-2 gap-3 mb-8">
-                    {p.features.map(f => (
-                      <li key={f} className="flex items-start gap-3 text-sm text-gray-700 list-none">
-                        <CheckCircle className="w-5 h-5 text-green-500 shrink-0 mt-0.5"/> 
-                        <span>{f}</span>
-                      </li>
-                    ))}
-                  </div>
-                </div>
-                <div className="lg:w-72 flex flex-col gap-4">
-                  <div className="text-center p-6 bg-gray-50 rounded-2xl border border-gray-100">
-                    <div className="text-4xl font-black text-gray-900 mb-1">₹{p.price}</div>
-                    <div className="text-base text-gray-400 line-through font-medium">₹{p.originalPrice}</div>
-                    <div className="mt-2 text-red-500 text-xs font-bold bg-red-50 py-1 px-2 rounded-full inline-block">SAVE {Math.round((1 - p.price/p.originalPrice) * 100)}%</div>
-                  </div>
-                  
-                  <div className="flex flex-col gap-3">
-                    {isProductPurchased(p.id) ? (
-                      <button onClick={() => setShowSuccessPage(p.id)} className="w-full bg-green-600 text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2 hover:bg-green-700 transition-colors shadow-lg shadow-green-100">
-                        <Download className="w-5 h-5"/> Download Products
-                      </button>
-                    ) : (
-                      <>
-                        <button onClick={() => handleBuyClick(p.id)} className="w-full bg-gray-900 text-white font-bold py-4 rounded-2xl hover:bg-black transition-colors shadow-lg shadow-gray-200">Buy Now</button>
-                        <button onClick={() => handleInstamojoClick(p.id)} className="w-full bg-[#0070ba] text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2 hover:bg-[#005ea6] transition-colors shadow-lg shadow-blue-100">
-                          <ExternalLink className="w-5 h-5"/> Pay Instamojo
+                  <div className="lg:w-72 flex flex-col gap-4">
+                    <div className="text-center p-6 bg-gray-50 rounded-2xl border border-gray-100">
+                      <div className="text-4xl font-black text-gray-900 mb-1">₹{p.price}</div>
+                      <div className="text-base text-gray-400 line-through font-medium">₹{p.originalPrice}</div>
+                      <div className="mt-2 text-red-500 text-xs font-bold bg-red-50 py-1 px-2 rounded-full inline-block">SAVE {Math.round((1 - p.price/p.originalPrice) * 100)}%</div>
+                    </div>
+                    
+                    <div className="flex flex-col gap-3">
+                      {isPurchased && !needsQuiz ? (
+                        <button onClick={() => setShowSuccessPage(p.id)} className="w-full bg-green-600 text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2 hover:bg-green-700 transition-colors shadow-lg shadow-green-100">
+                          <Download className="w-5 h-5"/> Download Products
                         </button>
-                        <button onClick={() => handleLaunchOfferClick(p.id)} className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold py-4 rounded-2xl text-xs uppercase tracking-tight hover:shadow-xl transition-all animate-pulse">
-                          Get Free for 45 Days (Launch Offer)
-                        </button>
-                        <p className="text-[10px] text-gray-400 text-center italic leading-tight px-4 mt-1">Return and click download after paying with Instamojo.</p>
-                      </>
-                    )}
+                      ) : (
+                        <>
+                          <button onClick={() => handleBuyClick(p.id)} className="w-full bg-gray-900 text-white font-bold py-4 rounded-2xl hover:bg-black transition-colors shadow-lg shadow-gray-200">Buy Now</button>
+                          <button onClick={() => handleInstamojoClick(p.id)} className="w-full bg-[#0070ba] text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2 hover:bg-[#005ea6] transition-colors shadow-lg shadow-blue-100">
+                            <ExternalLink className="w-5 h-5"/> Pay Instamojo
+                          </button>
+                          <button onClick={() => handleLaunchOfferClick(p.id)} className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold py-4 rounded-2xl text-xs uppercase tracking-tight hover:shadow-xl transition-all animate-pulse">
+                            Get Free for 45 Days (Launch Offer)
+                          </button>
+                          <p className="text-[10px] text-gray-400 text-center italic leading-tight px-4 mt-1">Return and click download after paying with Instamojo.</p>
+                        </>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </main>
 
