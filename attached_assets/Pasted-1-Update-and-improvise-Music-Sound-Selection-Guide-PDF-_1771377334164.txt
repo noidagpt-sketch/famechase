@@ -1,0 +1,18 @@
+1.Update and improvise “Music & Sound Selection Guide” PDF content as per real market trends and market research for “Instagram Reels Mastery Course” 
+2. In “Instagram Reels Mastery Course” “Pay with Instamojo” and “ Get Free for 45 Days (Launch Offer)” button are missing “Complete Creator Growth Kit” “Brand Collaboration Masterclass” 
+3. Products are not locked with QUIZ attempt wall as they were earlier, Lock all products access with quiz wall. Why have you missed this important feature of this whole product idea ?
+4. Admin dashboard “product” modification is not reflecting in frontend of famechase.com. Why?
+5. No content is inside “Contract Templates” PDF for product “Complete Creator Growth Kit”. WHY?
+6. Every PDF in Every product should have USER INFO. Why it’s not there? And always navigate to the products user looking for or top of the page in redirect. Why it’s not there.
+7. Why “Contract Templates” “50+ Brand Contact Database” and “Pitch Deck Templates” PDF are blank with no content inside “Brand Collaboration Masterclass”.
+8. Why all PDF contents are not optimized and as per latest market trends so far and why the 
+9. Famechase.com web app is not optimized for mobile and other device so far.
+10. why these buttons “Take Quiz, Shop, Get Started Free” are not available when website is open in mobile device.
+11. Why Purpose of payment is not less then 24 words when products are purchased with “Pay with Instamojo”
+•	12. Why detail about features like “2-hour video training (Step-by-step viral formula)” “BONUS: Live monthly Q&A sessions with viral creators” “2-hour comprehensive video training” “2-hour video training series” “Bonus: 1-on-1 Strategy Call” in products descriptions, are ignored in products offering when user buy them. 
+•	13. Make all products layouts more optimized for desktop and mobile app.
+•	14. Why are not capturing all the activities detail done by users on website in Admin dashboard properly.
+•	15 Do not waste credits and do the work completely as assigned to you. Otherwise do not use credit to waste. Use only fast mode with no excuse.
+
+
+

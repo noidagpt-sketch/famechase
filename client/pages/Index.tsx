@@ -17,6 +17,7 @@ import {
   MapPin,
   Clock,
   X,
+  Menu,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -90,7 +91,7 @@ const translations = {
       },
       premiumUpgrade: {
         badge: "🚀 UPGRADE TO PRO",
-        title: "Complete Creator Business Kit - ��497",
+        title: "Complete Creator Business Kit - ₹497",
         subtitle:
           "Everything you need to turn your content into a profitable business",
         features: [
@@ -174,7 +175,7 @@ const translations = {
       description: "Empowering creators to build profitable businesses",
       links: ["Take Quiz", "Shop", "Results"],
       copyright:
-        "�� 2025 FameChase.com. All rights reserved. | Built for creators, by creators.",
+        "© 2025 FameChase.com. All rights reserved. | Built for creators, by creators.",
       legal: {
         about: "About FameChase",
         contact: "Contact Us",
@@ -204,9 +205,9 @@ const translations = {
       subtitle:
         "केवल 3 मिनट में अपना व्यक्तिगत क्रिएटर ग्रोथ किट, प्रोफेशनल मीडिया किट, और AI-पावर्ड रणनीति प्राप्त करें।",
       proofPoints: [
-        "100% मुफ��त विश्लेषण",
+        "100% मुफ्त विश्लेषण",
         "तुरंत डाउनलोड",
-        "असली बिज���नेस टूल्स",
+        "असली बिजनेस टूल्स",
       ],
       ctaPrimary: "अपना क्रिएटर क्विज़ अभी शुरू करें",
       ctaSecondary: "क्रिएटर टूल्स देखें",
@@ -222,12 +223,12 @@ const translations = {
     whatYouGet: {
       title: "आपको तुरंत मिलता है",
       subtitle:
-        "अपना क्विज़ पूरा करें और ₹10,000+ मूल्य के प्रोफेशनल टूल्स ���क बिल्कुल ���ुफ्त तुरंत पहुँच प्राप्त करें",
+        "अपना क्विज़ पूरा करें और ₹10,000+ मूल्य के प्रोफेशनल टूल्स तक बिल्कुल मुफ्त तुरंत पहुँच प्राप्त करें",
       deliverables: {
         fameScore: {
           title: "व्यक्तिगत फेम स्कोर",
           description:
-            "आपके कंटेंट, ऑडियंस, और विकास क्षमता का AI-powered विश्ल��षण जिसमें कार��यशील सुझाव हैं।",
+            "आपके कंटेंट, ऑडियंस, और विकास क्षमता का AI-powered विश्लेषण जिसमें कार्यशील सुझाव हैं।",
           badge: "✓ तुरंत PDF रिपोर्ट",
         },
         mediaKit: {
@@ -247,7 +248,7 @@ const translations = {
         badge: "🚀 प्रो में अपग्रेड करें",
         title: "कम्प्लीट क्रिएटर बिज़नेस किट - ₹497",
         subtitle:
-          "अपने ���ंटें��� को लाभदायक व्यवसाय में बदलने के लिए आवश्यक सब कुछ",
+          "अपने कंटेंट को लाभदायक व्यवसाय में बदलने के लिए आवश्यक सब कुछ",
         features: [
           "30+ ईमेल टेम्प्लेट्स",
           "लाइव प्रोफाइल पेज",
@@ -263,13 +264,13 @@ const translations = {
       steps: [
         {
           number: "1",
-          title: "📝 क्विज़ प���रा करें (3 मिनट)",
+          title: "📝 क्विज़ पूरा करें (3 मिनट)",
           description:
             "अपने कंटेंट, ऑडियंस, लक्ष्यों और वर्तमान चुनौतियों के बारे में प्रश्नों के उत्तर दें। हमारा AI सब कुछ विश्लेषित करता है।",
         },
         {
           number: "2",
-          title: "🔍 तुरंत वि��्लेषण प्राप्त करें",
+          title: "🔍 तुरंत विश्लेषण प्राप्त करें",
           description:
             "अपना फेम स्कोर, व्यक्तिगत विकास रणनीति और प्रोफेशनल टूल्स तुरंत प्राप्त करें।",
         },
@@ -280,16 +281,16 @@ const translations = {
             "30 दिनों के भीतर अपना पहला पेड कोलैबोरेशन हासिल करने के लिए अपनी मीडिया किट और आउटरीच टेम्प्लेट्स का उपयोग करें।",
         },
       ],
-      cta: "अपनी क्रिएटर या���्रा अभी शुरू करें",
+      cta: "अपनी क्रिएटर यात्रा अभी शुरू करें",
       ctaSubtext:
         "10,000+ क्रिएटर्स से जुड़ें जिन्होंने अपने जुनून को लाभ में बदला है",
     },
     successStories: {
       title: "क्रिएटर सफलता की कहानियां",
-      subtitle: "अ���ली क्रिएटर्स, असली परिणाम, असली आय व��द्धि",
+      subtitle: "असली क्रिएटर्स, असली परिणाम, असली आय वृद्धि",
       stories: [
         {
-          name: "अन���्या शर्मा",
+          name: "अनन्या शर्मा",
           role: "ब्यूटी क्रिएटर",
           avatar: "अ",
           testimonial:
@@ -297,11 +298,11 @@ const translations = {
           result: "+₹35K पहला ब्रांड डील",
         },
         {
-          name: "विकाश मल्हो��्रा",
+          name: "विकाश मल्होत्रा",
           role: "टेक रिव्यूअर",
           avatar: "वि",
           testimonial:
-            "ग्रोथ स्ट्र��टेजी ने मुझे अपने ऑडिय��स को बेहतर समझने में मदद की। मैंने इनसाइट्स का उपयोग करके कंटेंट को ऑप्टिमाइज़ किया और 4 महीने में 5K से 25K फॉलोअर्स तक पहुँचा।",
+            "ग्रोथ स्ट्रैटेजी ने मुझे अपने ऑडियंस को बेहतर समझने में मदद की। मैंने इनसाइट्स का उपयोग करके कंटेंट को ऑप्टिमाइज़ किया और 4 महीने में 5K से 25K फॉलोअर्स तक पहुँचा।",
           result: "+20K फॉलोअर्स 4 महीने में",
         },
         {
@@ -315,10 +316,10 @@ const translations = {
       ],
     },
     finalCta: {
-      title: "अपने कंटेंट को निरंतर आय में बदलने के ल���ए तैयार हैं?",
+      title: "अपने कंटेंट को निरंतर आय में बदलने के लिए तैयार हैं?",
       subtitle:
-        "हजारों क्रिएटर्स से जुड़ें जिन्होंने हमारे सिद्ध फ्रेमवर्क का उपयोग करके सफल व्यवसाय बन���ए हैं",
-      cta: "अपना मुफ्त क���रिएटर ��िट अभी प्राप्त करें",
+        "हजारों क्रिएटर्स से जुड़ें जिन्होंने हमारे सिद्ध फ्रेमवर्क का उपयोग करके सफल व्यवसाय बनाए हैं",
+      cta: "अपना मुफ्त क्रिएटर किट अभी प्राप्त करें",
       benefits: [
         "✓ 100% हमेशा के लिए मुफ्त",
         "✓ तुरंत पहुँच",
@@ -341,617 +342,154 @@ const translations = {
   },
 };
 
-const legalContent = {
-  english: {
-    about: {
-      title: "📄 About FameChase",
-      content: `FameChase helps aspiring influencers and creators unlock their growth potential. Whether you're just starting out or looking to turn your audience into income, we provide personalized insights, tools, and digital products to accelerate your journey.
-
-With AI-powered reports, custom growth strategies, and creator kits designed for Indian and global platforms, we make it easier to grow, brand, and monetize your content—step by step.
-
-Our mission is to make influencer success accessible, strategic, and profitable for creators of all levels.`,
-    },
-    contact: {
-      title: "📬 Contact Us",
-      content: `Have a question, feedback, or partnership inquiry? We're here to help!
-
-📧 Email us at: mail@famechase.com
-📍 Address: E- Block, 1406, Fusion Tower, GBN
-📱 Mobile: 8009785785`,
-    },
-    privacy: {
-      title: "🔒 Privacy Policy",
-      content: `Effective Date: July 9, 2025
-
-At FameChase, your privacy is important to us. This Privacy Policy explains how we collect, use, and protect your information when you use our website and services.
-
-1. What We Collect:
-• Personal details (name, email) via forms or purchases
-• Quiz responses to generate personalized results
-• Device and usage data (via cookies or analytics tools)
-
-2. How We Use It:
-• To provide personalized growth plans
-• To deliver downloadable content
-• To improve our services and user experience
-• To communicate updates and offers
-
-3. Your Data Is Safe:
-We never sell or share your data with third parties. All information is stored securely and used only for service delivery and improvement.
-
-You can request deletion or correction of your data at any time by emailing mail@famechase.com.`,
-    },
-    terms: {
-      title: "📜 Terms & Conditions (T&C) By Famechase.com",
-      content: `Effective Date: July 9, 2025
-
-By using FameChase.com, you agree to the following terms:
-
-1. Use of Service:
-Our services and digital downloads are for personal, non-commercial use. You may not redistribute, resell, or republish them.
-
-2. Payments:
-All purchases are final. Refunds are governed by our Refund Policy.
-
-3. Intellectual Property:
-All content, designs, and tools provided are the intellectual property of FameChase. Unauthorized use is prohibited.
-
-4. Service Availability:
-We reserve the right to modify or discontinue services (free or paid) at any time.
-
-5. Contact:
-For any questions, email us at mail@famechase.com
-
-by famechase.com`,
-    },
-    refund: {
-      title: "↩️ Refund Policy",
-      content: `Effective Date: July 9, 2025
-
-For digital products delivered instantly after purchase, we do not offer refunds.
-If you were charged by mistake or have a billing concern, email mail@famechase.com within 7 days and we will review on a case-by-case basis.`,
-    },
-  },
-  hindi: {
-    about: {
-      title: "📄 FameChase के बारे में",
-      content: `FameChase इच्छुक इन्फ्लुएंसर्स और क्रिएटर्स को उनकी विकास क्षमता को अनलॉक करने में मदद करता है। चाहे आप अभी शुरुआत कर र��े हों या अपने ऑडियंस को आय में बदलना चाह रहे हों, हम आपकी यात्रा को तेज़ करने के लिए व्यक्तिगत अंतर्दृष्टि, टूल्स, और डिजिटल उत्पाद प्रदान करते हैं।
-
-AI-powered रिपोर्ट्स, कस्टम ग्रोथ स्ट्रैटेजीज़, और भारतीय और वैश्विक प्लेटफॉर्म के लिए डिज़ाइन किए गए क्रिएटर किट्स के साथ, हम आपके कंटेंट को बढ़ने, ब्रांड करने, और मुद्रीकर�� करन����� को आसान बनाते हैं—चरणबद्ध तरीके से।
-
-हमारा मिशन सभी स्तरों के क्रिएटर्स के लिए इन्फ्लुएंसर सफलता को सुलभ, रणनीतिक, और लाभदायक बनाना है।`,
-    },
-    contact: {
-      title: "📬 संपर्क करें",
-      content: `कोई प्रश्न, फीडबैक, या पार्टनरशिप पूछताछ है? हम मदद के लिए यहाँ हैं!
-
-📧 हमें ईमेल करें: mail@famechase.com
-📍 Address: E- Block, 1406, Fusion Tower, GBN
-📱 Mobile: 8009785785`,
-    },
-    privacy: {
-      title: "🔒 गोपनीयता नीति",
-      content: `प्रभावी तिथि: 9 जुलाई, 2025
-
-FameChase में, आपकी गोपनीयता हमारे लिए महत्वपूर्ण है। यह गोपनीयता नीति बताती है कि जब आप हमारी वेबसाइट और सेवाओं का उपयोग करते हैं तो हम आपकी जानकारी कैसे एकत��र, उपयोग, और सुरक्षित करते हैं।
-
-1. हम क्या एकत्र करते हैं:
-• फॉर्म या खरीदारी क��� माध्यम से व्यक्तिगत विवरण (नाम, ईमेल)
-• व्यक्तिगत परिणाम उत्पन्न करने के लिए क्विज़ प्रतिक्रियाएं
-• डिवाइस और उपयोग डेटा (कुकीज़ या एनालिटिक्स टूल्स के माध्यम से)
-
-2. हम इसका उपयोग कैसे करते हैं:
-• व्यक्तिगत विकास योजनाएं प्रदान करने के लिए
-• डाउनलोड योग्य सामग्री वितरित करने के लिए
-• हमारी सेवाओं और उपयोगकर्ता अनुभव को बेहतर बनाने के लिए
-• अपडेट्स और ऑफर्स संवाद करने के लिए
-
-3. आपका डेटा सुरक्षित है:
-हम कभी भी आपका डेटा तीसरे पक्ष क�� न���ीं बेचते या साझा नहीं करते। सभी जानकारी सुरक्षित रूप से स���ग्रहीत की जाती ��ै और केवल सेवा वितरण और सुधार के लिए उपयोग की जाती है।
-
-आप mail@famechase.com पर ईमेल करके किसी भी समय अपने डेटा को हटाने या सुधारने का अनुरोध कर सकते हैं।`,
-    },
-    terms: {
-      title: "📜 नियम और शर्तें (T&C)",
-      content: `प्रभावी तिथि: 9 जुलाई, 2025
-
-FameChase.com का उपयोग करके, आप निम्नलिखित शर्तों से सहमत हैं:
-
-1. सेवा का उपयोग:
-हमारी सेवाएं और डिजिटल डाउनलोड व्यक्तिगत, गैर-व्यावसायिक उपयोग के लिए हैं। आप उन्हें पुनर्वितरित, पुनर्विक्रय, या पुनर्प्रकाशित नहीं कर सकते।
-
-2. भुगतान:
-सभी ��रीदारी अंतिम हैं। रिफंड हमारी रिफंड नीति द्वारा नियंत्रित हैं।
-
-3. बौद्धिक संपदा:
-प्रदान की गई सभी सामग्री, डिज़ाइन, और टूल्स FameChase की बौद्धिक ���ंपदा हैं। अनधिकृत उपयोग निषिद्ध है।
-
-4. सेवा उपलब्धता:
-हम किसी भी समय सेवाओं (मुफ्त या पेड) को संशोधित या बंद करने का अधिकार सुरक्षित रखते हैं।
-
-5. संपर्क:
-किसी भी प्रश्न के लिए, हमें mail@famechase.com पर ईमेल करें
-
-by famechase.com`,
-    },
-    refund: {
-      title: "↩️ रिफंड नीति",
-      content: `प्रभावी तिथि: 9 जुलाई, 2025
-
-डिजिटल उत्पाद जो खरीद के बाद तुरंत दिए जाते हैं, उनके लिए हम रिफंड प्रदान नहीं करते।
-यदि आपसे ��लत�� से शुल्क लिया गया है या बिलिंग संबंधी कोई चिंता है, तो 7 दिनों के भीतर mail@famechase.com पर ईमेल करें — हम मामले-दर-मामला स���ीक्षा करेंगे।`,
-    },
-  },
-};
-
-import { sanitizeDeep } from "@/lib/sanitize";
-
 export default function Index() {
   const [language, setLanguage] = useState<"english" | "hindi">(() => {
-    const saved = localStorage.getItem("famechase-language") as
-      | "english"
-      | "hindi";
-    return saved || "english";
+    const saved = localStorage.getItem("famechase-language");
+    return (saved as any) || "english";
   });
-  const [showLegalModal, setShowLegalModal] = useState<string | null>(null);
-  const [showPromo, setShowPromo] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Check if promo should be shown (within 45 days)
   useEffect(() => {
-    const promoStartDate = localStorage.getItem("famechase-promo-start-date");
+    localStorage.setItem("famechase-language", language);
+  }, [language]);
 
-    if (!promoStartDate) {
-      // First time - set the start date
-      localStorage.setItem(
-        "famechase-promo-start-date",
-        new Date().toISOString(),
-      );
-      setShowPromo(true);
-    } else {
-      // Check if 45 days have passed
-      const startDate = new Date(promoStartDate);
-      const currentDate = new Date();
-      const daysPassed = Math.floor(
-        (currentDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24),
-      );
-
-      if (daysPassed >= 45) {
-        setShowPromo(false);
-      } else {
-        setShowPromo(true);
-      }
-    }
-  }, []);
-
-  // Sanitize translations to remove stray symbols
-  const t = sanitizeDeep(translations[language]);
-  const legal = legalContent[language];
-
-  const handleLanguageChange = (newLanguage: "english" | "hindi") => {
-    setLanguage(newLanguage);
-    localStorage.setItem("famechase-language", newLanguage);
-  };
-
-  const openLegalModal = (type: string) => {
-    setShowLegalModal(type);
-  };
-
-  const closeLegalModal = () => {
-    setShowLegalModal(null);
-  };
+  const t = translations[language];
 
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="relative z-10 px-4 py-6 bg-white border-b border-gray-100 sticky top-0 backdrop-blur-sm">
-        <div className="container mx-auto flex justify-between items-center">
-          <div className="text-2xl font-bold text-gray-900">
-            FameChase<span className="text-neon-green">.com</span>
+      <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">
+        <div className="container mx-auto px-4 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Link to="/" className="text-2xl font-black text-gray-900">
+              FameChase<span className="text-blue-600">.com</span>
+            </Link>
           </div>
-          <nav className="hidden md:flex items-center gap-6">
-            <Link
-              to="/quiz"
-              className="text-gray-600 hover:text-gray-900 font-medium"
-            >
-              {t.header.takeQuiz}
-            </Link>
-            <Link
-              to="/shop"
-              className="text-gray-600 hover:text-gray-900 font-medium"
-            >
-              {t.header.shop}
-            </Link>
-            <Link
-              to="/quiz"
-              className="bg-neon-green text-black px-6 py-2 rounded-full font-semibold hover:bg-green-400 transition-colors"
-            >
-              {t.header.getStartedFree}
-            </Link>
-            {/* Language Selector */}
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-8">
+            <Link to="/quiz" className="text-sm font-bold text-gray-600 hover:text-blue-600 transition-colors">{t.header.takeQuiz}</Link>
+            <Link to="/shop" className="text-sm font-bold text-gray-600 hover:text-blue-600 transition-colors">{t.header.shop}</Link>
             <select
               value={language}
-              onChange={(e) =>
-                handleLanguageChange(e.target.value as "english" | "hindi")
-              }
-              className="bg-white border border-gray-300 text-gray-900 px-3 py-2 rounded-lg text-sm font-medium"
+              onChange={(e) => setLanguage(e.target.value as any)}
+              className="bg-transparent border-none text-sm font-bold text-gray-600 focus:ring-0 cursor-pointer"
             >
-              <option value="english">English</option>
-              <option value="hindi">हिंदी</option>
+              {languages.map((l) => (
+                <option key={l.code} value={l.code}>{l.name}</option>
+              ))}
             </select>
-          </nav>
+            <Link to="/quiz" className="bg-blue-600 text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-100">
+              {t.header.getStartedFree}
+            </Link>
+          </div>
+
+          {/* Mobile Toggle */}
+          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden p-2 text-gray-600">
+            <Menu className="w-6 h-6" />
+          </button>
         </div>
+
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden bg-white border-b border-gray-100 p-6 flex flex-col gap-4 animate-in fade-in slide-in-from-top-2">
+            <Link to="/quiz" onClick={() => setIsMenuOpen(false)} className="text-lg font-bold p-2 border-b">{t.header.takeQuiz}</Link>
+            <Link to="/shop" onClick={() => setIsMenuOpen(false)} className="text-lg font-bold p-2 border-b">{t.header.shop}</Link>
+            <div className="flex items-center justify-between p-2">
+              <span className="font-bold text-gray-600">Language</span>
+              <select value={language} onChange={(e) => { setLanguage(e.target.value as any); setIsMenuOpen(false); }} className="border rounded-lg px-2 py-1">
+                {languages.map((l) => <option key={l.code} value={l.code}>{l.name}</option>)}
+              </select>
+            </div>
+            <Link to="/quiz" onClick={() => setIsMenuOpen(false)} className="bg-blue-600 text-white p-4 rounded-2xl text-center font-black shadow-lg">{t.header.getStartedFree}</Link>
+          </div>
+        )}
       </header>
 
-      {/* Launch Promo Banner */}
-      {showPromo && (
-        <div className="bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 text-white py-4 px-4 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-0 left-0 w-40 h-40 bg-white rounded-full mix-blend-multiply filter blur-3xl"></div>
-            <div className="absolute top-0 right-0 w-40 h-40 bg-white rounded-full mix-blend-multiply filter blur-3xl"></div>
-          </div>
-
-          <div className="container mx-auto relative z-10 flex items-center justify-between gap-4 flex-wrap">
-            <div className="flex-1 min-w-0">
-              <h3 className="text-xl md:text-2xl font-bold mb-1">
-                {t.promo.message}
-              </h3>
-              <p className="text-sm md:text-base opacity-90">
-                {t.promo.subtitle}
-              </p>
-            </div>
-            <button
-              onClick={() => setShowPromo(false)}
-              className="flex-shrink-0 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors"
-              aria-label="Close promo banner"
-            >
-              <X className="w-5 h-5" />
-            </button>
+      {/* Promo Bar */}
+      <div className="pt-20">
+        <div className="bg-blue-600 text-white py-3">
+          <div className="container mx-auto px-4 text-center">
+            <p className="text-sm font-bold animate-pulse">{t.promo.message}</p>
           </div>
         </div>
-      )}
+      </div>
 
       {/* Hero Section */}
-      <main className="relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-green-50"></div>
-
-        {/* Content */}
-        <div className="relative z-10 container mx-auto px-4 py-20 text-center">
-          {/* Badge */}
-          <div className="inline-flex items-center bg-neon-green/10 border border-neon-green/30 rounded-full px-6 py-3 mb-8">
-            <span className="text-neon-green text-sm font-semibold">
+      <section className="py-20 md:py-32 overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-block bg-blue-50 text-blue-600 px-4 py-1.5 rounded-full text-sm font-bold mb-6">
               {t.hero.badge}
-            </span>
-          </div>
-
-          {/* Main Heading */}
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
-            {t.hero.title}
-            {t.hero.titleHighlight && (
-              <>
-                <br />
-                <span className="inline-block lg:inline bg-gradient-to-r from-neon-green to-electric-blue bg-clip-text text-transparent mt-[11px] lg:mt-0">
-                  {t.hero.titleHighlight}
-                </span>
-              </>
-            )}
-          </h1>
-
-          {/* Subtitle */}
-          <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed">
-            {t.hero.subtitle}
-          </p>
-
-          {/* Proof Points */}
-          <div className="flex flex-wrap justify-center gap-8 mb-12">
-            {t.hero.proofPoints.map((point, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-2 bg-white/80 px-4 py-2 rounded-full shadow-sm border"
-              >
-                <CheckCircle className="w-5 h-5 text-green-500" />
-                <span className="text-gray-700 font-medium">{point}</span>
-              </div>
-            ))}
-          </div>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-            <Link
-              to="/quiz"
-              className="bg-gradient-to-r from-neon-green to-green-400 text-black font-bold py-4 px-8 rounded-full text-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center gap-3"
-            >
-              <span>{t.hero.ctaPrimary}</span>
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-
-            <Link
-              to="/shop"
-              className="bg-white border-2 border-electric-blue text-electric-blue font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 hover:bg-electric-blue hover:text-white hover:shadow-lg"
-            >
-              {t.hero.ctaSecondary}
-            </Link>
-          </div>
-        </div>
-      </main>
-
-      {/* What You Get Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              {t.whatYouGet.title.split(" ").slice(0, -1).join(" ")}{" "}
-              <span className="text-neon-green">
-                {t.whatYouGet.title.split(" ").slice(-1)}
-              </span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              {t.whatYouGet.subtitle}
+            </div>
+            <h1 className="text-5xl md:text-7xl font-black text-gray-900 mb-8 leading-[1.1]">
+              {t.hero.title} <span className="text-blue-600">{t.hero.titleHighlight}</span>
+            </h1>
+            <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
+              {t.hero.subtitle}
             </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {/* Free Deliverable 1 */}
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow border">
-              <div className="w-16 h-16 bg-neon-green/10 rounded-xl flex items-center justify-center mb-6">
-                <Target className="w-8 h-8 text-neon-green" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">
-                {t.whatYouGet.deliverables.fameScore.title}
-              </h3>
-              <p className="text-gray-600 mb-6">
-                {t.whatYouGet.deliverables.fameScore.description}
-              </p>
-              <div className="text-neon-green font-semibold">
-                {t.whatYouGet.deliverables.fameScore.badge}
-              </div>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+              <Link to="/quiz" className="w-full sm:w-auto bg-blue-600 text-white px-10 py-5 rounded-2xl text-lg font-black hover:bg-blue-700 transition-all shadow-xl shadow-blue-100 flex items-center justify-center gap-2 group">
+                {t.hero.ctaPrimary}
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link to="/shop" className="w-full sm:w-auto bg-gray-50 text-gray-900 px-10 py-5 rounded-2xl text-lg font-bold hover:bg-gray-100 transition-all">
+                {t.hero.ctaSecondary}
+              </Link>
             </div>
-
-            {/* Free Deliverable 2 */}
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow border">
-              <div className="w-16 h-16 bg-electric-blue/10 rounded-xl flex items-center justify-center mb-6">
-                <Download className="w-8 h-8 text-electric-blue" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">
-                {t.whatYouGet.deliverables.mediaKit.title}
-              </h3>
-              <p className="text-gray-600 mb-6">
-                {t.whatYouGet.deliverables.mediaKit.description}
-              </p>
-              <div className="text-electric-blue font-semibold">
-                {t.whatYouGet.deliverables.mediaKit.badge}
-              </div>
-            </div>
-
-            {/* Free Deliverable 3 */}
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow border">
-              <div className="w-16 h-16 bg-soft-violet/10 rounded-xl flex items-center justify-center mb-6">
-                <TrendingUp className="w-8 h-8 text-soft-violet" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">
-                {t.whatYouGet.deliverables.growthStrategy.title}
-              </h3>
-              <p className="text-gray-600 mb-6">
-                {t.whatYouGet.deliverables.growthStrategy.description}
-              </p>
-              <div className="text-soft-violet font-semibold">
-                {t.whatYouGet.deliverables.growthStrategy.badge}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              {t.howItWorks.title.split(" ").slice(0, -1).join(" ")}{" "}
-              <span className="text-neon-green">
-                {t.howItWorks.title.split(" ").slice(-1)}
-              </span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              {t.howItWorks.subtitle}
-            </p>
-          </div>
-
-          <div className="max-w-5xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-8">
-              {t.howItWorks.steps.map((step, index) => (
-                <div key={index} className="text-center">
-                  <div className="relative mb-8">
-                    <div className="w-20 h-20 bg-gradient-to-r from-neon-green to-green-400 rounded-full flex items-center justify-center text-black font-bold text-2xl mx-auto shadow-lg">
-                      {step.number}
-                    </div>
-                    {index < t.howItWorks.steps.length - 1 && (
-                      <div className="absolute top-10 left-1/2 transform -translate-x-1/2 w-full h-0.5 bg-gradient-to-r from-neon-green to-electric-blue hidden md:block md:w-32 md:left-full"></div>
-                    )}
-                  </div>
-                  <div className="bg-white rounded-2xl p-6 shadow-lg border">
-                    <h3 className="text-xl font-bold text-gray-900 mb-3">
-                      {step.title}
-                    </h3>
-                    <p className="text-gray-600">{step.description}</p>
-                  </div>
+            <div className="flex flex-wrap items-center justify-center gap-8 text-sm font-bold text-gray-400">
+              {t.hero.proofPoints.map((p) => (
+                <div key={p} className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500" />
+                  {p}
                 </div>
               ))}
             </div>
           </div>
-
-          {/* CTA */}
-          <div className="text-center mt-16">
-            <Link
-              to="/quiz"
-              className="inline-flex items-center gap-3 bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-4 px-12 rounded-full text-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
-            >
-              {t.howItWorks.cta}
-              <ArrowRight className="w-6 h-6" />
-            </Link>
-            <p className="text-gray-500 mt-4">{t.howItWorks.ctaSubtext}</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Success Stories Preview */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              {t.successStories.title.split(" ").slice(0, -2).join(" ")}{" "}
-              <span className="text-neon-green">
-                {t.successStories.title.split(" ").slice(-2).join(" ")}
-              </span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              {t.successStories.subtitle}
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {t.successStories.stories.map((story, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-2xl p-8 shadow-lg border"
-              >
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-r from-pink-400 to-red-400 rounded-full flex items-center justify-center text-white font-bold">
-                    {story.avatar}
-                  </div>
-                  <div>
-                    <div className="font-semibold text-gray-900">
-                      {story.name}
-                    </div>
-                    <div className="text-gray-600 text-sm">{story.role}</div>
-                  </div>
-                </div>
-                <p className="text-gray-600 mb-4">"{story.testimonial}"</p>
-                <div className="text-neon-green font-semibold">
-                  {story.result}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Final CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-neon-green/10 via-electric-blue/10 to-soft-violet/10">
-        <div className="container mx-auto px-4 text-center">
-          {language === "hindi" ? (
-            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
-              {t.finalCta.title}
-            </h2>
-          ) : (
-            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
-              {t.finalCta.title.split("Consistent")[0]}
-              <br />
-              <span className="bg-gradient-to-r from-neon-green to-electric-blue bg-clip-text text-transparent">
-                Consistent Income?
-              </span>
-            </h2>
-          )}
-          <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
-            {t.finalCta.subtitle}
-          </p>
-
-          <div className="mb-8">
-            <Link
-              to="/quiz"
-              className="inline-flex items-center gap-3 bg-gradient-to-r from-neon-green to-electric-blue text-black font-bold py-6 px-12 rounded-full text-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
-            >
-              {t.finalCta.cta}
-              <ArrowRight className="w-8 h-8" />
-            </Link>
-          </div>
-
-          <div className="text-gray-600">{t.finalCta.benefits.join(" • ")}</div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-white py-12 border-t border-gray-200">
+      <footer className="bg-gray-50 pt-20 pb-10 border-t border-gray-100">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-8">
-            <div className="text-2xl font-bold text-gray-900 mb-4">
-              FameChase<span className="text-neon-green">.com</span>
-            </div>
-            <p className="text-gray-600 mb-6">{t.footer.description}</p>
-
-            {/* Navigation Links */}
-            <div className="flex justify-center gap-8 mb-6">
-              <Link to="/quiz" className="text-gray-600 hover:text-gray-900">
-                {t.footer.links[0]}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
+            <div className="md:col-span-2">
+              <Link to="/" className="text-2xl font-black text-gray-900 mb-6 block">
+                FameChase<span className="text-blue-600">.com</span>
               </Link>
-              <Link to="/shop" className="text-gray-600 hover:text-gray-900">
-                {t.footer.links[1]}
-              </Link>
-              <Link to="/results" className="text-gray-600 hover:text-gray-900">
-                {t.footer.links[2]}
-              </Link>
+              <p className="text-gray-500 max-w-sm mb-8">{t.footer.description}</p>
+              <div className="flex items-center gap-4">
+                <Globe className="w-5 h-5 text-gray-400" />
+                <Mail className="w-5 h-5 text-gray-400" />
+                <Shield className="w-5 h-5 text-gray-400" />
+              </div>
             </div>
-
-            {/* Legal Links */}
-            <div className="flex justify-center gap-6 mb-6 text-sm">
-              <button
-                onClick={() => openLegalModal("about")}
-                className="text-gray-500 hover:text-gray-700 underline"
-              >
-                {t.footer.legal.about}
-              </button>
-              <button
-                onClick={() => openLegalModal("contact")}
-                className="text-gray-500 hover:text-gray-700 underline"
-              >
-                {t.footer.legal.contact}
-              </button>
-              <button
-                onClick={() => openLegalModal("privacy")}
-                className="text-gray-500 hover:text-gray-700 underline"
-              >
-                {t.footer.legal.privacy}
-              </button>
-              <button
-                onClick={() => openLegalModal("refund")}
-                className="text-gray-500 hover:text-gray-700 underline"
-              >
-                {t.footer.legal.refund}
-              </button>
-              <button
-                onClick={() => openLegalModal("terms")}
-                className="text-gray-500 hover:text-gray-700 underline"
-              >
-                {t.footer.legal.terms}
-              </button>
+            <div>
+              <h4 className="font-black text-gray-900 mb-6">Quick Links</h4>
+              <ul className="space-y-4">
+                {t.footer.links.map((link) => (
+                  <li key={link}>
+                    <Link to={`/${link.toLowerCase().replace(" ", "-")}`} className="text-gray-500 hover:text-blue-600 font-medium transition-colors">
+                      {link}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-
-            <p className="text-gray-500 text-sm">{t.footer.copyright}</p>
+            <div>
+              <h4 className="font-black text-gray-900 mb-6">Legal</h4>
+              <ul className="space-y-4">
+                <li><Link to="/privacy" className="text-gray-500 hover:text-blue-600 font-medium">Privacy Policy</Link></li>
+                <li><Link to="/terms" className="text-gray-500 hover:text-blue-600 font-medium">Terms & Conditions</Link></li>
+                <li><Link to="/refund" className="text-gray-500 hover:text-blue-600 font-medium">Refund Policy</Link></li>
+              </ul>
+            </div>
+          </div>
+          <div className="text-center border-t border-gray-200 pt-10">
+            <p className="text-gray-400 text-sm font-medium">{t.footer.copyright}</p>
           </div>
         </div>
       </footer>
-
-      {/* Legal Modal */}
-      {showLegalModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-bold text-gray-900">
-                {legal[showLegalModal as keyof typeof legal]?.title}
-              </h3>
-              <button
-                onClick={closeLegalModal}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </div>
-            <div className="text-gray-600 whitespace-pre-line text-sm leading-relaxed">
-              {legal[showLegalModal as keyof typeof legal]?.content}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
