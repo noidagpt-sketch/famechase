@@ -60,7 +60,6 @@ function ShopNew() {
 
   const checkQuizCompletion = () => {
     if (!quizData) return false;
-    // Strict check for name, email, niche, and goals
     return Boolean(quizData.name && quizData.email && quizData.niche && quizData.goals);
   };
 
@@ -188,43 +187,43 @@ function ShopNew() {
             const needsQuiz = !checkQuizCompletion();
             
             return (
-              <div key={p.id} className="p-6 md:p-8 border-2 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 border-gray-100 bg-white group">
-                <div className="flex flex-col lg:flex-row gap-8">
+              <div key={p.id} className="p-6 md:p-8 border rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border-gray-100 bg-white group">
+                <div className="flex flex-col md:flex-row gap-8">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-3">
                       <span className="bg-blue-50 text-blue-600 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">{p.category}</span>
                       {p.id === "complete-growth-kit" && <span className="bg-yellow-100 text-yellow-700 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Bestseller</span>}
                     </div>
-                    <h3 className="text-2xl md:text-3xl font-bold mb-3 group-hover:text-blue-600 transition-colors">{p.name}</h3>
-                    <p className="text-gray-600 mb-6 text-base leading-relaxed">{p.description}</p>
+                    <h3 className="text-xl md:text-2xl font-bold mb-3 group-hover:text-blue-600 transition-colors">{p.name}</h3>
+                    <p className="text-gray-600 mb-6 text-sm leading-relaxed">{p.description}</p>
                     <div className="grid sm:grid-cols-2 gap-3 mb-8">
                       {p.features.map(f => (
                         <li key={f} className="flex items-start gap-3 text-sm text-gray-700 list-none">
-                          <CheckCircle className="w-5 h-5 text-green-500 shrink-0 mt-0.5"/> 
+                          <CheckCircle className="w-4 h-4 text-green-500 shrink-0 mt-0.5"/> 
                           <span>{f}</span>
                         </li>
                       ))}
                     </div>
                   </div>
-                  <div className="lg:w-72 flex flex-col gap-4">
-                    <div className="text-center p-6 bg-gray-50 rounded-2xl border border-gray-100">
-                      <div className="text-4xl font-black text-gray-900 mb-1">₹{p.price}</div>
-                      <div className="text-base text-gray-400 line-through font-medium">₹{p.originalPrice}</div>
-                      <div className="mt-2 text-red-500 text-xs font-bold bg-red-50 py-1 px-2 rounded-full inline-block">SAVE {Math.round((1 - p.price/p.originalPrice) * 100)}%</div>
+                  <div className="md:w-64 flex flex-col gap-4">
+                    <div className="text-center p-6 bg-gray-50 rounded-xl border border-gray-100">
+                      <div className="text-3xl font-black text-gray-900 mb-1">₹{p.price}</div>
+                      <div className="text-sm text-gray-400 line-through font-medium">₹{p.originalPrice}</div>
+                      <div className="mt-2 text-red-500 text-[10px] font-bold bg-red-50 py-1 px-2 rounded-full inline-block">SAVE {Math.round((1 - p.price/p.originalPrice) * 100)}%</div>
                     </div>
                     
                     <div className="flex flex-col gap-3">
                       {isPurchased && !needsQuiz ? (
-                        <button onClick={() => setShowSuccessPage(p.id)} className="w-full bg-green-600 text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2 hover:bg-green-700 transition-colors shadow-lg shadow-green-100">
-                          <Download className="w-5 h-5"/> Download Products
+                        <button onClick={() => setShowSuccessPage(p.id)} className="w-full bg-green-600 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 hover:bg-green-700 transition-colors shadow-lg shadow-green-100">
+                          <Download className="w-4 h-4"/> Download Products
                         </button>
                       ) : (
                         <>
-                          <button onClick={() => handleBuyClick(p.id)} className="w-full bg-gray-900 text-white font-bold py-4 rounded-2xl hover:bg-black transition-colors shadow-lg shadow-gray-200">Buy Now</button>
-                          <button onClick={() => handleInstamojoClick(p.id)} className="w-full bg-[#0070ba] text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2 hover:bg-[#005ea6] transition-colors shadow-lg shadow-blue-100">
-                            <ExternalLink className="w-5 h-5"/> Pay Instamojo
+                          <button onClick={() => handleBuyClick(p.id)} className="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-black transition-colors">Buy Now</button>
+                          <button onClick={() => handleInstamojoClick(p.id)} className="w-full bg-[#0070ba] text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 hover:bg-[#005ea6] transition-colors">
+                            <ExternalLink className="w-4 h-4"/> Pay Instamojo
                           </button>
-                          <button onClick={() => handleLaunchOfferClick(p.id)} className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold py-4 rounded-2xl text-xs uppercase tracking-tight hover:shadow-xl transition-all animate-pulse">
+                          <button onClick={() => handleLaunchOfferClick(p.id)} className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold py-3 rounded-xl text-[10px] uppercase tracking-tight hover:shadow-lg transition-all animate-pulse">
                             Get Free for 45 Days (Launch Offer)
                           </button>
                           <p className="text-[10px] text-gray-400 text-center italic leading-tight px-4 mt-1">Return and click download after paying with Instamojo.</p>
@@ -241,14 +240,14 @@ function ShopNew() {
 
       {showQuizRequiredPopup && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
-          <div className="bg-white p-8 md:p-10 rounded-[2rem] max-w-sm w-full text-center shadow-2xl scale-in-center">
+          <div className="bg-white p-8 md:p-10 rounded-3xl max-w-sm w-full text-center shadow-2xl scale-in-center">
             <div className="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6">
               <Target className="w-10 h-10 text-red-500" />
             </div>
             <h3 className="text-2xl font-black text-gray-900 mb-3">Complete Your Profile First</h3>
             <p className="text-gray-500 mb-8 text-sm leading-relaxed">Before purchasing premium tools, please finish the 2-minute creator quiz.</p>
             <div className="flex flex-col gap-3">
-              <Link to="/quiz" className="bg-blue-600 text-white font-bold py-4 rounded-2xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-100">Take the Quiz Now</Link>
+              <Link to="/quiz" className="bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-100">Take the Quiz Now</Link>
               <button onClick={() => setShowQuizRequiredPopup(false)} className="text-gray-400 text-sm font-medium hover:text-gray-600 py-2">Later</button>
             </div>
           </div>
