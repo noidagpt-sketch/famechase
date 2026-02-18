@@ -141,10 +141,19 @@ function ShopNew() {
     );
   }
 
+  const getProductColors = (id: string) => {
+    switch(id) {
+      case "complete-growth-kit": return { bg: "bg-[#e8f5f1]", accent: "bg-[#00c853]", text: "text-[#00c853]", border: "border-[#00c853]/20" };
+      case "instagram-reels-mastery": return { bg: "bg-[#f5eefc]", accent: "bg-[#9c27b0]", text: "text-[#9c27b0]", border: "border-[#9c27b0]/20" };
+      case "brand-collaboration-masterclass": return { bg: "bg-[#fff3e0]", accent: "bg-[#ff9800]", text: "text-[#ff9800]", border: "border-[#ff9800]/20" };
+      default: return { bg: "bg-gray-50", accent: "bg-blue-600", text: "text-blue-600", border: "border-gray-100" };
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <header className="p-4 border-b flex justify-between items-center sticky top-0 bg-white z-50 shadow-sm">
-        <Link to="/" className="text-xl font-bold">FameChase<span className="text-blue-600">.com</span></Link>
+        <Link to="/" className="text-xl font-bold text-[#00c853]">FameChase<span className="text-gray-900">.com</span></Link>
         
         {/* Mobile Menu Toggle */}
         <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden p-2 text-gray-600">
@@ -153,9 +162,10 @@ function ShopNew() {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-6">
-          <Link to="/" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">Home</Link>
-          <Link to="/quiz" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">Take Quiz</Link>
-          <select value={language} onChange={e => setLanguage(e.target.value as any)} className="border rounded-lg px-3 py-1.5 text-sm font-medium focus:ring-2 focus:ring-blue-500 outline-none">
+          <Link to="/" className="text-[10px] font-bold text-gray-600 hover:text-[#00c853] uppercase tracking-widest">Take Quiz</Link>
+          <Link to="/shop" className="text-[10px] font-bold text-gray-600 hover:text-[#00c853] uppercase tracking-widest">Shop</Link>
+          <button className="bg-[#00c853] text-white text-[10px] font-bold px-4 py-2 rounded-full uppercase">Get Started Free</button>
+          <select value={language} onChange={e => setLanguage(e.target.value as any)} className="border rounded-lg px-2 py-1 text-[10px] font-medium focus:ring-1 focus:ring-[#00c853] outline-none">
             <option value="english">English</option>
             <option value="hindi">Hindi</option>
           </select>
@@ -163,12 +173,13 @@ function ShopNew() {
 
         {/* Mobile Navigation Overlay */}
         {isMenuOpen && (
-          <div className="absolute top-full left-0 right-0 bg-white border-b shadow-lg p-4 flex flex-col gap-4 md:hidden animate-in fade-in slide-in-from-top-2">
-            <Link to="/" onClick={() => setIsMenuOpen(false)} className="text-base font-medium p-2 border-b">Home</Link>
-            <Link to="/quiz" onClick={() => setIsMenuOpen(false)} className="text-base font-medium p-2 border-b">Take Quiz</Link>
+          <div className="absolute top-full left-0 right-0 bg-white border-b shadow-lg p-4 flex flex-col gap-4 md:hidden">
+            <Link to="/" onClick={() => setIsMenuOpen(false)} className="text-sm font-medium p-2 border-b">Home</Link>
+            <Link to="/quiz" onClick={() => setIsMenuOpen(false)} className="text-sm font-medium p-2 border-b">Take Quiz</Link>
+            <Link to="/shop" onClick={() => setIsMenuOpen(false)} className="text-sm font-medium p-2 border-b">Shop</Link>
             <div className="flex items-center justify-between p-2">
               <span className="text-sm font-medium text-gray-600">Language:</span>
-              <select value={language} onChange={e => { setLanguage(e.target.value as any); setIsMenuOpen(false); }} className="border rounded-lg px-3 py-1.5 text-sm font-medium">
+              <select value={language} onChange={e => { setLanguage(e.target.value as any); setIsMenuOpen(false); }} className="border rounded-lg px-3 py-1 text-sm">
                 <option value="english">English</option>
                 <option value="hindi">Hindi</option>
               </select>
@@ -177,56 +188,76 @@ function ShopNew() {
         )}
       </header>
 
-      <main className="container mx-auto px-4 py-8 max-w-6xl">
-        <h1 className="text-3xl md:text-4xl font-extrabold text-center mb-2">Creator Tools & Resources</h1>
-        <p className="text-gray-500 text-center mb-10 max-w-2xl mx-auto">Professional growth kits and courses to accelerate your influencer journey.</p>
+      <div className="bg-gradient-to-r from-[#9c27b0] to-[#e91e63] text-white text-center py-2 text-[10px] font-bold uppercase tracking-widest relative">
+        🚀 Launch Promo: All Premium Products Are FREE for 45 Days!
+        <span className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer opacity-70 hover:opacity-100">✕</span>
+      </div>
+
+      <main className="container mx-auto px-4 py-8 max-w-4xl">
+        <div className="text-center mb-10">
+          <h2 className="text-2xl font-black text-gray-900 mb-2">Creator Tools & Resources</h2>
+          <p className="text-gray-500 text-xs font-bold uppercase tracking-widest">Professional tools to accelerate your creator journey.</p>
+          <div className="h-1 w-20 bg-[#00c853] mx-auto mt-4 rounded-full"></div>
+          <h3 className="mt-8 text-lg font-black text-gray-900 uppercase tracking-tight">Premium Creator Tools</h3>
+        </div>
         
-        <div className="grid gap-8">
+        <div className="grid gap-6">
           {products.map(p => {
+            const colors = getProductColors(p.id);
             const isPurchased = isProductPurchased(p.id);
             const needsQuiz = !checkQuizCompletion();
             
             return (
-              <div key={p.id} className="p-6 md:p-8 border rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border-gray-100 bg-white group">
-                <div className="flex flex-col md:flex-row gap-8">
+              <div key={p.id} className={`${colors.bg} p-6 border ${colors.border} rounded-xl shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden`}>
+                <div className="flex flex-col md:flex-row gap-6">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-3">
-                      <span className="bg-blue-50 text-blue-600 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">{p.category}</span>
-                      {p.id === "complete-growth-kit" && <span className="bg-yellow-100 text-yellow-700 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Bestseller</span>}
+                      <span className={`${colors.accent} text-white text-[8px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter`}>{p.category}</span>
+                      {p.id === "complete-growth-kit" && <span className="bg-[#00b0ff] text-white text-[8px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter">Bestseller</span>}
                     </div>
-                    <h3 className="text-xl md:text-2xl font-bold mb-3 group-hover:text-blue-600 transition-colors">{p.name}</h3>
-                    <p className="text-gray-600 mb-6 text-sm leading-relaxed">{p.description}</p>
-                    <div className="grid sm:grid-cols-2 gap-3 mb-8">
+                    <h3 className="text-lg font-black text-gray-900 mb-2">{p.name}</h3>
+                    <p className="text-gray-600 mb-4 text-[10px] font-medium leading-relaxed">{p.description}</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5 mb-6">
                       {p.features.map(f => (
-                        <li key={f} className="flex items-start gap-3 text-sm text-gray-700 list-none">
-                          <CheckCircle className="w-4 h-4 text-green-500 shrink-0 mt-0.5"/> 
+                        <li key={f} className="flex items-start gap-2 text-[10px] text-gray-600 font-medium list-none">
+                          <CheckCircle className={`w-3 h-3 ${colors.text} shrink-0 mt-0.5`}/> 
                           <span>{f}</span>
                         </li>
                       ))}
                     </div>
+                    
+                    <div className="mt-auto pt-4 border-t border-black/5 flex items-center gap-4 text-[8px] font-black uppercase tracking-widest text-[#00c853]">
+                      <span className="flex items-center gap-1"><Shield className="w-2.5 h-2.5" /> 100% Satisfaction Guarantee</span>
+                      <span className="flex items-center gap-1"><Zap className="w-2.5 h-2.5" /> Instant Download • Start Learning Now</span>
+                    </div>
                   </div>
-                  <div className="md:w-64 flex flex-col gap-4">
-                    <div className="text-center p-6 bg-gray-50 rounded-xl border border-gray-100">
-                      <div className="text-3xl font-black text-gray-900 mb-1">₹{p.price}</div>
-                      <div className="text-sm text-gray-400 line-through font-medium">₹{p.originalPrice}</div>
-                      <div className="mt-2 text-red-500 text-[10px] font-bold bg-red-50 py-1 px-2 rounded-full inline-block">SAVE {Math.round((1 - p.price/p.originalPrice) * 100)}%</div>
+                  <div className="md:w-56 flex flex-col gap-3">
+                    <div className="text-center p-4 bg-white/50 rounded-lg border border-black/5 relative">
+                      <div className="text-3xl font-black text-gray-900">₹{p.price}</div>
+                      <div className="text-[10px] text-gray-400 line-through font-bold">₹{p.originalPrice}</div>
+                      <div className="mt-1 text-red-500 text-[8px] font-black bg-red-50 py-0.5 px-2 rounded-full inline-block">HOT DEAL</div>
+                      {isPurchased && (
+                        <div className="absolute top-2 right-2 text-[#00c853]">
+                          <CheckCircle className="w-4 h-4" />
+                        </div>
+                      )}
                     </div>
                     
-                    <div className="flex flex-col gap-3">
+                    <div className="flex flex-col gap-2">
                       {isPurchased && !needsQuiz ? (
-                        <button onClick={() => setShowSuccessPage(p.id)} className="w-full bg-green-600 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 hover:bg-green-700 transition-colors shadow-lg shadow-green-100">
-                          <Download className="w-4 h-4"/> Download Products
+                        <button onClick={() => setShowSuccessPage(p.id)} className="w-full bg-[#00c853] text-white text-[10px] font-black py-2.5 rounded-lg flex items-center justify-center gap-2 hover:bg-[#00a846] shadow-sm">
+                          <Download className="w-3 h-3"/> Download Products
                         </button>
                       ) : (
                         <>
-                          <button onClick={() => handleBuyClick(p.id)} className="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-black transition-colors">Buy Now</button>
-                          <button onClick={() => handleInstamojoClick(p.id)} className="w-full bg-[#0070ba] text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 hover:bg-[#005ea6] transition-colors">
-                            <ExternalLink className="w-4 h-4"/> Pay Instamojo
+                          <button onClick={() => handleBuyClick(p.id)} className="w-full bg-gray-900 text-white text-[10px] font-black py-2.5 rounded-lg hover:bg-black transition-colors">Buy Now</button>
+                          <button onClick={() => handleInstamojoClick(p.id)} className="w-full bg-[#0070ba] text-white text-[10px] font-black py-2.5 rounded-lg flex items-center justify-center gap-2 hover:bg-[#005ea6]">
+                            <ExternalLink className="w-3 h-3"/> Pay Instamojo
                           </button>
-                          <button onClick={() => handleLaunchOfferClick(p.id)} className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold py-3 rounded-xl text-[10px] uppercase tracking-tight hover:shadow-lg transition-all animate-pulse">
+                          <button onClick={() => handleLaunchOfferClick(p.id)} className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white text-[10px] font-black py-2.5 rounded-lg uppercase tracking-tight hover:shadow-lg transition-all animate-pulse">
                             Get Free for 45 Days (Launch Offer)
                           </button>
-                          <p className="text-[10px] text-gray-400 text-center italic leading-tight px-4 mt-1">Return and click download after paying with Instamojo.</p>
+                          <p className="text-[8px] text-gray-400 text-center italic leading-tight px-4 font-bold">Return and click download after paying with Instamojo.</p>
                         </>
                       )}
                     </div>
@@ -240,15 +271,15 @@ function ShopNew() {
 
       {showQuizRequiredPopup && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
-          <div className="bg-white p-8 md:p-10 rounded-3xl max-w-sm w-full text-center shadow-2xl scale-in-center">
-            <div className="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Target className="w-10 h-10 text-red-500" />
+          <div className="bg-white p-8 rounded-2xl max-w-sm w-full text-center shadow-2xl border border-gray-100">
+            <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Target className="w-8 h-8 text-red-500" />
             </div>
-            <h3 className="text-2xl font-black text-gray-900 mb-3">Complete Your Profile First</h3>
-            <p className="text-gray-500 mb-8 text-sm leading-relaxed">Before purchasing premium tools, please finish the 2-minute creator quiz.</p>
-            <div className="flex flex-col gap-3">
-              <Link to="/quiz" className="bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-100">Take the Quiz Now</Link>
-              <button onClick={() => setShowQuizRequiredPopup(false)} className="text-gray-400 text-sm font-medium hover:text-gray-600 py-2">Later</button>
+            <h3 className="text-xl font-black text-gray-900 mb-2">Complete Profile First</h3>
+            <p className="text-gray-500 mb-6 text-[10px] font-medium">Before purchasing premium tools, please finish the 2-minute creator quiz.</p>
+            <div className="flex flex-col gap-2">
+              <Link to="/quiz" className="bg-[#00c853] text-white text-xs font-black py-3 rounded-xl hover:bg-[#00a846] shadow-lg shadow-[#00c853]/20">Take the Quiz Now</Link>
+              <button onClick={() => setShowQuizRequiredPopup(false)} className="text-gray-400 text-[10px] font-bold hover:text-gray-600 py-1">Later</button>
             </div>
           </div>
         </div>
