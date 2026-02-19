@@ -131,23 +131,27 @@ ${"=".repeat(60)}
 
 function generateFullProjections(projections: any, profile: any, isHindi: boolean): string {
   return `
-${isHindi ? "--- रेवेन्यू प्रोजेक्शन ---" : "--- REVENUE PROJECTIONS ---"}
+${isHindi ? "--- रेवेन्यू प्रोजेक्शन (पारदर्शिता अनुभाग) ---" : "--- REVENUE PROJECTIONS (Formula Transparency) ---"}
+
+${isHindi ? "गणना सूत्र:" : "Calculation Formula:"}
+Rate = Base Rate × Niche Multiplier × Engagement Bonus
+Engagement Bonus = +30% if 4–6%, +50% if 6%+
 
 ${isHindi ? "ब्रांड रेट कार्ड (आपके प्रोफाइल पर आधारित):" : "Brand Rate Card (Based on your profile):"}
-${isHindi ? "पोस्ट:" : "Post:"} ${formatCurrencyFull(projections.brandRatePerPost)} - ${formatCurrencyFull(Math.round(projections.brandRatePerPost * 1.5))}
-${isHindi ? "रील:" : "Reel:"} ${formatCurrencyFull(projections.brandRatePerReel)} - ${formatCurrencyFull(Math.round(projections.brandRatePerReel * 1.5))}
-${isHindi ? "स्टोरी:" : "Story:"} ${formatCurrencyFull(projections.brandRatePerStory)} - ${formatCurrencyFull(Math.round(projections.brandRatePerStory * 1.5))}
-${isHindi ? "वीडियो:" : "Video:"} ${formatCurrencyFull(projections.brandRatePerVideo)} - ${formatCurrencyFull(Math.round(projections.brandRatePerVideo * 1.5))}
+${isHindi ? "पोस्ट:" : "Post:"} ${formatCurrencyFull(projections.brandRatePerPost)} - ${formatCurrencyFull(Math.round(projections.brandRatePerPost * 1.3))}
+${isHindi ? "रील:" : "Reel:"} ${formatCurrencyFull(projections.brandRatePerReel)} - ${formatCurrencyFull(Math.round(projections.brandRatePerReel * 1.3))}
+${isHindi ? "स्टोरी:" : "Story:"} ${formatCurrencyFull(projections.brandRatePerStory)} - ${formatCurrencyFull(Math.round(projections.brandRatePerStory * 1.3))}
+${isHindi ? "वीडियो:" : "Video:"} ${formatCurrencyFull(projections.brandRatePerVideo)} - ${formatCurrencyFull(Math.round(projections.brandRatePerVideo * 1.3))}
 
 ${isHindi ? "मासिक इनकम सिनेरियो:" : "Monthly Income Scenarios:"}
-${isHindi ? "कंजर्वेटिव:" : "Conservative:"} ${formatCurrencyFull(projections.conservativeMonthly)}/month
-${isHindi ? "रियलिस्टिक:" : "Realistic:"} ${formatCurrencyFull(projections.realisticMonthly)}/month
-${isHindi ? "एग्रेसिव:" : "Aggressive:"} ${formatCurrencyFull(projections.aggressiveMonthly)}/month
+${isHindi ? "लो (कंजर्वेटिव):" : "Low (Conservative):"} ${formatCurrencyFull(projections.conservativeMonthly)}/month
+${isHindi ? "मिड (रियलिस्टिक):" : "Mid (Realistic):"} ${formatCurrencyFull(projections.realisticMonthly)}/month
+${isHindi ? "हाई (एग्रेसिव):" : "High (Aggressive):"} ${formatCurrencyFull(projections.aggressiveMonthly)}/month
 
 ${isHindi ? "6-महीने का प्रोजेक्शन:" : "6-Month Projection:"}
-${isHindi ? "कंजर्वेटिव:" : "Conservative:"} ${formatCurrencyFull(projections.sixMonthProjection.conservative)}
-${isHindi ? "रियलिस्टिक:" : "Realistic:"} ${formatCurrencyFull(projections.sixMonthProjection.realistic)}
-${isHindi ? "एग्रेसिव:" : "Aggressive:"} ${formatCurrencyFull(projections.sixMonthProjection.aggressive)}
+${isHindi ? "लो:" : "Low:"} ${formatCurrencyFull(projections.sixMonthProjection.conservative)}
+${isHindi ? "मिड:" : "Mid:"} ${formatCurrencyFull(projections.sixMonthProjection.realistic)}
+${isHindi ? "हाई:" : "High:"} ${formatCurrencyFull(projections.sixMonthProjection.aggressive)}
 
 `;
 }
@@ -297,6 +301,7 @@ ${isHindi ? "--- कस्टम ब्रांड रेट कार्ड --
 
 ${profile.name} | ${profile.platform} ${isHindi ? "क्रिएटर" : "Creator"}
 ${profile.niche} | ${profile.followerRange} ${isHindi ? "फॉलोअर्स" : "Followers"} | ${profile.engagementRate}% ER
+${isHindi ? "लक्ष्य:" : "Goals:"} ${profile.goals.join(", ")}
 
 ${"─".repeat(50)}
 ${isHindi ? "सर्विस" : "Service"}              | ${isHindi ? "रेट" : "Rate"}

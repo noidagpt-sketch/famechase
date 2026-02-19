@@ -46,17 +46,17 @@ export interface CreatorScores {
 }
 
 export interface RevenueProjection {
-  brandRatePerPost: number;
-  brandRatePerReel: number;
-  brandRatePerStory: number;
-  brandRatePerVideo: number;
-  conservativeMonthly: number;
-  realisticMonthly: number;
-  aggressiveMonthly: number;
+  brandRatePerPost: { low: number; high: number };
+  brandRatePerReel: { low: number; high: number };
+  brandRatePerStory: { low: number; high: number };
+  brandRatePerVideo: { low: number; high: number };
+  conservativeMonthly: { low: number; high: number };
+  realisticMonthly: { low: number; high: number };
+  aggressiveMonthly: { low: number; high: number };
   sixMonthProjection: {
-    conservative: number;
-    realistic: number;
-    aggressive: number;
+    low: { from: number; to: number };
+    mid: { from: number; to: number };
+    high: { from: number; to: number };
   };
   roiModel: {
     currentRate: number;

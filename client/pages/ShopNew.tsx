@@ -156,7 +156,12 @@ function ShopNew() {
   return (
     <div className="min-h-screen bg-white">
       <header className="p-4 border-b flex justify-between items-center sticky top-0 bg-white z-50 shadow-sm">
-        <Link to="/" className="text-xl font-bold text-[#00c853]">FameChase<span className="text-gray-900">.com</span></Link>
+        <div className="flex items-center gap-4">
+          <Link to="/" className="text-xl font-bold text-[#00c853]">FameChase<span className="text-gray-900">.com</span></Link>
+          <Link to="/" className="hidden md:flex items-center gap-1 text-[10px] font-bold text-gray-600 hover:text-[#00c853] uppercase tracking-widest border border-gray-100 px-3 py-1.5 rounded-full bg-gray-50">
+            <Home className="w-3 h-3" /> Home
+          </Link>
+        </div>
         
         {/* Mobile Menu Toggle */}
         <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden p-2 text-gray-600">

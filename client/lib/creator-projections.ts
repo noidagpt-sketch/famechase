@@ -16,6 +16,17 @@ export function computeRevenueProjections(profile: CreatorProfile): RevenueProje
   const brandRatePerStory = Math.round(profile.followers * 0.004 * nicheMultiplier * platformMultiplier);
   const brandRatePerVideo = Math.round(profile.followers * 0.025 * nicheMultiplier * platformMultiplier);
 
+  // Calculate ranges (±15%)
+  const getRange = (val: number) => ({
+    low: Math.round(val * 0.85),
+    high: Math.round(val * 1.15)
+  });
+
+  const postRange = getRange(brandRatePerPost);
+  const reelRange = getRange(brandRatePerReel);
+  const storyRange = getRange(brandRatePerStory);
+  const videoRange = getRange(brandRatePerVideo);
+
   const postingMultiplier = getPostingMultiplier(profile.postingFrequency);
   const erMultiplier = getEngagementMultiplier(profile.engagementRate);
 
@@ -24,11 +35,24 @@ export function computeRevenueProjections(profile: CreatorProfile): RevenueProje
   const realisticMonthly = Math.round(baseMonthly * 0.8 * postingMultiplier * erMultiplier);
   const aggressiveMonthly = Math.round(baseMonthly * 1.8 * postingMultiplier * erMultiplier);
 
+  const lowMonthlyRange = getRange(conservativeMonthly);
+  const midMonthlyRange = getRange(realisticMonthly);
+  const highMonthlyRange = getRange(aggressiveMonthly);
+
   const sixMonthGrowth = 1 + (postingMultiplier * 0.3);
   const sixMonthProjection = {
-    conservative: Math.round(conservativeMonthly * sixMonthGrowth * 6),
-    realistic: Math.round(realisticMonthly * sixMonthGrowth * 6),
-    aggressive: Math.round(aggressiveMonthly * sixMonthGrowth * 6),
+    low: {
+      from: Math.round(lowMonthlyRange.low * sixMonthGrowth * 6),
+      to: Math.round(lowMonthlyRange.high * sixMonthGrowth * 6)
+    },
+    mid: {
+      from: Math.round(midMonthlyRange.low * sixMonthGrowth * 6),
+      to: Math.round(midMonthlyRange.high * sixMonthGrowth * 6)
+    },
+    high: {
+      from: Math.round(highMonthlyRange.low * sixMonthGrowth * 6),
+      to: Math.round(highMonthlyRange.high * sixMonthGrowth * 6)
+    }
   };
 
   const currentRate = realisticMonthly;
@@ -40,13 +64,13 @@ export function computeRevenueProjections(profile: CreatorProfile): RevenueProje
   };
 
   return {
-    brandRatePerPost,
-    brandRatePerReel,
-    brandRatePerStory,
-    brandRatePerVideo,
-    conservativeMonthly,
-    realisticMonthly,
-    aggressiveMonthly,
+    brandRatePerPost: postRange,
+    brandRatePerReel: reelRange,
+    brandRatePerStory: storyRange,
+    brandRatePerVideo: videoRange,
+    conservativeMonthly: lowMonthlyRange,
+    realisticMonthly: midMonthlyRange,
+    aggressiveMonthly: highMonthlyRange,
     sixMonthProjection,
     roiModel,
     nicheCPM,

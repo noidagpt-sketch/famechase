@@ -1350,6 +1350,28 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
               </div>
             </div>
 
+            <div className="bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 rounded-2xl p-8 mb-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-3">
+                <Sparkles className="w-6 h-6 text-purple-600" />
+                {language === "hindi"
+                  ? "🚀 आपके अगले 3 मुख्य कदम (Specific Actions)"
+                  : "🚀 Your Next 3 Specific Actions"}
+              </h2>
+              <div className="grid gap-4">
+                {analysis.recommendations.slice(0, 3).map((rec: any, idx: number) => (
+                  <div key={idx} className="bg-white p-4 rounded-xl border border-purple-100 flex gap-4 items-start">
+                    <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 text-purple-600 font-bold">
+                      {idx + 1}
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900">{rec.title}</h4>
+                      <p className="text-gray-600 text-sm">{rec.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             {/* AI-Suggested Products */}
             <div className="bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 rounded-2xl p-8 mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-3">
