@@ -1364,13 +1364,22 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
                       ? "अगले 45 दिनों के लिए हमारे सभी प्रीमियम टूल्स बिल्कुल फ्री पाएं।"
                       : "Get all our premium tools absolutely FREE for the next 45 days."}
                   </p>
-                  <Link
-                    to="/shop"
-                    className="inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-purple-900 font-bold py-3 px-8 rounded-xl transition-all shadow-lg"
-                  >
-                    <Zap className="w-5 h-5" />
-                    {language === "hindi" ? "45 दिनों के लिए फ्री पाएं" : "Get Free for 45 Days (Launch Offer)"}
-                  </Link>
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <Link
+                      to="/shop"
+                      className="inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-purple-900 font-bold py-3 px-8 rounded-xl transition-all shadow-lg text-center justify-center"
+                    >
+                      <Zap className="w-5 h-5" />
+                      {language === "hindi" ? "45 दिनों के लिए फ्री पाएं" : "Get Free for 45 Days (Launch Offer)"}
+                    </Link>
+                    <button
+                      onClick={() => setShowPaymentForm(true)}
+                      className="inline-flex items-center gap-2 bg-white hover:bg-gray-100 text-purple-900 font-bold py-3 px-8 rounded-xl transition-all shadow-lg text-center justify-center"
+                    >
+                      <CreditCard className="w-5 h-5" />
+                      {language === "hindi" ? "पूरा टूलकिट अनलॉक करें - ₹99" : "Unlock Complete Toolkit - ₹99"}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
