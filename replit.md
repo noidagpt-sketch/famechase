@@ -10,6 +10,16 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
 
+- **2026-02-19**: Creator Intelligence Engine (AI-powered analysis system):
+  - Built modular scoring engine: `client/lib/creator-model.ts`, `creator-scores.ts`, `creator-projections.ts`, `creator-recommendations.ts`, `creator-engine.ts`
+  - Four computed scores: Authority, Consistency, Algorithm Alignment, Monetization Readiness
+  - Revenue projections with brand rate estimator, monthly income scenarios (conservative/realistic/aggressive), ROI model
+  - Adaptive recommendation engine that targets weakest metrics with context-aware strategies
+  - Tiered PDF output system: Free (scores + limited insights), Pro (full growth roadmap), Premium (monetization blueprint + outreach scripts + revenue projections)
+  - LLM-powered executive summary via OpenAI (gpt-4o-mini) at `POST /api/creator-intelligence/executive-summary`
+  - Bilingual support (English/Hindi) for AI summaries
+  - Results page enhanced with new intelligence sections integrated alongside existing analysis
+  - Server route: `server/routes/creator-intelligence.ts` registered in `server/index.ts`
 - **2026-02-17**: Major UI/UX improvements:
   - Restored quiz to 13 steps (removed Q20 DNA report upload)
   - Added "Get Free for 45 Days (Launch Offer)" button below Instamojo payment in shop
