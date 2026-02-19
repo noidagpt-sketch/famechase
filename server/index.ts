@@ -25,6 +25,7 @@ import {
 } from "./routes/auth.js";
 import { authMiddleware, adminMiddleware } from "./middleware/auth.js";
 import { initializeDatabase } from "./db-init.js";
+import creatorIntelligenceRouter from "./routes/creator-intelligence.js";
 
 export function createServer() {
   const app = express();
@@ -46,6 +47,7 @@ export function createServer() {
   app.get("/api/auth/me", authMiddleware, handleGetMe);
 
   app.post("/api/ai-agent-analysis", handleAIAgentAnalysis);
+  app.use("/api/creator-intelligence", creatorIntelligenceRouter);
 
   app.post("/api/user-analytics/quiz", handleCaptureQuizData);
   app.post("/api/user-analytics/download", handleCaptureDownload);

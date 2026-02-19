@@ -41,6 +41,8 @@ import { analyzeQuizData } from "../lib/ai-analysis";
 import { supabase, dbHelpers, isSupabaseConfigured } from "@/lib/supabase";
 import { downloadFile, productConfigs } from "@/lib/products";
 import { sanitizeDeep } from "@/lib/sanitize";
+import { generateCreatorReport, generateTieredPDFContent, formatCurrencyFull } from "@/lib/creator-engine";
+import type { CreatorIntelligenceReport } from "@/lib/creator-model";
 
 interface QuizData {
   name: string;
@@ -245,6 +247,9 @@ export default function Results() {
   const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
   const [products, setProducts] = useState<any[]>([]);
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
+  const [intelligenceReport, setIntelligenceReport] = useState<CreatorIntelligenceReport | null>(null);
+  const [executiveSummary, setExecutiveSummary] = useState<string>("");
+  const [summaryLoading, setSummaryLoading] = useState(false);
 
   const t = sanitizeDeep(languages[language]);
 
@@ -339,9 +344,31 @@ export default function Results() {
         city: data.city || "",
       });
 
-      // Generate analysis
       const generatedAnalysis = analyzeQuizData(data);
       setAnalysis(generatedAnalysis);
+
+      const report = generateCreatorReport(data);
+      setIntelligenceReport(report);
+
+      setSummaryLoading(true);
+      fetch("/api/creator-intelligence/executive-summary", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          scores: report.scores,
+          projections: report.projections,
+          profile: report.profile,
+          language: savedLanguage,
+        }),
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          if (result.success && result.summary) {
+            setExecutiveSummary(result.summary);
+          }
+        })
+        .catch(() => {})
+        .finally(() => setSummaryLoading(false));
     }
   }, []);
 
@@ -484,6 +511,8 @@ export default function Results() {
       } else {
         content = "Download not found";
       }
+    } else if (type === "fameScore" && intelligenceReport) {
+      content = generateTieredPDFContent(intelligenceReport, "free", language);
     } else if (type === "fameScore") {
       content =
         fontSizeIndicator +
@@ -2132,6 +2161,144 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
               </div>
             </div>
           </div>
+
+          {/* Creator Intelligence Engine - Computed Scores */}
+          {intelligenceReport && (
+            <div className="bg-white border-2 border-gray-100 rounded-2xl p-8 mb-8 shadow-lg">
+              <h2 className="text-2xl font-bold text-gray-900 mb-2 flex items-center gap-3">
+                <Zap className="w-6 h-6 text-orange-600" />
+                {language === "hindi" ? "क्रिएटर इंटेलिजेंस स्कोर्स" : "Creator Intelligence Scores"}
+              </h2>
+              <p className="text-gray-500 text-sm mb-6">
+                {language === "hindi" ? "आपके डेटा से कंप्यूट किया गया - रियल इंडियन मार्केट मेट्रिक्स" : "Computed from your data using real Indian market metrics"}
+              </p>
+
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                <div className="text-center p-4 bg-blue-50 rounded-xl border border-blue-200">
+                  <div className="text-3xl font-bold text-blue-700 mb-1">{intelligenceReport.scores.authorityScore}</div>
+                  <div className="text-sm font-semibold text-blue-600 mb-1">{language === "hindi" ? "ऑथोरिटी" : "Authority"}</div>
+                  <div className="w-full bg-gray-200 rounded-full h-1.5 mt-1">
+                    <div className="bg-blue-500 h-1.5 rounded-full" style={{ width: `${intelligenceReport.scores.authorityScore}%` }}></div>
+                  </div>
+                  <div className="text-xs text-gray-500 mt-2 line-clamp-2">{intelligenceReport.scores.authorityInterpretation}</div>
+                </div>
+                <div className="text-center p-4 bg-green-50 rounded-xl border border-green-200">
+                  <div className="text-3xl font-bold text-green-700 mb-1">{intelligenceReport.scores.consistencyScore}</div>
+                  <div className="text-sm font-semibold text-green-600 mb-1">{language === "hindi" ? "कंसिस्टेंसी" : "Consistency"}</div>
+                  <div className="w-full bg-gray-200 rounded-full h-1.5 mt-1">
+                    <div className="bg-green-500 h-1.5 rounded-full" style={{ width: `${intelligenceReport.scores.consistencyScore}%` }}></div>
+                  </div>
+                  <div className="text-xs text-gray-500 mt-2 line-clamp-2">{intelligenceReport.scores.consistencyInterpretation}</div>
+                </div>
+                <div className="text-center p-4 bg-purple-50 rounded-xl border border-purple-200">
+                  <div className="text-3xl font-bold text-purple-700 mb-1">{intelligenceReport.scores.algorithmAlignmentScore}</div>
+                  <div className="text-sm font-semibold text-purple-600 mb-1">{language === "hindi" ? "एल्गोरिदम" : "Algorithm"}</div>
+                  <div className="w-full bg-gray-200 rounded-full h-1.5 mt-1">
+                    <div className="bg-purple-500 h-1.5 rounded-full" style={{ width: `${intelligenceReport.scores.algorithmAlignmentScore}%` }}></div>
+                  </div>
+                  <div className="text-xs text-gray-500 mt-2 line-clamp-2">{intelligenceReport.scores.algorithmAlignmentInterpretation}</div>
+                </div>
+                <div className="text-center p-4 bg-orange-50 rounded-xl border border-orange-200">
+                  <div className="text-3xl font-bold text-orange-700 mb-1">{intelligenceReport.scores.monetizationReadinessScore}</div>
+                  <div className="text-sm font-semibold text-orange-600 mb-1">{language === "hindi" ? "मोनेटाइज़ेशन" : "Monetization"}</div>
+                  <div className="w-full bg-gray-200 rounded-full h-1.5 mt-1">
+                    <div className="bg-orange-500 h-1.5 rounded-full" style={{ width: `${intelligenceReport.scores.monetizationReadinessScore}%` }}></div>
+                  </div>
+                  <div className="text-xs text-gray-500 mt-2 line-clamp-2">{intelligenceReport.scores.monetizationReadinessInterpretation}</div>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-5 mb-6">
+                <div className="flex items-center justify-between mb-3">
+                  <div>
+                    <span className="text-lg font-bold text-gray-900">
+                      {language === "hindi" ? "समग्र स्कोर:" : "Overall Score:"}
+                    </span>
+                    <span className="ml-2 text-2xl font-bold text-indigo-700">{intelligenceReport.scores.overallScore}/100</span>
+                    <span className="ml-2 px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm font-semibold">
+                      {intelligenceReport.scores.tierLabel}
+                    </span>
+                  </div>
+                </div>
+                <p className="text-sm text-gray-600">{intelligenceReport.scores.overallInterpretation}</p>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-4">
+                <div className="bg-green-50 rounded-xl p-4 border border-green-200">
+                  <div className="text-xs font-semibold text-green-700 mb-1">
+                    {language === "hindi" ? "ब्रांड रेट/पोस्ट" : "Brand Rate/Post"}
+                  </div>
+                  <div className="text-xl font-bold text-green-800">{formatCurrencyFull(intelligenceReport.projections.brandRatePerPost)}</div>
+                </div>
+                <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
+                  <div className="text-xs font-semibold text-blue-700 mb-1">
+                    {language === "hindi" ? "रियलिस्टिक मासिक" : "Realistic Monthly"}
+                  </div>
+                  <div className="text-xl font-bold text-blue-800">{formatCurrencyFull(intelligenceReport.projections.realisticMonthly)}</div>
+                </div>
+                <div className="bg-purple-50 rounded-xl p-4 border border-purple-200">
+                  <div className="text-xs font-semibold text-purple-700 mb-1">
+                    {language === "hindi" ? "6-महीने प्रोजेक्शन" : "6-Month Projection"}
+                  </div>
+                  <div className="text-xl font-bold text-purple-800">{formatCurrencyFull(intelligenceReport.projections.sixMonthProjection.realistic)}</div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* AI Executive Summary */}
+          {(executiveSummary || summaryLoading) && (
+            <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6 mb-8 border border-amber-200">
+              <h3 className="text-xl font-bold text-gray-900 mb-3 flex items-center gap-2">
+                <Sparkles className="w-5 h-5 text-amber-600" />
+                {language === "hindi" ? "AI एक्जीक्यूटिव समरी" : "AI Executive Summary"}
+              </h3>
+              {summaryLoading ? (
+                <div className="flex items-center gap-3 text-gray-500">
+                  <div className="w-5 h-5 border-2 border-amber-400 border-t-transparent rounded-full animate-spin"></div>
+                  {language === "hindi" ? "आपकी पर्सनलाइज़्ड समरी जेनरेट हो रही है..." : "Generating your personalized summary..."}
+                </div>
+              ) : (
+                <div className="text-gray-700 leading-relaxed whitespace-pre-line">{executiveSummary}</div>
+              )}
+            </div>
+          )}
+
+          {/* Personalized Recommendations from Engine */}
+          {intelligenceReport && intelligenceReport.recommendations.length > 0 && (
+            <div className="bg-white border-2 border-gray-100 rounded-2xl p-8 mb-8 shadow-lg">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                <Lightbulb className="w-6 h-6 text-yellow-500" />
+                {language === "hindi" ? "डेटा-ड्रिवन रिकमेंडेशन्स" : "Data-Driven Recommendations"}
+              </h2>
+              <div className="space-y-4">
+                {intelligenceReport.recommendations.slice(0, 4).map((rec, i) => (
+                  <div key={i} className={`rounded-xl p-5 border ${rec.priority === "critical" ? "bg-red-50 border-red-200" : rec.priority === "high" ? "bg-orange-50 border-orange-200" : "bg-blue-50 border-blue-200"}`}>
+                    <div className="flex items-start gap-3">
+                      <span className={`px-2 py-1 rounded text-xs font-bold ${rec.priority === "critical" ? "bg-red-200 text-red-800" : rec.priority === "high" ? "bg-orange-200 text-orange-800" : "bg-blue-200 text-blue-800"}`}>
+                        {rec.priority === "critical" ? "!!!" : rec.priority === "high" ? "!!" : "!"}
+                      </span>
+                      <div className="flex-1">
+                        <h4 className="font-bold text-gray-900 mb-1">
+                          {language === "hindi" ? rec.titleHindi : rec.title}
+                        </h4>
+                        <p className="text-sm text-gray-600 mb-2">
+                          {language === "hindi" ? rec.descriptionHindi : rec.description}
+                        </p>
+                        <div className="flex items-center gap-2 text-xs text-gray-500">
+                          <Clock className="w-3 h-3" />
+                          {rec.timeframe}
+                          <span className="mx-1">|</span>
+                          <Target className="w-3 h-3" />
+                          {language === "hindi" ? rec.expectedImpactHindi : rec.expectedImpact}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/*  PROFESSIONAL ANALYSIS SUMMARY */}
           <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-6 mb-8 border border-indigo-200">
