@@ -2228,9 +2228,114 @@ function generateContractContent(
   language: "english" | "hindi",
   userData?: any,
 ): string {
-  return language === "hindi"
-    ? "कॉन्ट्रैक्ट टेम्प्लेट्स..."
-    : "Contract Templates...";
+  const userName = userData?.name || "Creator Name";
+  const userNiche = userData?.niche || "Content Creator";
+  const userPlatform = userData?.primaryPlatform || "Instagram";
+  const userFollowers = userData?.followerCount || "10K+";
+
+  if (language === "hindi") {
+    return `📜 इन्फ्लुएंसर-ब्रांड सहयोग समझौता टेम्प्लेट
+
+क्रिएटर: ${userName}
+निच: ${userNiche} | प्लेटफॉर्म: ${userPlatform} | फॉलोअर्स: ${userFollowers}
+
+--- टेम्प्लेट 1: बेसिक कोलैबोरेशन एग्रीमेंट ---
+
+पार्टी A (ब्रांड): [ब्रांड नाम]
+पार्टी B (क्रिएटर): ${userName}
+
+1. कार्य का दायरा:
+क्रिएटर ${userPlatform} पर ${userNiche} से संबंधित सामग्री प्रदान करेगा:
+• [Reels/Posts की संख्या]
+• [Stories की संख्या]
+• डिलीवरी: [तारीख]
+
+2. भुगतान की शर्तें:
+• कुल शुल्क: ₹[राशि]
+• 50% एडवांस, 50% कंटेंट अप्रूवल के बाद
+• भुगतान का तरीका: UPI/बैंक ट्रांसफर
+
+3. कंटेंट अधिकार:
+• ब्रांड 30 दिनों तक कंटेंट उपयोग कर सकता है
+• क्रिएटर के पास ओरिजिनल कंटेंट का स्वामित्व रहेगा
+
+4. रिवीज़न:
+• अधिकतम 2 रिवीज़न शामिल
+• अतिरिक्त रिवीज़न: ₹[राशि] प्रति रिवीज़न
+
+5. रद्दीकरण:
+• 48 घंटे पहले नोटिस आवश्यक
+• एडवांस नॉन-रिफंडेबल
+
+हस्ताक्षर:
+क्रिएटर: ________________ तारीख: ________________
+ब्रांड: ________________ तारीख: ________________
+
+--- टेम्प्लेट 2: लॉन्ग-टर्म ब्रांड एंबेसडर ---
+
+अवधि: [3/6/12 महीने]
+मासिक डिलीवरेबल्स: [Posts] पोस्ट + [Reels] रील + [Stories] स्टोरीज
+मासिक शुल्क: ₹[राशि]
+एक्सक्लूसिविटी: [हां/नहीं]
+बोनस: वायरल कंटेंट (1M+ views) पर ₹[राशि] बोनस
+
+--- टेम्प्लेट 3: प्रोडक्ट बार्टर एग्रीमेंट ---
+
+प्रोडक्ट वैल्यू: ₹[राशि]
+कंटेंट डिलीवरेबल्स: [विवरण]
+पोस्टिंग टाइमलाइन: प्रोडक्ट प्राप्ति के [X] दिनों के भीतर`;
+  }
+
+  return `📜 INFLUENCER-BRAND COLLABORATION AGREEMENT TEMPLATES
+
+Creator: ${userName}
+Niche: ${userNiche} | Platform: ${userPlatform} | Followers: ${userFollowers}
+
+--- TEMPLATE 1: BASIC COLLABORATION AGREEMENT ---
+
+Party A (Brand): [Brand Name]
+Party B (Creator): ${userName}
+
+1. SCOPE OF WORK:
+Creator will deliver the following content on ${userPlatform} related to ${userNiche}:
+• [Number of Reels/Posts]
+• [Number of Stories]
+• Delivery by: [Date]
+
+2. PAYMENT TERMS:
+• Total Fee: INR [Amount]
+• 50% advance, 50% upon content approval
+• Payment Method: UPI/Bank Transfer
+
+3. CONTENT RIGHTS:
+• Brand may use content for 30 days in digital ads
+• Creator retains ownership of original content
+
+4. REVISIONS:
+• Up to 2 revisions included
+• Additional revisions: INR [Amount] each
+
+5. CANCELLATION:
+• 48-hour notice required
+• Advance is non-refundable
+
+SIGNATURES:
+Creator: ________________ Date: ________________
+Brand: ________________ Date: ________________
+
+--- TEMPLATE 2: LONG-TERM BRAND AMBASSADOR ---
+
+Duration: [3/6/12 months]
+Monthly Deliverables: [Posts] posts + [Reels] reels + [Stories] stories
+Monthly Fee: INR [Amount]
+Exclusivity: [Yes/No]
+Bonus: INR [Amount] bonus for viral content (1M+ views)
+
+--- TEMPLATE 3: PRODUCT BARTER AGREEMENT ---
+
+Product Value: INR [Amount]
+Content Deliverables: [Details]
+Posting Timeline: Within [X] days of product receipt`;
 }
 
 function generateViralReelIdeasContent(
@@ -9113,25 +9218,189 @@ function generateBrandContractContent(
   language: "english" | "hindi",
   userData?: any,
 ): string {
-  return language === "hindi"
-    ? "ब्रांड कॉन्ट्रैक्ट्स..."
-    : "Brand Contracts...";
+  const userName = userData?.name || "Creator Name";
+  const userNiche = userData?.niche || "Content Creator";
+  const userPlatform = userData?.primaryPlatform || "Instagram";
+
+  if (language === "hindi") {
+    return `📋 ब्रांड कॉन्ट्रैक्ट नेगोशिएशन गाइड
+
+क्रिएटर: ${userName} | ${userNiche} | ${userPlatform}
+
+🔑 कॉन्ट्रैक्ट में ज़रूरी बातें:
+1. पेमेंट टर्म्स स्पष्ट हों (एडवांस + फाइनल)
+2. कंटेंट राइट्स की अवधि (30/60/90 दिन)
+3. रिवीज़न की सीमा (अधिकतम 2)
+4. कैंसलेशन पॉलिसी (48 घंटे नोटिस)
+5. एक्सक्लूसिविटी क्लॉज़ (अगर हो तो अतिरिक्त चार्ज)
+
+⚠️ रेड फ्लैग्स जिनसे बचें:
+• अनलिमिटेड यूसेज राइट्स
+• पेमेंट "पोस्ट के बाद 90 दिन"
+• "हम आपको एक्सपोज़र देंगे" (बिना पेमेंट)
+• कंटेंट ओनरशिप ट्रांसफर`;
+  }
+
+  return `📋 BRAND CONTRACT NEGOTIATION GUIDE
+
+Creator: ${userName} | ${userNiche} | ${userPlatform}
+
+🔑 MUST-HAVE CONTRACT CLAUSES:
+1. Clear payment terms (advance + final)
+2. Content rights duration (30/60/90 days)
+3. Revision limits (max 2 included)
+4. Cancellation policy (48-hour notice)
+5. Exclusivity clause (charge extra if applicable)
+
+⚠️ RED FLAGS TO AVOID:
+• Unlimited usage rights without extra pay
+• Payment "90 days after posting"
+• "We'll give you exposure" (no payment)
+• Full content ownership transfer`;
 }
 
 function generateBrandDatabaseContent(
   language: "english" | "hindi",
   userData?: any,
 ): string {
-  return language === "hindi" ? "ब्रंड डेटाबेस..." : "Brand Database...";
+  const userNiche = userData?.niche || "Content Creator";
+  const userPlatform = userData?.primaryPlatform || "Instagram";
+  const userName = userData?.name || "Creator";
+
+  if (language === "hindi") {
+    return `📊 ${userNiche} क्रिएटर्स के लिए ब्रांड डेटाबेस
+
+क्रिएटर: ${userName}
+
+🎯 आपके ${userNiche} निच के लिए ब्रांड कैटेगरीज़:
+
+1. डायरेक्ट-टू-कंज्यूमर (D2C) ब्रांड्स:
+   • ${userPlatform} पर एक्टिव ब्रांड्स खोजें
+   • "Collab" या "Partnership" हैशटैग सर्च करें
+   • प्रोडक्ट रिव्यू पेज चेक करें
+
+2. एजेंसी प्लेटफॉर्म्स:
+   • Plixxo (plixxo.com)
+   • One Impression (oneimpression.io)
+   • Influencer.in
+   • Winkl (winkl.co)
+
+3. एफिलिएट प्रोग्राम्स:
+   • Amazon Associates India
+   • Flipkart Affiliate
+   • Cuelinks
+   • vCommission
+
+4. ब्रांड को कैसे ढूंढें:
+   • Instagram पर "#ad" + "${userNiche}" सर्च करें
+   • अपने निच के टॉप क्रिएटर्स के स्पॉन्सर्ड पोस्ट देखें
+   • LinkedIn पर ब्रांड मार्केटिंग मैनेजर्स से कनेक्ट करें
+
+💡 प्रो टिप: हर हफ्ते 5 नए ब्रांड्स को पिच भेजें`;
+  }
+
+  return `📊 BRAND DATABASE FOR ${userNiche.toUpperCase()} CREATORS
+
+Creator: ${userName}
+
+🎯 BRAND CATEGORIES FOR YOUR ${userNiche.toUpperCase()} NICHE:
+
+1. Direct-to-Consumer (D2C) Brands:
+   • Search for brands active on ${userPlatform}
+   • Look for "Collab" or "Partnership" hashtags
+   • Check product review pages
+
+2. Agency Platforms:
+   • Plixxo (plixxo.com)
+   • One Impression (oneimpression.io)
+   • Influencer.in
+   • Winkl (winkl.co)
+
+3. Affiliate Programs:
+   • Amazon Associates India
+   • Flipkart Affiliate
+   • Cuelinks
+   • vCommission
+
+4. HOW TO FIND BRANDS:
+   • Search "#ad" + "${userNiche}" on Instagram
+   • Check sponsored posts of top creators in your niche
+   • Connect with brand marketing managers on LinkedIn
+
+💡 PRO TIP: Pitch 5 new brands every week for best results`;
 }
 
 function generatePitchDeckContent(
   language: "english" | "hindi",
   userData?: any,
 ): string {
-  return language === "hindi"
-    ? "पिच डेक टेम्प्लेट्स..."
-    : "Pitch Deck Templates...";
+  const userName = userData?.name || "Creator Name";
+  const userNiche = userData?.niche || "Content Creator";
+  const userFollowers = userData?.followerCount || "10K+";
+  const userPlatform = userData?.primaryPlatform || "Instagram";
+  const userEngagement = userData?.engagementRate || "3-5%";
+
+  if (language === "hindi") {
+    return `🎨 क्रिएटर मीडिया किट / पिच डेक
+
+नाम: ${userName}
+निच: ${userNiche}
+मुख्य प्लेटफॉर्म: ${userPlatform}
+
+📊 सांख्यिकी:
+• फॉलोअर्स: ${userFollowers}
+• एंगेजमेंट रेट: ${userEngagement}
+• कंटेंट टाइप: ${userNiche} से संबंधित रील्स, पोस्ट्स, स्टोरीज़
+
+🌟 मेरे बारे में:
+मैं ${userName}, ${userNiche} में ${userPlatform} पर कंटेंट बनाता/बनाती हूं। मेरे ${userFollowers} engaged followers हैं जो ${userNiche} में गहरी रुचि रखते हैं।
+
+💼 सहयोग के विकल्प:
+• ब्रांडेड रील्स / पोस्ट्स
+• प्रोडक्ट रिव्यू
+• स्टोरी इंटीग्रेशन
+• दीर्घकालिक पार्टनरशिप
+• इवेंट कवरेज
+
+📈 पिछले रिजल्ट्स:
+• [अपने बेस्ट परफॉर्मिंग कंटेंट की मेट्रिक्स डालें]
+• [ब्रांड कोलैबोरेशन के रिजल्ट्स डालें]
+
+📧 संपर्क:
+${userName}
+${userPlatform}: @[आपका हैंडल]
+ईमेल: [आपका ईमेल]`;
+  }
+
+  return `🎨 CREATOR MEDIA KIT / PITCH DECK
+
+Name: ${userName}
+Niche: ${userNiche}
+Primary Platform: ${userPlatform}
+
+📊 STATISTICS:
+• Followers: ${userFollowers}
+• Engagement Rate: ${userEngagement}
+• Content Type: ${userNiche}-related Reels, Posts, Stories
+
+🌟 ABOUT ME:
+I'm ${userName}, creating content in ${userNiche} on ${userPlatform}. My ${userFollowers} engaged followers have a genuine interest in ${userNiche} content.
+
+💼 COLLABORATION OPTIONS:
+• Branded Reels / Posts
+• Product Reviews
+• Story Integration
+• Long-term Partnerships
+• Event Coverage
+
+📈 PAST RESULTS:
+• [Add your best-performing content metrics here]
+• [Add brand collaboration results here]
+
+📧 CONTACT:
+${userName}
+${userPlatform}: @[Your Handle]
+Email: [Your Email]`;
 }
 
 function generatePremiumToolsContent(

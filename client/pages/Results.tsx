@@ -1344,9 +1344,34 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
               <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-4">
                 <p className="text-amber-800 font-medium text-center">
                   {language === "hindi"
-                    ? "🎯 इन टूल्स ी कीमत बाजार मं ₹5,000+ है - लेकिन आपको ये बिल्कुल फरी मिल रहे है!"
+                    ? "🎯 इन टूल्स की कीमत बाजार में ₹5,000+ है - लेकिन आपको ये बिल्कुल फ्री मिल रहे हैं!"
                     : "🎯 This content is exclusively for premium users - FREE users don't get this!"}
                 </p>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-br from-purple-600 to-indigo-700 rounded-2xl p-8 text-white shadow-xl mb-8 transform hover:scale-[1.02] transition-all">
+              <div className="flex flex-col md:flex-row items-center gap-6">
+                <div className="bg-white/20 p-4 rounded-2xl backdrop-blur-sm">
+                  <Gift className="w-12 h-12 text-yellow-300" />
+                </div>
+                <div className="flex-1 text-center md:text-left">
+                  <h3 className="text-2xl font-bold mb-2">
+                    {language === "hindi" ? "🎁 स्पेशल लॉन्च ऑफर!" : "🎁 Special Launch Offer!"}
+                  </h3>
+                  <p className="text-purple-100 text-lg mb-4">
+                    {language === "hindi"
+                      ? "अगले 45 दिनों के लिए हमारे सभी प्रीमियम टूल्स बिल्कुल फ्री पाएं।"
+                      : "Get all our premium tools absolutely FREE for the next 45 days."}
+                  </p>
+                  <Link
+                    to="/shop"
+                    className="inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-purple-900 font-bold py-3 px-8 rounded-xl transition-all shadow-lg"
+                  >
+                    <Zap className="w-5 h-5" />
+                    {language === "hindi" ? "45 दिनों के लिए फ्री पाएं" : "Get Free for 45 Days (Launch Offer)"}
+                  </Link>
+                </div>
               </div>
             </div>
 
@@ -2250,19 +2275,19 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
                   <div className="text-xs font-semibold text-green-700 mb-1">
                     {language === "hindi" ? "ब्रांड रेट/पोस्ट" : "Brand Rate/Post"}
                   </div>
-                  <div className="text-xl font-bold text-green-800">{formatCurrencyFull(intelligenceReport.projections.brandRatePerPost)}</div>
+                  <div className="text-xl font-bold text-green-800">{formatCurrencyFull(intelligenceReport.projections.brandRatePerPost.low)} - {formatCurrencyFull(intelligenceReport.projections.brandRatePerPost.high)}</div>
                 </div>
                 <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
                   <div className="text-xs font-semibold text-blue-700 mb-1">
                     {language === "hindi" ? "रियलिस्टिक मासिक" : "Realistic Monthly"}
                   </div>
-                  <div className="text-xl font-bold text-blue-800">{formatCurrencyFull(intelligenceReport.projections.realisticMonthly)}</div>
+                  <div className="text-xl font-bold text-blue-800">{formatCurrencyFull(intelligenceReport.projections.realisticMonthly.low)} - {formatCurrencyFull(intelligenceReport.projections.realisticMonthly.high)}</div>
                 </div>
                 <div className="bg-purple-50 rounded-xl p-4 border border-purple-200">
                   <div className="text-xs font-semibold text-purple-700 mb-1">
                     {language === "hindi" ? "6-महीने प्रोजेक्शन" : "6-Month Projection"}
                   </div>
-                  <div className="text-xl font-bold text-purple-800">{formatCurrencyFull(intelligenceReport.projections.sixMonthProjection.realistic)}</div>
+                  <div className="text-xl font-bold text-purple-800">{formatCurrencyFull(intelligenceReport.projections.sixMonthProjection.mid.from)} - {formatCurrencyFull(intelligenceReport.projections.sixMonthProjection.mid.to)}</div>
                 </div>
               </div>
             </div>

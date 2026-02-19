@@ -102,7 +102,7 @@ ${isHindi ? "प्लेटफॉर्म:" : "Platform:"} ${profile.platform}
 ${isHindi ? "निच:" : "Niche:"} ${profile.niche}
 ${isHindi ? "फॉलोअर्स:" : "Followers:"} ${profile.followerRange}
 ${isHindi ? "एंगेजमेंट:" : "Engagement:"} ${profile.engagementRate}%
-${isHindi ? "अनुमानित मासिक आय क्षमता:" : "Estimated Monthly Income Potential:"} ${formatCurrencyFull(projections.realisticMonthly)}
+${isHindi ? "अनुमानित मासिक आय क्षमता:" : "Estimated Monthly Income Potential:"} ${formatCurrencyFull(projections.realisticMonthly.low)} - ${formatCurrencyFull(projections.realisticMonthly.high)}
 
 ${isHindi ? "मुख्य इनसाइट:" : "Key Insight:"}
 ${scores.overallScore >= 60
@@ -138,20 +138,20 @@ Rate = Base Rate × Niche Multiplier × Engagement Bonus
 Engagement Bonus = +30% if 4–6%, +50% if 6%+
 
 ${isHindi ? "ब्रांड रेट कार्ड (आपके प्रोफाइल पर आधारित):" : "Brand Rate Card (Based on your profile):"}
-${isHindi ? "पोस्ट:" : "Post:"} ${formatCurrencyFull(projections.brandRatePerPost)} - ${formatCurrencyFull(Math.round(projections.brandRatePerPost * 1.3))}
-${isHindi ? "रील:" : "Reel:"} ${formatCurrencyFull(projections.brandRatePerReel)} - ${formatCurrencyFull(Math.round(projections.brandRatePerReel * 1.3))}
-${isHindi ? "स्टोरी:" : "Story:"} ${formatCurrencyFull(projections.brandRatePerStory)} - ${formatCurrencyFull(Math.round(projections.brandRatePerStory * 1.3))}
-${isHindi ? "वीडियो:" : "Video:"} ${formatCurrencyFull(projections.brandRatePerVideo)} - ${formatCurrencyFull(Math.round(projections.brandRatePerVideo * 1.3))}
+${isHindi ? "पोस्ट:" : "Post:"} ${formatCurrencyFull(projections.brandRatePerPost.low)} - ${formatCurrencyFull(Math.round(projections.brandRatePerPost.high * 1.3))}
+${isHindi ? "रील:" : "Reel:"} ${formatCurrencyFull(projections.brandRatePerReel.low)} - ${formatCurrencyFull(Math.round(projections.brandRatePerReel.high * 1.3))}
+${isHindi ? "स्टोरी:" : "Story:"} ${formatCurrencyFull(projections.brandRatePerStory.low)} - ${formatCurrencyFull(Math.round(projections.brandRatePerStory.high * 1.3))}
+${isHindi ? "वीडियो:" : "Video:"} ${formatCurrencyFull(projections.brandRatePerVideo.low)} - ${formatCurrencyFull(Math.round(projections.brandRatePerVideo.high * 1.3))}
 
 ${isHindi ? "मासिक इनकम सिनेरियो:" : "Monthly Income Scenarios:"}
-${isHindi ? "लो (कंजर्वेटिव):" : "Low (Conservative):"} ${formatCurrencyFull(projections.conservativeMonthly)}/month
-${isHindi ? "मिड (रियलिस्टिक):" : "Mid (Realistic):"} ${formatCurrencyFull(projections.realisticMonthly)}/month
-${isHindi ? "हाई (एग्रेसिव):" : "High (Aggressive):"} ${formatCurrencyFull(projections.aggressiveMonthly)}/month
+${isHindi ? "लो (कंजर्वेटिव):" : "Low (Conservative):"} ${formatCurrencyFull(projections.conservativeMonthly.low)} - ${formatCurrencyFull(projections.conservativeMonthly.high)}/month
+${isHindi ? "मिड (रियलिस्टिक):" : "Mid (Realistic):"} ${formatCurrencyFull(projections.realisticMonthly.low)} - ${formatCurrencyFull(projections.realisticMonthly.high)}/month
+${isHindi ? "हाई (एग्रेसिव):" : "High (Aggressive):"} ${formatCurrencyFull(projections.aggressiveMonthly.low)} - ${formatCurrencyFull(projections.aggressiveMonthly.high)}/month
 
 ${isHindi ? "6-महीने का प्रोजेक्शन:" : "6-Month Projection:"}
-${isHindi ? "लो:" : "Low:"} ${formatCurrencyFull(projections.sixMonthProjection.conservative)}
-${isHindi ? "मिड:" : "Mid:"} ${formatCurrencyFull(projections.sixMonthProjection.realistic)}
-${isHindi ? "हाई:" : "High:"} ${formatCurrencyFull(projections.sixMonthProjection.aggressive)}
+${isHindi ? "लो:" : "Low:"} ${formatCurrencyFull(projections.sixMonthProjection.low.from)}
+${isHindi ? "मिड:" : "Mid:"} ${formatCurrencyFull(projections.sixMonthProjection.mid.from)} - ${formatCurrencyFull(projections.sixMonthProjection.mid.to)}
+${isHindi ? "हाई:" : "High:"} ${formatCurrencyFull(projections.sixMonthProjection.high.to)}
 
 `;
 }
@@ -196,13 +196,13 @@ ${isHindi ? "चरण 3 (दिन 61-90): मोनेटाइज़ेशन
 ${isHindi ? "- ब्रांड आउटरीच शुरू करें (5 पिच/सप्ताह)" : "- Begin brand outreach (5 pitches/week)"}
 ${isHindi ? "- एफिलिएट प्रोग्राम्स जॉइन करें" : "- Join affiliate programs"}
 ${isHindi ? "- डिजिटल प्रोडक्ट प्लान करें" : "- Plan digital product"}
-${isHindi ? "- लक्ष्य:" : "- Target:"} ${formatCurrencyFull(projections.conservativeMonthly)} ${isHindi ? "मासिक आय" : "monthly income"}
+${isHindi ? "- लक्ष्य:" : "- Target:"} ${formatCurrencyFull(projections.conservativeMonthly.low)} - ${formatCurrencyFull(projections.conservativeMonthly.high)} ${isHindi ? "मासिक आय" : "monthly income"}
 
 `;
 }
 
 function generateMonetizationBlueprint(profile: any, projections: any, isHindi: boolean): string {
-  const dealsNeeded = Math.max(1, Math.ceil(projections.realisticMonthly / projections.brandRatePerPost));
+  const dealsNeeded = Math.max(1, Math.ceil(projections.realisticMonthly.low / projections.brandRatePerPost.low));
   return `
 ${isHindi ? "--- मोनेटाइज़ेशन ब्लूप्रिंट ---" : "--- MONETIZATION BLUEPRINT ---"}
 
@@ -210,19 +210,19 @@ ${isHindi ? "इनकम डायवर्सिफिकेशन प्ल�
 
 1. ${isHindi ? "ब्रांड डील्स (40% रेवेन्यू)" : "Brand Deals (40% Revenue)"}
    ${isHindi ? "- टार्गेट:" : "- Target:"} ${dealsNeeded} ${isHindi ? "डील्स/महीना" : "deals/month"}
-   ${isHindi ? "- रेट:" : "- Rate:"} ${formatCurrencyFull(projections.brandRatePerPost)} - ${formatCurrencyFull(projections.brandRatePerReel)} ${isHindi ? "प्रति कंटेंट" : "per content"}
-   ${isHindi ? "- प्रोजेक्टेड:" : "- Projected:"} ${formatCurrencyFull(Math.round(projections.realisticMonthly * 0.4))}/month
+   ${isHindi ? "- रेट:" : "- Rate:"} ${formatCurrencyFull(projections.brandRatePerPost.low)} - ${formatCurrencyFull(projections.brandRatePerReel.high)} ${isHindi ? "प्रति कंटेंट" : "per content"}
+   ${isHindi ? "- प्रोजेक्टेड:" : "- Projected:"} ${formatCurrencyFull(Math.round(projections.realisticMonthly.low * 0.4))}/month
 
 2. ${isHindi ? "एफिलिएट मार्केटिंग (30% रेवेन्यू)" : "Affiliate Marketing (30% Revenue)"}
    ${isHindi ? "- प्लेटफॉर्म:" : "- Platforms:"} Amazon Associates, Flipkart Affiliate, niche-specific programs
-   ${isHindi ? "- प्रोजेक्टेड:" : "- Projected:"} ${formatCurrencyFull(Math.round(projections.realisticMonthly * 0.3))}/month
+   ${isHindi ? "- प्रोजेक्टेड:" : "- Projected:"} ${formatCurrencyFull(Math.round(projections.realisticMonthly.low * 0.3))}/month
 
 3. ${isHindi ? "डिजिटल प्रोडक्ट्स (30% रेवेन्यू)" : "Digital Products (30% Revenue)"}
    ${isHindi ? "- प्रोडक्ट आइडिया:" : "- Product Ideas:"} ${profile.niche} ${isHindi ? "गाइड, टेम्प्लेट, कोर्स" : "guide, templates, course"}
    ${isHindi ? "- प्राइसिंग:" : "- Pricing:"} ₹99-₹999
-   ${isHindi ? "- प्रोजेक्टेड:" : "- Projected:"} ${formatCurrencyFull(Math.round(projections.realisticMonthly * 0.3))}/month
+   ${isHindi ? "- प्रोजेक्टेड:" : "- Projected:"} ${formatCurrencyFull(Math.round(projections.realisticMonthly.low * 0.3))}/month
 
-${isHindi ? "कुल मासिक टार्गेट:" : "Total Monthly Target:"} ${formatCurrencyFull(projections.realisticMonthly)}
+${isHindi ? "कुल मासिक टार्गेट:" : "Total Monthly Target:"} ${formatCurrencyFull(projections.realisticMonthly.low)} - ${formatCurrencyFull(projections.realisticMonthly.high)}
 
 `;
 }
@@ -239,7 +239,7 @@ Hi [Brand Name] Team,
 
 I'm ${profile.name}, a ${profile.niche} creator with ${profile.followerRange} engaged followers on ${profile.platform}. My audience achieves ${profile.engagementRate}% engagement rate, and I specialize in creating content that drives real results.
 
-I'd love to create authentic content showcasing [specific product]. My rates start at ${formatCurrencyFull(projections.brandRatePerPost)} per post.
+I'd love to create authentic content showcasing [specific product]. My rates start at ${formatCurrencyFull(projections.brandRatePerPost.low)} per post.
 
 ${isHindi ? "मेरे पोर्टफोलियो और मीडिया किट के लिए मुझे बताएं।" : "Happy to share my media kit and past campaign results."}
 
@@ -255,7 +255,7 @@ Following up on my collaboration proposal. I noticed [recent brand activity/camp
 Quick stats:
 - ${profile.followerRange} followers (${profile.engagementRate}% ER)
 - Niche: ${profile.niche}
-- Rate: Starting at ${formatCurrencyFull(projections.brandRatePerPost)}
+- Rate: Starting at ${formatCurrencyFull(projections.brandRatePerPost.low)}
 
 Would love to hop on a quick call this week.
 
@@ -266,12 +266,12 @@ ${isHindi ? "स्क्रिप्ट 3: नेगोशिएशन" : "Scri
 ${"─".repeat(50)}
 Thank you for your interest! Here's my rate card:
 
-Single Post: ${formatCurrencyFull(projections.brandRatePerPost)}
-Reel/Short: ${formatCurrencyFull(projections.brandRatePerReel)}
-Story: ${formatCurrencyFull(projections.brandRatePerStory)}
-Video: ${formatCurrencyFull(projections.brandRatePerVideo)}
+Single Post: ${formatCurrencyFull(projections.brandRatePerPost.low)} - ${formatCurrencyFull(projections.brandRatePerPost.high)}
+Reel/Short: ${formatCurrencyFull(projections.brandRatePerReel.low)} - ${formatCurrencyFull(projections.brandRatePerReel.high)}
+Story: ${formatCurrencyFull(projections.brandRatePerStory.low)} - ${formatCurrencyFull(projections.brandRatePerStory.high)}
+Video: ${formatCurrencyFull(projections.brandRatePerVideo.low)} - ${formatCurrencyFull(projections.brandRatePerVideo.high)}
 
-Package Deal (3 posts + 5 stories): ${formatCurrencyFull(Math.round((projections.brandRatePerPost * 3 + projections.brandRatePerStory * 5) * 0.85))} (15% discount)
+Package Deal (3 posts + 5 stories): ${formatCurrencyFull(Math.round((projections.brandRatePerPost.high * 3 + projections.brandRatePerStory.high * 5) * 0.85))} (15% discount)
 
 Long-term Partnership (3 months): 25% discount on all rates.
 
@@ -306,18 +306,18 @@ ${isHindi ? "लक्ष्य:" : "Goals:"} ${profile.goals.join(", ")}
 ${"─".repeat(50)}
 ${isHindi ? "सर्विस" : "Service"}              | ${isHindi ? "रेट" : "Rate"}
 ${"─".repeat(50)}
-${isHindi ? "स्टैटिक पोस्ट" : "Static Post"}           | ${formatCurrencyFull(projections.brandRatePerPost)}
-${isHindi ? "रील/शॉर्ट" : "Reel/Short"}             | ${formatCurrencyFull(projections.brandRatePerReel)}
-${isHindi ? "स्टोरी (24hr)" : "Story (24hr)"}          | ${formatCurrencyFull(projections.brandRatePerStory)}
-${isHindi ? "वीडियो" : "Video"}                | ${formatCurrencyFull(projections.brandRatePerVideo)}
-${isHindi ? "कैरोसल" : "Carousel"}              | ${formatCurrencyFull(Math.round(projections.brandRatePerPost * 1.3))}
-${isHindi ? "प्रोडक्ट रिव्यू" : "Product Review"}       | ${formatCurrencyFull(Math.round(projections.brandRatePerReel * 1.5))}
+${isHindi ? "स्टैटिक पोस्ट" : "Static Post"}           | ${formatCurrencyFull(projections.brandRatePerPost.low)} - ${formatCurrencyFull(projections.brandRatePerPost.high)}
+${isHindi ? "रील/शॉर्ट" : "Reel/Short"}             | ${formatCurrencyFull(projections.brandRatePerReel.low)} - ${formatCurrencyFull(projections.brandRatePerReel.high)}
+${isHindi ? "स्टोरी (24hr)" : "Story (24hr)"}          | ${formatCurrencyFull(projections.brandRatePerStory.low)} - ${formatCurrencyFull(projections.brandRatePerStory.high)}
+${isHindi ? "वीडियो" : "Video"}                | ${formatCurrencyFull(projections.brandRatePerVideo.low)} - ${formatCurrencyFull(projections.brandRatePerVideo.high)}
+${isHindi ? "कैरोसल" : "Carousel"}              | ${formatCurrencyFull(Math.round(projections.brandRatePerPost.high * 1.3))}
+${isHindi ? "प्रोडक्ट रिव्यू" : "Product Review"}       | ${formatCurrencyFull(Math.round(projections.brandRatePerReel.high * 1.5))}
 ${"─".repeat(50)}
 
 ${isHindi ? "पैकेज डील्स:" : "Package Deals:"}
-${isHindi ? "बेसिक:" : "Basic:"} 2 Posts + 3 Stories = ${formatCurrencyFull(Math.round((projections.brandRatePerPost * 2 + projections.brandRatePerStory * 3) * 0.9))}
-${isHindi ? "स्टैंडर्ड:" : "Standard:"} 3 Posts + 2 Reels + 5 Stories = ${formatCurrencyFull(Math.round((projections.brandRatePerPost * 3 + projections.brandRatePerReel * 2 + projections.brandRatePerStory * 5) * 0.85))}
-${isHindi ? "प्रीमियम:" : "Premium:"} 5 Posts + 3 Reels + 10 Stories + 1 Video = ${formatCurrencyFull(Math.round((projections.brandRatePerPost * 5 + projections.brandRatePerReel * 3 + projections.brandRatePerStory * 10 + projections.brandRatePerVideo) * 0.8))}
+${isHindi ? "बेसिक:" : "Basic:"} 2 Posts + 3 Stories = ${formatCurrencyFull(Math.round((projections.brandRatePerPost.high * 2 + projections.brandRatePerStory.high * 3) * 0.9))}
+${isHindi ? "स्टैंडर्ड:" : "Standard:"} 3 Posts + 2 Reels + 5 Stories = ${formatCurrencyFull(Math.round((projections.brandRatePerPost.high * 3 + projections.brandRatePerReel.high * 2 + projections.brandRatePerStory.high * 5) * 0.85))}
+${isHindi ? "प्रीमियम:" : "Premium:"} 5 Posts + 3 Reels + 10 Stories + 1 Video = ${formatCurrencyFull(Math.round((projections.brandRatePerPost.high * 5 + projections.brandRatePerReel.high * 3 + projections.brandRatePerStory.high * 10 + projections.brandRatePerVideo.high) * 0.8))}
 
 ${isHindi ? "नोट:" : "Note:"} ${isHindi ? "3+ महीने की पार्टनरशिप पर 25% डिस्काउंट" : "25% discount on 3+ month partnerships"}
 
