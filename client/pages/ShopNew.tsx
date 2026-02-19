@@ -144,8 +144,11 @@ function ShopNew() {
   const getProductColors = (id: string) => {
     switch(id) {
       case "complete-growth-kit": return { bg: "bg-[#e8f5f1]", accent: "bg-[#00c853]", text: "text-[#00c853]", border: "border-[#00c853]/20" };
+      case "reels-mastery":
       case "instagram-reels-mastery": return { bg: "bg-[#f5eefc]", accent: "bg-[#9c27b0]", text: "text-[#9c27b0]", border: "border-[#9c27b0]/20" };
+      case "brand-masterclass":
       case "brand-collaboration-masterclass": return { bg: "bg-[#fff3e0]", accent: "bg-[#ff9800]", text: "text-[#ff9800]", border: "border-[#ff9800]/20" };
+      case "complete-bundle": return { bg: "bg-[#e3f2fd]", accent: "bg-[#1976d2]", text: "text-[#1976d2]", border: "border-[#1976d2]/20" };
       default: return { bg: "bg-gray-50", accent: "bg-blue-600", text: "text-blue-600", border: "border-gray-100" };
     }
   };
