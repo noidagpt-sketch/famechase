@@ -250,6 +250,7 @@ export default function Results() {
   const [intelligenceReport, setIntelligenceReport] = useState<CreatorIntelligenceReport | null>(null);
   const [executiveSummary, setExecutiveSummary] = useState<string>("");
   const [summaryLoading, setSummaryLoading] = useState(false);
+  const [noQuizData, setNoQuizData] = useState(false);
 
   const t = sanitizeDeep(languages[language]);
 
@@ -326,11 +327,18 @@ export default function Results() {
 
   useEffect(() => {
     const storedData = localStorage.getItem("fameChaseQuizData");
-    if (storedData) {
+    if (!storedData) {
+      setNoQuizData(true);
+      return;
+    }
+    try {
       const data = JSON.parse(storedData);
+      if (!data || !data.name) {
+        setNoQuizData(true);
+        return;
+      }
       setQuizData(data);
 
-      // Use saved language preference
       const savedLanguage =
         (localStorage.getItem("famechase-language") as "english" | "hindi") ||
         "english";
@@ -347,28 +355,35 @@ export default function Results() {
       const generatedAnalysis = analyzeQuizData(data);
       setAnalysis(generatedAnalysis);
 
-      const report = generateCreatorReport(data);
-      setIntelligenceReport(report);
+      try {
+        const report = generateCreatorReport(data);
+        setIntelligenceReport(report);
 
-      setSummaryLoading(true);
-      fetch("/api/creator-intelligence/executive-summary", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          scores: report.scores,
-          projections: report.projections,
-          profile: report.profile,
-          language: savedLanguage,
-        }),
-      })
-        .then((res) => res.json())
-        .then((result) => {
-          if (result.success && result.summary) {
-            setExecutiveSummary(result.summary);
-          }
+        setSummaryLoading(true);
+        fetch("/api/creator-intelligence/executive-summary", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            scores: report.scores,
+            projections: report.projections,
+            profile: report.profile,
+            language: savedLanguage,
+          }),
         })
-        .catch(() => {})
-        .finally(() => setSummaryLoading(false));
+          .then((res) => res.json())
+          .then((result) => {
+            if (result.success && result.summary) {
+              setExecutiveSummary(result.summary);
+            }
+          })
+          .catch(() => {})
+          .finally(() => setSummaryLoading(false));
+      } catch (reportError) {
+        console.warn("Creator intelligence report generation failed:", reportError);
+      }
+    } catch (e) {
+      console.error("Failed to parse quiz data:", e);
+      setNoQuizData(true);
     }
   }, []);
 
@@ -1053,6 +1068,30 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
     }
   };
 
+  if (noQuizData) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto p-8">
+          <div className="w-20 h-20 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Target className="w-10 h-10 text-white" />
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-3">Complete Your Quiz First</h2>
+          <p className="text-gray-600 mb-6">Take the 2-minute creator quiz to get your personalized analysis, Fame Score, and growth recommendations.</p>
+          <Link
+            to="/quiz"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold py-3 px-8 rounded-xl hover:shadow-lg transition-all"
+          >
+            <Sparkles className="w-5 h-5" />
+            Take the Quiz Now
+          </Link>
+          <Link to="/" className="block mt-4 text-gray-500 hover:text-gray-700 text-sm">
+            Back to Home
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   if (!quizData || !analysis) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
@@ -1392,14 +1431,14 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
                   : "🚀 Your Next 3 Specific Actions"}
               </h2>
               <div className="grid gap-4">
-                {analysis.recommendations.slice(0, 3).map((rec: any, idx: number) => (
+                {(intelligenceReport?.recommendations || []).slice(0, 3).map((rec: any, idx: number) => (
                   <div key={idx} className="bg-white p-4 rounded-xl border border-purple-100 flex gap-4 items-start">
                     <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 text-purple-600 font-bold">
                       {idx + 1}
                     </div>
                     <div>
-                      <h4 className="font-bold text-gray-900">{rec.title}</h4>
-                      <p className="text-gray-600 text-sm">{rec.description}</p>
+                      <h4 className="font-bold text-gray-900">{language === "hindi" ? rec.titleHindi : rec.title}</h4>
+                      <p className="text-gray-600 text-sm">{language === "hindi" ? rec.descriptionHindi : rec.description}</p>
                     </div>
                   </div>
                 ))}
