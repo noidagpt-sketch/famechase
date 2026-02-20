@@ -2589,15 +2589,13 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
             {/* FOMO Section */}
             <div className="bg-red-50 border border-red-100 rounded-xl p-4 mb-8">
               <div className="grid grid-cols-1 gap-4">
-                <a
-                  href="https://www.instamojo.com/@famechase/?amount=99&purpose=FameChase%20-%20Complete%20Toolkit"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={handleInstamojoClick}
                   className="w-full bg-[#007bff] hover:bg-[#0069d9] text-white font-bold py-4 px-8 rounded-xl flex items-center justify-center gap-3 transition-all transform hover:scale-[1.02] shadow-lg"
                 >
                   <CreditCard className="w-5 h-5" />
                   {language === "hindi" ? "Instamojo के माध्यम से भुगतान करें" : "Pay via Instamojo"}
-                </a>
+                </button>
 
                 <button
                   onClick={() => setShowLaunchOfferPopup(true)}
