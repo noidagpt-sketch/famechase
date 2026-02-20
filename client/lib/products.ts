@@ -230,7 +230,7 @@ export const productConfigs: ProductConfig[] = [
       "2-hour video training (Step-by-step viral formula)",
       "50+ Viral Reel Ideas (Tested on 500K+ followers)",
       "Editing Templates & Transitions (Used by top Indian creators)",
-      "Music & Sound Selection Guide (2024 trending audio list)",
+      "Music & Sound Selection Guide (Trending audio list)",
       "Algorithm Optimization Secrets (86% higher reach proven)",
       "Case Studies from 1M+ creators (Real income breakdowns)",
       "BONUS: Live monthly Q&A sessions with viral creators",
@@ -408,7 +408,7 @@ export const productConfigs: ProductConfig[] = [
     category: "course",
     features: [
       "2-hour video training series",
-      "Facebook algorithm secrets 2024",
+      "Facebook algorithm secrets",
       "Post optimization techniques",
       "Community building strategies",
       "Facebook groups monetization",
@@ -417,11 +417,11 @@ export const productConfigs: ProductConfig[] = [
     downloads: [
       {
         id: "facebook-algorithm-guide",
-        name: "Facebook Algorithm Secrets 2024",
+        name: "Facebook Algorithm Secrets",
         type: "guide",
         language: "both",
         content: generateFacebookAlgorithmContent,
-        fileName: "Facebook_Algorithm_Secrets_2024",
+        fileName: "Facebook_Algorithm_Secrets",
       },
       {
         id: "facebook-posting-strategies",
@@ -466,7 +466,232 @@ export const productConfigs: ProductConfig[] = [
       "Brand Collaboration Masterclass",
       "Bonus: 1-on-1 Strategy Call",
     ],
-    downloads: [], // Bundle includes all downloads from other products
+    downloads: [
+      {
+        id: "bundle-media-kit-template",
+        name: "Professional Media Kit Template",
+        type: "template",
+        language: "both",
+        content: generateMediaKitContent,
+        fileName: "Professional_Media_Kit_Template",
+      },
+      {
+        id: "bundle-email-templates",
+        name: "30+ Brand Outreach Email Templates",
+        type: "template",
+        language: "both",
+        content: generateEmailTemplatesContent,
+        fileName: "Brand_Outreach_Email_Templates",
+      },
+      {
+        id: "bundle-pricing-calculator",
+        name: "Professional Pricing Calculator",
+        type: "template",
+        language: "both",
+        content: generatePricingCalculatorContent,
+        fileName: "Creator_Pricing_Calculator",
+      },
+      {
+        id: "bundle-content-calendar",
+        name: "Content Calendar Template (3 months)",
+        type: "template",
+        language: "both",
+        content: generateContentCalendarContent,
+        fileName: "Content_Calendar_3_Months",
+      },
+      {
+        id: "bundle-growth-strategy",
+        name: "Growth Strategy Workbook",
+        type: "guide",
+        language: "both",
+        content: generateGrowthStrategyContent,
+        fileName: "Creator_Growth_Strategy_Workbook",
+      },
+      {
+        id: "bundle-hashtag-guide",
+        name: "Hashtag Research Guide",
+        type: "guide",
+        language: "both",
+        content: generateHashtagGuideContent,
+        fileName: "Hashtag_Research_Master_Guide",
+      },
+      {
+        id: "bundle-rate-cards",
+        name: "Rate Card Templates",
+        type: "template",
+        language: "both",
+        content: generateRateCardContent,
+        fileName: "Professional_Rate_Card_Templates",
+      },
+      {
+        id: "bundle-contracts",
+        name: "Contract Templates",
+        type: "template",
+        language: "both",
+        content: generateContractContent,
+        fileName: "Creator_Contract_Templates",
+      },
+      {
+        id: "bundle-premium-tools",
+        name: "Premium Tools Guide",
+        type: "guide",
+        language: "both",
+        content: generatePremiumToolsContent,
+        fileName: "Premium_Creator_Tools_Guide",
+      },
+      {
+        id: "bundle-viral-reel-ideas",
+        name: "50+ Viral Reel Ideas",
+        type: "guide",
+        language: "both",
+        content: generateViralReelIdeasContent,
+        fileName: "50_Viral_Reel_Ideas_Guide",
+      },
+      {
+        id: "bundle-editing-templates",
+        name: "Editing Templates & Transitions",
+        type: "template",
+        language: "both",
+        content: generateEditingTemplatesContent,
+        fileName: "Reel_Editing_Templates_Pack",
+      },
+      {
+        id: "bundle-music-guide",
+        name: "Music & Sound Selection Guide",
+        type: "guide",
+        language: "both",
+        content: generateMusicGuideContent,
+        fileName: "Reel_Music_Selection_Guide",
+      },
+      {
+        id: "bundle-algorithm-secrets",
+        name: "Algorithm Optimization Secrets",
+        type: "guide",
+        language: "both",
+        content: generateAlgorithmSecretsContent,
+        fileName: "Instagram_Algorithm_Secrets",
+      },
+      {
+        id: "bundle-case-studies",
+        name: "Case Studies from 1M+ Creators",
+        type: "guide",
+        language: "both",
+        content: generateCaseStudiesContent,
+        fileName: "Viral_Creator_Case_Studies",
+      },
+      {
+        id: "bundle-brand-outreach-scripts",
+        name: "Brand Outreach Email Scripts",
+        type: "template",
+        language: "both",
+        content: generateBrandOutreachScriptsContent,
+        fileName: "Brand_Outreach_Email_Scripts",
+      },
+      {
+        id: "bundle-media-kit-designs",
+        name: "Media Kit Templates (10 designs)",
+        type: "template",
+        language: "both",
+        content: generateMediaKitDesignsContent,
+        fileName: "Media_Kit_Template_Collection",
+      },
+      {
+        id: "bundle-negotiation-tactics",
+        name: "Negotiation Tactics & Rate Cards",
+        type: "guide",
+        language: "both",
+        content: generateNegotiationTacticsContent,
+        fileName: "Brand_Negotiation_Tactics_Guide",
+      },
+      {
+        id: "bundle-brand-contracts",
+        name: "Brand Partnership Contracts",
+        type: "template",
+        language: "both",
+        content: generateBrandContractContent,
+        fileName: "Brand_Partnership_Contracts",
+      },
+      {
+        id: "bundle-brand-database",
+        name: "50+ Brand Contact Database",
+        type: "template",
+        language: "both",
+        content: generateBrandDatabaseContent,
+        fileName: "Brand_Contact_Database_50plus",
+      },
+      {
+        id: "bundle-pitch-decks",
+        name: "Pitch Deck Templates",
+        type: "template",
+        language: "both",
+        content: generatePitchDeckContent,
+        fileName: "Brand_Pitch_Deck_Templates",
+      },
+      {
+        id: "bundle-youtube-seo",
+        name: "YouTube SEO Optimization Guide",
+        type: "guide",
+        language: "both",
+        content: generateYouTubeSEOContent,
+        fileName: "YouTube_SEO_Mastery_Guide",
+      },
+      {
+        id: "bundle-youtube-monetization",
+        name: "Complete Monetization Strategies",
+        type: "guide",
+        language: "both",
+        content: generateYouTubeMonetizationContent,
+        fileName: "YouTube_Monetization_Blueprint",
+      },
+      {
+        id: "bundle-thumbnail-templates",
+        name: "Viral Thumbnail Templates & Psychology",
+        type: "template",
+        language: "both",
+        content: generateThumbnailTemplatesContent,
+        fileName: "YouTube_Thumbnail_Templates",
+      },
+      {
+        id: "bundle-youtube-analytics",
+        name: "YouTube Analytics Mastery Guide",
+        type: "guide",
+        language: "both",
+        content: generateYouTubeAnalyticsContent,
+        fileName: "YouTube_Analytics_Mastery",
+      },
+      {
+        id: "bundle-facebook-algorithm",
+        name: "Facebook Algorithm Secrets",
+        type: "guide",
+        language: "both",
+        content: generateFacebookAlgorithmContent,
+        fileName: "Facebook_Algorithm_Secrets",
+      },
+      {
+        id: "bundle-facebook-posting",
+        name: "High-Engagement Posting Strategies",
+        type: "guide",
+        language: "both",
+        content: generateFacebookPostingContent,
+        fileName: "Facebook_Posting_Strategies",
+      },
+      {
+        id: "bundle-facebook-groups",
+        name: "Facebook Groups Monetization Guide",
+        type: "guide",
+        language: "both",
+        content: generateFacebookGroupsContent,
+        fileName: "Facebook_Groups_Monetization",
+      },
+      {
+        id: "bundle-facebook-calendar",
+        name: "Facebook Content Calendar Templates",
+        type: "template",
+        language: "both",
+        content: generateFacebookCalendarContent,
+        fileName: "Facebook_Content_Calendar_Templates",
+      },
+    ],
   },
 ];
 
@@ -990,9 +1215,11 @@ function generatePricingCalculatorContent(
 ): string {
   const userFollowers = userData?.followerCount || "10K+";
   const userNiche = userData?.niche || "Content Creator";
+  const userName = userData?.name || "Creator Name";
 
   if (language === "hindi") {
     return ` प्रोफेशनल प्राइसिंग कैलकुेटर
+के लिए तैयार: ${userName}
 
 📊 आपकी current stats:
 • फॉलोअर्स: ${userFollowers}
@@ -1094,6 +1321,7 @@ Performance: [Metrics]
   }
 
   return `💰 PROFESSIONAL PRICING CALCULATOR
+Prepared for: ${userName}
 
 📊 Your current stats:
 • Followers: ${userFollowers}
@@ -1199,10 +1427,12 @@ function generateContentCalendarContent(
   userData?: any,
 ): string {
   const userNiche = userData?.niche || "Content Creator";
+  const userName = userData?.name || "Creator Name";
   const userPlatform = userData?.primaryPlatform || "Instagram";
 
   if (language === "hindi") {
     return `📅 3-महीने कंे���ट कैलेंडर टेम्प्लेट
+के लिए तैयार: ${userName}
 
 🎯 ${userNiche} के लिए ${userPlatform} कंटेंट प्लान
 
@@ -1402,6 +1632,7 @@ Month 3: Monetization Focus
   }
 
   return ` 3-MONTH CONTENT CALENDAR TEMPLATE
+Prepared for: ${userName}
 
 🎯 ${userNiche} Content Plan for ${userPlatform}
 
@@ -1607,6 +1838,7 @@ function generateGrowthStrategyContent(
 ): string {
   const userNiche = userData?.niche || "Content Creator";
   const userPlatform = userData?.primaryPlatform || "Instagram";
+  const userName = userData?.name || "Creator Name";
   const userFollowers = userData?.followerCount || "1K-5K";
   const userGoals =
     userData?.goals?.slice(0, 3).join(", ") ||
@@ -1614,6 +1846,7 @@ function generateGrowthStrategyContent(
 
   if (language === "hindi") {
     return `📈 क्रिएटर ग्रोथ स्ट्रैटेजी वर्कबुक
+के लिए तैयार: ${userName}
 
 ${userNiche} क्रिएटर्स के लिए विस्तृत ग्रोथ गाइड
 
@@ -1682,6 +1915,7 @@ ${userNiche} क्रिएटर्स के लिए विस्तृत 
   }
 
   return `📈 CREATOR GROWTH STRATEGY WORKBOOK
+Prepared for: ${userName}
 
 Comprehensive Growth Guide for ${userNiche} Creators
 
@@ -1754,10 +1988,12 @@ function generateHashtagGuideContent(
   userData?: any,
 ): string {
   const userNiche = userData?.niche || "Content Creator";
+  const userName = userData?.name || "Creator Name";
   const userPlatform = userData?.primaryPlatform || "Instagram";
 
   if (language === "hindi") {
     return `#️⃣ हैशटैग रिसर्च मास्टर गाइड
+के लिए तैयार: ${userName}
 
 ${userNiche} क्रिएटर्स े लि�� ${userPlatform} हैशटैग रणनीति
 
@@ -1836,7 +2072,7 @@ ${userNiche} क्रिएटर्स े लि�� ${userPlatform} है
 • #valentinesday #mothersday #fathersday
 • #independence #republic #gandhijayanti
 
-🔥 हॉट ट्रेंडिंग हैशटैग (2024):
+🔥 हॉट ट्रेंडिंग हैशटैग:
 • #reels #trending #viral #explore
 • #aitools #digitalindia #startupindia
 • #sustainability #mentalhealth #fitness
@@ -1865,6 +2101,7 @@ ${userNiche} क्रिएटर्स े लि�� ${userPlatform} है
   }
 
   return `#️⃣ HASHTAG RESEARCH MASTER GUIDE
+Prepared for: ${userName}
 
 ${userPlatform} Hashtag Strategy for ${userNiche} Creators
 
@@ -1943,7 +2180,7 @@ ${userPlatform} Hashtag Strategy for ${userNiche} Creators
 • #valentinesday #mothersday #fathersday
 • #independence #republic #gandhijayanti
 
-🔥 HOT TRENDING HASHTAGS (2024):
+🔥 HOT TRENDING HASHTAGS:
 • #reels #trending #viral #explore
 • #aitools #digitalindia #startupindia
 • #sustainability #mentalhealth #fitness
@@ -2343,10 +2580,12 @@ function generateViralReelIdeasContent(
   userData?: any,
 ): string {
   const userNiche = userData?.niche || "Content Creator";
+  const userName = userData?.name || "Creator Name";
   const userPlatform = userData?.primaryPlatform || "Instagram";
 
   if (language === "hindi") {
     return `🎬 50+ वायरल रील आइडियाज गाइ���
+के लिए तैयार: ${userName}
 
 ${userNiche} ्रिएटर्स के लिए प्रमाणित वायरल कंटेंट फॉर्मू���
 
@@ -2454,6 +2693,7 @@ Hook (0-3s) + Value/Entertainment (3-20s) + Call to Action (20-30s)
   }
 
   return `🎬 50+ VIRAL REEL IDEAS GUIDE
+Prepared for: ${userName}
 
 Proven Viral Content Formula for ${userNiche} Creators
 
@@ -2565,9 +2805,11 @@ function generateEditingTemplatesContent(
   userData?: any,
 ): string {
   const userNiche = userData?.niche || "Content Creator";
+  const userName = userData?.name || "Creator Name";
 
   if (language === "hindi") {
     return `🎞️ प्रोफेशनल एडिटिग टेम्प्ल��ट्स & ट्रांजिशन गाइड
+के लिए तैयार: ${userName}
 
 ${userNiche} क्रिएटर्स के लिए ायरल डिटिंग तीें
 
@@ -2737,6 +2979,7 @@ ${userNiche} क्रिएटर्स के लिए ायरल डिट
   }
 
   return `🎞️ PROFESSIONAL EDITING TEMPLATES & TRANSITIONS GUIDE
+Prepared for: ${userName}
 
 Viral Editing Techniques for ${userNiche} Creators
 
@@ -2910,15 +3153,17 @@ function generateMusicGuideContent(
   userData?: any,
 ): string {
   const userNiche = userData?.niche || "Content Creator";
+  const userName = userData?.name || "Creator Name";
 
   if (language === "hindi") {
     return `🎵 म्यूजिक & सांड सेलेक्शन मास्टर गाइड
+के लिए तैयार: ${userName}
 
 ${userNiche} क्रिएटर्स के लिए वायरल ऑडियो स्ट्रैटेजी
 
 🎧 VIRAL म्यूजिक कैटेगरीज:
 
-🔥 ट्ेंडिंग बॉलीवुड हिट्स (2024):
+🔥 ट्ेंडिंग बॉलीवुड हिट्स:
 • "Animal" Movie Songs
 • "Pathaan" Background Music
 • "Jawan" Theme Music
@@ -3148,12 +3393,13 @@ ${userNiche} क्रिएटर्स के लिए वायरल ऑड
   }
 
   return `🎵 MUSIC & SOUND SELECTION MASTER GUIDE
+Prepared for: ${userName}
 
 Viral Audio Strategy for ${userNiche} Creators
 
 🎧 VIRAL MUSIC CATEGORIES:
 
-🔥 Trending Bollywood Hits (2024):
+🔥 Trending Bollywood Hits:
 • "Animal" Movie Songs
 • "Pathaan" Background Music
 • "Jawan" Theme Music
@@ -3387,9 +3633,11 @@ function generateAlgorithmSecretsContent(
   userData?: any,
 ): string {
   const userNiche = userData?.niche || "Content Creator";
+  const userName = userData?.name || "Creator Name";
 
   if (language === "hindi") {
     return `📱 इंस्टाग्राम एल्गोरिदम ऑप्टिमाइजेशन सीक्रेट्स
+के लिए तैयार: ${userName}
 
 ${userNiche} क्रिएटर्स के लिए एल्गोरिदम मास्टरी गाइड
 
@@ -3488,6 +3736,7 @@ ${userNiche} क्रिएटर्स के लिए एल्गोरि�
   }
 
   return `📱 INSTAGRAM ALGORITHM OPTIMIZATION SECRETS
+Prepared for: ${userName}
 
 Algorithm Mastery Guide for ${userNiche} Creators
 
@@ -3590,9 +3839,11 @@ function generateCaseStudiesContent(
   userData?: any,
 ): string {
   const userNiche = userData?.niche || "Content Creator";
+  const userName = userData?.name || "Creator Name";
 
   if (language === "hindi") {
     return `🏆 वायरल क्रिएटर केस स्टडीज
+के लिए तैयार: ${userName}
 
 ${userNiche} क्रिएटर्स के लिए 10+ कामयाब केस स्टडीज
 
@@ -3749,6 +4000,7 @@ ${userNiche} क्रिएटर्स के लिए 10+ कामयाब
   }
 
   return `🏆 VIRAL CREATOR CASE STUDIES
+Prepared for: ${userName}
 
 10+ Successful Case Studies for ${userNiche} Creators
 
@@ -4560,9 +4812,11 @@ function generateYouTubeSEOContent(
   userData?: any,
 ): string {
   const userNiche = userData?.niche || "Content Creator";
+  const userName = userData?.name || "Creator Name";
 
   if (language === "hindi") {
     return `🎬 यूट्यूब SEO ऑप्टिमाइजेशन कम्प्ीट गाइड
+के लिए तैयार: ${userName}
 
 ${userNiche} क्रिएटर्स के लए वायरल हैक���स और रैंकिंग सी्रट्स
 
@@ -4661,6 +4915,7 @@ Long-tail tags (2-5):
   }
 
   return `🎬 YOUTUBE SEO OPTIMIZATION COMPLETE GUIDE
+Prepared for: ${userName}
 
 Viral Hacks and Ranking Secrets for ${userNiche} Creators
 
@@ -4763,9 +5018,11 @@ function generateYouTubeMonetizationContent(
   userData?: any,
 ): string {
   const userNiche = userData?.niche || "Content Creator";
+  const userName = userData?.name || "Creator Name";
 
   if (language === "hindi") {
     return `💰 यूट्यूब मोनेटाइजेशन कम्प्लीट ब्लूपरिंट
+के लिए तैयार: ${userName}
 
 ${userNiche} क्रिएटर्स के लिए 10+ आय स्रोत रणनीति
 
@@ -4912,6 +5169,7 @@ Example rates:
   }
 
   return `💰 YOUTUBE MONETIZATION COMPLETE BLUEPRINT
+Prepared for: ${userName}
 
 10+ Income Source Strategy for ${userNiche} Creators
 
@@ -5062,9 +5320,11 @@ function generateThumbnailTemplatesContent(
   userData?: any,
 ): string {
   const userNiche = userData?.niche || "Content Creator";
+  const userName = userData?.name || "Creator Name";
 
   if (language === "hindi") {
     return `🎨 वायरल थंबनेल टेम्प्लेट्स & साइकोलॉजी गाइड
+के लिए तैयार: ${userName}
 
 ${userNiche} क्रिएटर्स के लिए 50+ प्रोवन थंबनेल डिज़ाइन
 
@@ -5304,6 +5564,7 @@ Best for: Premium content, mysterious topics, creative arts
   }
 
   return `🎨 VIRAL THUMBNAIL TEMPLATES & PSYCHOLOGY GUIDE
+Prepared for: ${userName}
 
 50+ Proven Thumbnail Designs for ${userNiche} Creators
 
@@ -5547,9 +5808,11 @@ function generateYouTubeAnalyticsContent(
   userData?: any,
 ): string {
   const userNiche = userData?.niche || "Content Creator";
+  const userName = userData?.name || "Creator Name";
 
   if (language === "hindi") {
     return `📊 यूट्यूब एनालिटिक्स मास्टरी गाइड
+के लिए तैयार: ${userName}
 
 ${userNiche} क्रिएटर्स के लिए ग्रोथ ट्रैकिंग और ऑप्टिमाइजेशन
 
@@ -5765,6 +6028,7 @@ ${userNiche} क्रिएटर्स के लिए ग्रोथ ट्
   }
 
   return `📊 YOUTUBE ANALYTICS MASTERY GUIDE
+Prepared for: ${userName}
 
 Growth Tracking and Optimization for ${userNiche} Creators
 
@@ -5985,9 +6249,11 @@ function generateFacebookAlgorithmContent(
   userData?: any,
 ): string {
   const userNiche = userData?.niche || "Content Creator";
+  const userName = userData?.name || "Creator Name";
 
   if (language === "hindi") {
-    return `📱 फेसबुक एल्गोरिदम सी्रेट्स 2024
+    return `📱 फेसबुक एल्गोरिदम सी्रेट्स
+के लिए तैयार: ${userName}
 
 ${userNiche} क्िएटर्स के लिए ऑर्गेनिक रीच और एंगेजमेंट मास्टरी
 
@@ -6207,7 +6473,8 @@ ${userNiche} क्िएटर्स के लिए ऑर्गेनिक 
 • Competitor analysis regular करें`;
   }
 
-  return `📱 FACEBOOK ALGORITHM SECRETS 2024
+  return `📱 FACEBOOK ALGORITHM SECRETS
+Prepared for: ${userName}
 
 Organic Reach and Engagement Mastery for ${userNiche} Creators
 
@@ -6432,9 +6699,11 @@ function generateFacebookPostingContent(
   userData?: any,
 ): string {
   const userNiche = userData?.niche || "Content Creator";
+  const userName = userData?.name || "Creator Name";
 
   if (language === "hindi") {
     return `📝 फेसबुक हाई-एंगेजमंट पोस्टिंग स्ट्रैटेजीज
+के लिए तैयार: ${userName}
 
 ${userNiche} क्रिएटर्स के लिए 100+ प्रोवन पोस्ट टेम्प्लेट्स
 
@@ -6693,6 +6962,7 @@ Week 4: Community/Engagement focus
   }
 
   return `📝 FACEBOOK HIGH-ENGAGEMENT POSTING STRATEGIES
+Prepared for: ${userName}
 
 100+ Proven Post Templates for ${userNiche} Creators
 
@@ -6955,9 +7225,11 @@ function generateFacebookGroupsContent(
   userData?: any,
 ): string {
   const userNiche = userData?.niche || "Content Creator";
+  const userName = userData?.name || "Creator Name";
 
   if (language === "hindi") {
     return ` फेसबुक ग्रुप्स मोनेटाइजेशन गाइड
+के लिए तैयार: ${userName}
 
 ${userNiche} क्रिएटर्स के लिए कम्युन���टी बिल्डिंग और आय रणनीति
 
@@ -7227,6 +7499,7 @@ Pricing Strategy:
   }
 
   return `👥 FACEBOOK GROUPS MONETIZATION GUIDE
+Prepared for: ${userName}
 
 Community Building and Income Strategy for ${userNiche} Creators
 
@@ -7500,9 +7773,11 @@ function generateFacebookCalendarContent(
   userData?: any,
 ): string {
   const userNiche = userData?.niche || "Content Creator";
+  const userName = userData?.name || "Creator Name";
 
   if (language === "hindi") {
     return ` फेसबुक कंटेंट ���ैलेंडर टेम्प्लेट्स
+के लिए तैयार: ${userName}
 
 ${userNiche} क्रिएटर्स के लिए 365-दिन कंटेंट प्लानिंग सिस्टम
 
@@ -7580,7 +7855,7 @@ Content: Deep insights, industry analysis, thought leadership
 
 Example posts:
 • "[Industry topic] के बारे में मेरे विचार"
-• "Future of [niche] - 2024 predictions"
+• "Future of [niche] - predictions"
 • "क्या आपको लगा है [controversial but respectful topic]?"
 
 🎉 FRIDAY - FUN FRIDAY:
@@ -7809,6 +8084,7 @@ Q4: Celebration & Preparation
   }
 
   return `📅 FACEBOOK CONTENT CALENDAR TEMPLATES
+Prepared for: ${userName}
 
 365-Day Content Planning System for ${userNiche} Creators
 
@@ -7886,7 +8162,7 @@ Content: Deep insights, industry analysis, thought leadership
 
 Example posts:
 • "My thoughts on [industry topic]"
-• "Future of [niche] - 2024 predictions"
+• "Future of [niche] - predictions"
 • "Do you think [controversial but respectful topic]?"
 
 🎉 FRIDAY - FUN FRIDAY:
@@ -8801,10 +9077,12 @@ function generateNegotiationTacticsContent(
   userData?: any,
 ): string {
   const userNiche = userData?.niche || "Content Creator";
+  const userName = userData?.name || "Creator Name";
   const userFollowers = userData?.followerCount || "10K+";
 
   if (language === "hindi") {
     return `🤝 प्रोफेशनल नेगोसिएशन टैक्टिक्स & रेट ार्ड गाइड
+के लिए तैयार: ${userName}
 
 ${userNiche} क्रिएटर्स के लिए ब्रांड नेगोसिएशन मास्टरी
 
@@ -9048,6 +9326,7 @@ Remember: आपका content valuable है, और आपको fair compens
   }
 
   return `🤝 PROFESSIONAL NEGOTIATION TACTICS & RATE CARDS GUIDE
+Prepared for: ${userName}
 
 Brand Negotiation Mastery for ${userNiche} Creators
 
@@ -9408,9 +9687,11 @@ function generatePremiumToolsContent(
   userData?: any,
 ): string {
   const userNiche = userData?.niche || "Content Creator";
+  const userName = userData?.name || "Creator Name";
 
   if (language === "hindi") {
     return `🛠️ प्रीमियम क्रिएटर टूल्स गाइड
+के लिए तैयार: ${userName}
 
 ${userNiche} क्रिएटर्स के लिए आवश्यक फ्री और पेड टूल्स
 
@@ -9495,6 +9776,7 @@ ${userNiche} क्रिएटर्स के लिए आवश्यक फ
   }
 
   return `🛠️ PREMIUM CREATOR TOOLS GUIDE
+Prepared for: ${userName}
 
 Essential FREE and PAID tools for ${userNiche} creators
 

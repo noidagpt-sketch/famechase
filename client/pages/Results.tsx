@@ -234,6 +234,7 @@ export default function Results() {
   const [quizData, setQuizData] = useState<QuizData | null>(null);
   const [analysis, setAnalysis] = useState<any>(null);
   const [showPaymentForm, setShowPaymentForm] = useState(false);
+  const [showLaunchOfferPopup, setShowLaunchOfferPopup] = useState(false);
   const [personalInfo, setPersonalInfo] = useState<PersonalInfo>({
     name: "",
     email: "",
@@ -1404,20 +1405,22 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
                       : "Get all our premium tools absolutely FREE for the next 45 days."}
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                    <Link
-                      to="/shop"
+                    <button
+                      onClick={() => setShowLaunchOfferPopup(true)}
                       className="inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-purple-900 font-bold py-3 px-8 rounded-xl transition-all shadow-lg text-center justify-center"
                     >
                       <Zap className="w-5 h-5" />
                       {language === "hindi" ? "45 दिनों के लिए फ्री पाएं" : "Get Free for 45 Days (Launch Offer)"}
-                    </Link>
-                    <button
-                      onClick={() => setShowPaymentForm(true)}
+                    </button>
+                    <a
+                      href="https://www.instamojo.com/@famechase/?amount=99&purpose=FameChase%20-%20Complete%20Toolkit"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 bg-white hover:bg-gray-100 text-purple-900 font-bold py-3 px-8 rounded-xl transition-all shadow-lg text-center justify-center"
                     >
                       <CreditCard className="w-5 h-5" />
                       {language === "hindi" ? "पूरा टूलकिट अनलॉक करें - ₹99" : "Unlock Complete Toolkit - ₹99"}
-                    </button>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -2818,6 +2821,60 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
           </div>
         </div>
       </main>
+
+      {showLaunchOfferPopup && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4" onClick={() => setShowLaunchOfferPopup(false)}>
+          <div className="bg-white rounded-2xl max-w-md w-full shadow-2xl border border-purple-100 overflow-hidden" onClick={(e) => e.stopPropagation()}>
+            <div className="bg-gradient-to-r from-purple-600 to-indigo-700 p-6 text-white text-center">
+              <Gift className="w-12 h-12 mx-auto mb-3 text-yellow-300" />
+              <h3 className="text-2xl font-bold mb-1">
+                {language === "hindi" ? "🎁 45 दिनों का फ्री लॉन्च ऑफर!" : "🎁 45-Day Free Launch Offer!"}
+              </h3>
+            </div>
+            <div className="p-6">
+              <div className="space-y-3 mb-6">
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
+                  <p className="text-gray-700 text-sm">
+                    {language === "hindi" ? "सभी प्रीमियम क्रिएटर टूल्स 45 दिनों के लिए बिल्कुल फ्री" : "Access ALL premium creator tools completely FREE for 45 days"}
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
+                  <p className="text-gray-700 text-sm">
+                    {language === "hindi" ? "मीडिया किट, ग्रोथ स्ट्रैटेजी, ब्रांड टेम्प्लेट्स सब कुछ शामिल" : "Includes Media Kit, Growth Strategy, Brand Templates & more"}
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
+                  <p className="text-gray-700 text-sm">
+                    {language === "hindi" ? "कोई क्रेडिट कार्ड नहीं चाहिए - बस क्विज़ पूरा करें" : "No credit card required - just complete the quiz"}
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
+                  <p className="text-gray-700 text-sm">
+                    {language === "hindi" ? "लॉन्च प्रोमो - सीमित समय के लिए उपलब्ध" : "Launch promo - available for a limited time only"}
+                  </p>
+                </div>
+              </div>
+              <Link
+                to="/shop"
+                className="block w-full bg-gradient-to-r from-purple-600 to-indigo-700 text-white font-bold py-3 px-6 rounded-xl text-center hover:shadow-lg transition-all mb-3"
+              >
+                <Zap className="w-5 h-5 inline-block mr-2" />
+                {language === "hindi" ? "शॉप पर जाएं और फ्री पाएं" : "Go to Shop & Get Free Access"}
+              </Link>
+              <button
+                onClick={() => setShowLaunchOfferPopup(false)}
+                className="block w-full text-gray-400 text-sm font-medium hover:text-gray-600 py-2 text-center"
+              >
+                {language === "hindi" ? "बाद में" : "Maybe Later"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
