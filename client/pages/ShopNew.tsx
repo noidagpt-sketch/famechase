@@ -57,6 +57,17 @@ function ShopNew() {
       setQuizData(data);
       if (data.language) setLanguage(data.language);
     }
+
+    // Handle Instamojo redirect
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("payment_success") === "true" && params.get("product_id")) {
+      const productId = params.get("product_id");
+      if (productId) {
+        handlePurchase(productId);
+        // Clean up URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    }
   }, []);
 
   const checkQuizCompletion = () => {
@@ -75,7 +86,8 @@ function ShopNew() {
     if (product) {
       const purpose = encodeURIComponent(`FameChase - ${product.name}`.substring(0, 30));
       const amount = Math.round(product.price * (1 - appliedDiscount / 100));
-      window.open(`https://www.instamojo.com/@famechase/?amount=${amount}&purpose=${purpose}`, "_blank");
+      const redirectUrl = encodeURIComponent(`${window.location.origin}/shop?payment_success=true&product_id=${productId}`);
+      window.open(`https://www.instamojo.com/@famechase/?amount=${amount}&purpose=${purpose}&redirect_url=${redirectUrl}`, "_blank");
     }
   };
 

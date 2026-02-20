@@ -400,6 +400,23 @@ export default function Results() {
     })();
   }, []);
 
+  const handleInstamojoClick = () => {
+    if (!validateForm()) return;
+    const purpose = encodeURIComponent("FameChase - Complete Toolkit").substring(0, 30);
+    const amount = 99;
+    const redirectUrl = encodeURIComponent(`${window.location.origin}/results?payment_success=true`);
+    window.open(`https://www.instamojo.com/@famechase/?amount=${amount}&purpose=${purpose}&redirect_url=${redirectUrl}`, "_blank");
+  };
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("payment_success") === "true") {
+      setPaymentSuccess(true);
+      window.history.replaceState({}, document.title, window.location.pathname);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, []);
+
   const handlePayment = async () => {
     // Validate form before proceeding
     if (!validateForm()) {
