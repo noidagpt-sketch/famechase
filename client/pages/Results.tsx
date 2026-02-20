@@ -1412,15 +1412,25 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
                       <Zap className="w-5 h-5" />
                       {language === "hindi" ? "45 दिनों के लिए फ्री पाएं" : "Get Free for 45 Days (Launch Offer)"}
                     </button>
-                    <a
-                      href="https://www.instamojo.com/@famechase/?amount=99&purpose=FameChase%20-%20Complete%20Toolkit"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 bg-white hover:bg-gray-100 text-purple-900 font-bold py-3 px-8 rounded-xl transition-all shadow-lg text-center justify-center"
-                    >
-                      <CreditCard className="w-5 h-5" />
-                      {language === "hindi" ? "पूरा टूलकिट अनलॉक करें - ₹99" : "Unlock Complete Toolkit - ₹99"}
-                    </a>
+                    <div className="grid grid-cols-1 gap-4 mb-8">
+                      <a
+                        href="https://www.instamojo.com/@famechase/?amount=99&purpose=FameChase%20-%20Complete%20Toolkit"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 bg-[#007bff] hover:bg-[#0069d9] text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg text-center justify-center transform hover:scale-[1.02]"
+                      >
+                        <CreditCard className="w-5 h-5" />
+                        {language === "hindi" ? "Instamojo के माध्यम से भुगतान करें" : "Pay via Instamojo"}
+                      </a>
+
+                      <button
+                        onClick={() => setShowLaunchOfferPopup(true)}
+                        className="inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-900 font-bold py-4 px-8 rounded-xl border-2 border-gray-200 transition-all text-center justify-center"
+                      >
+                        <Gift className="w-5 h-5 text-primary" />
+                        {language === "hindi" ? "45 दिनों के लिए मुफ्त प्राप्त करें (लॉन्च ऑफर)" : "Get Free for 45 Days (Launch Offer)"}
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2560,234 +2570,27 @@ ${language === "hindi" ? "💡 नेक्स्ट ��िव���यू
             </div>
 
             {/* FOMO Section */}
-            <div className="bg-red-50 border-2 border-red-200 rounded-xl p-4 mb-6">
-              <div className="text-center">
-                <div className="text-red-600 font-bold text-sm mb-2">
-                  🔥 LIMITED TIME OFFER
-                </div>
-                <div className="grid grid-cols-3 gap-4 text-center">
-                  <div>
-                    <div className="text-2xl font-bold text-red-700">2.1M+</div>
-                    <div className="text-xs text-red-600">
-                      Creators in India
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold text-red-700">₹3.2L</div>
-                    <div className="text-xs text-red-600">
-                      Avg Annual Income
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold text-red-700">89%</div>
-                    <div className="text-xs text-red-600">
-                      Start Earning in 3mo
-                    </div>
-                  </div>
-                </div>
-                <div className="text-red-700 text-sm mt-2 font-medium">
-                  ⏰ Only {Math.floor(Math.random() * 47) + 23} left at this
-                  price today!
-                </div>
-              </div>
-            </div>
-
-            {!showPaymentForm ? (
-              <button
-                onClick={() => setShowPaymentForm(true)}
-                className="bg-gradient-to-r from-neon-green to-electric-blue text-black px-8 py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center gap-3 mx-auto animate-pulse"
-              >
-                <Unlock className="w-5 h-5" />
-                Unlock Complete Toolkit - ₹99
-                <ArrowRight className="w-5 h-5" />
-              </button>
-            ) : (
-              <div className="max-w-md mx-auto">
-                <div className="bg-white rounded-xl p-6 border-2 border-gray-200 mb-6">
-                  <h3 className="text-lg font-bold text-gray-900 mb-4">
-                    {t.paymentForm}
-                  </h3>
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        {t.fullName}
-                      </label>
-                      <input
-                        type="text"
-                        value={personalInfo.name}
-                        onChange={(e) => {
-                          setPersonalInfo({
-                            ...personalInfo,
-                            name: e.target.value,
-                          });
-                          if (formErrors.name) {
-                            setFormErrors({ ...formErrors, name: "" });
-                          }
-                        }}
-                        className={`w-full px-3 py-2 border-2 rounded-lg focus:outline-none text-gray-900 bg-white ${
-                          formErrors.name
-                            ? "border-red-500 focus:border-red-500"
-                            : "border-gray-300 focus:border-blue-500"
-                        }`}
-                        placeholder="Enter your full name"
-                      />
-                      {formErrors.name && (
-                        <p className="text-red-500 text-sm mt-1">
-                          {formErrors.name}
-                        </p>
-                      )}
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        {t.emailAddress}
-                      </label>
-                      <input
-                        type="email"
-                        value={personalInfo.email}
-                        onChange={(e) => {
-                          setPersonalInfo({
-                            ...personalInfo,
-                            email: e.target.value,
-                          });
-                          if (formErrors.email) {
-                            setFormErrors({ ...formErrors, email: "" });
-                          }
-                        }}
-                        className={`w-full px-3 py-2 border-2 rounded-lg focus:outline-none text-gray-900 bg-white ${
-                          formErrors.email
-                            ? "border-red-500 focus:border-red-500"
-                            : "border-gray-300 focus:border-blue-500"
-                        }`}
-                        placeholder="your@email.com"
-                      />
-                      {formErrors.email && (
-                        <p className="text-red-500 text-sm mt-1">
-                          {formErrors.email}
-                        </p>
-                      )}
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        {t.phoneNumber}
-                      </label>
-                      <input
-                        type="tel"
-                        value={personalInfo.phone}
-                        onChange={(e) => {
-                          setPersonalInfo({
-                            ...personalInfo,
-                            phone: e.target.value,
-                          });
-                          if (formErrors.phone) {
-                            setFormErrors({ ...formErrors, phone: "" });
-                          }
-                        }}
-                        className={`w-full px-3 py-2 border-2 rounded-lg focus:outline-none text-gray-900 bg-white ${
-                          formErrors.phone
-                            ? "border-red-500 focus:border-red-500"
-                            : "border-gray-300 focus:border-blue-500"
-                        }`}
-                        placeholder="+91 9876543210"
-                      />
-                      {formErrors.phone && (
-                        <p className="text-red-500 text-sm mt-1">
-                          {formErrors.phone}
-                        </p>
-                      )}
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          {t.age}
-                        </label>
-                        <input
-                          type="number"
-                          value={personalInfo.age}
-                          onChange={(e) => {
-                            setPersonalInfo({
-                              ...personalInfo,
-                              age: e.target.value,
-                            });
-                            if (formErrors.age) {
-                              setFormErrors({ ...formErrors, age: "" });
-                            }
-                          }}
-                          className={`w-full px-3 py-2 border-2 rounded-lg focus:outline-none text-gray-900 bg-white ${
-                            formErrors.age
-                              ? "border-red-500 focus:border-red-500"
-                              : "border-gray-300 focus:border-blue-500"
-                          }`}
-                          placeholder="25"
-                          min="13"
-                          max="80"
-                        />
-                        {formErrors.age && (
-                          <p className="text-red-500 text-sm mt-1">
-                            {formErrors.age}
-                          </p>
-                        )}
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          {t.city}
-                        </label>
-                        <input
-                          type="text"
-                          value={personalInfo.city}
-                          onChange={(e) =>
-                            setPersonalInfo({
-                              ...personalInfo,
-                              city: e.target.value,
-                            })
-                          }
-                          className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-gray-900 bg-white"
-                          placeholder="Mumbai"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
+            <div className="bg-red-50 border border-red-100 rounded-xl p-4 mb-8">
+              <div className="grid grid-cols-1 gap-4">
+                <a
+                  href="https://www.instamojo.com/@famechase/?amount=99&purpose=FameChase%20-%20Complete%20Toolkit"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full bg-[#007bff] hover:bg-[#0069d9] text-white font-bold py-4 px-8 rounded-xl flex items-center justify-center gap-3 transition-all transform hover:scale-[1.02] shadow-lg"
+                >
+                  <CreditCard className="w-5 h-5" />
+                  {language === "hindi" ? "Instamojo के माध्यम से भुगतान करें" : "Pay via Instamojo"}
+                </a>
 
                 <button
-                  onClick={handlePayment}
-                  disabled={
-                    isSubmitting ||
-                    !personalInfo.name ||
-                    !personalInfo.email ||
-                    !personalInfo.phone
-                  }
-                  className="w-full bg-gradient-to-r from-neon-green to-electric-blue text-black px-8 py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                  onClick={() => setShowLaunchOfferPopup(true)}
+                  className="w-full bg-white hover:bg-gray-50 text-gray-900 font-bold py-4 px-8 rounded-xl border-2 border-gray-200 flex items-center justify-center gap-3 transition-all"
                 >
-                  {isSubmitting ? (
-                    <>
-                      <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
-                      {t.processing}
-                    </>
-                  ) : (
-                    <>
-                      <CreditCard className="w-5 h-5" />
-                      {t.paySecure}
-                      <Shield className="w-5 h-5" />
-                    </>
-                  )}
+                  <Gift className="w-5 h-5 text-primary" />
+                  {language === "hindi" ? "45 दिनों के लिए मुफ्त प्राप्त करें (लॉन्च ऑफर)" : "Get Free for 45 Days (Launch Offer)"}
                 </button>
-
-                <div className="flex items-center justify-center gap-6 mt-4 text-sm text-gray-600">
-                  <div className="flex items-center gap-1">
-                    <Shield className="w-4 h-4" />
-                    {t.securePayment}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Download className="w-4 h-4" />
-                    {t.instantDownload}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <CheckCircle className="w-4 h-4" />
-                    {t.moneyBack}
-                  </div>
-                </div>
               </div>
-            )}
+            </div>
 
             <div className="mt-8 text-sm text-gray-600">
               <p>{t.whatYouGet}</p>

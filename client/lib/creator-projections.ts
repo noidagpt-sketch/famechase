@@ -28,12 +28,15 @@ export function computeRevenueProjections(profile: CreatorProfile): RevenueProje
   const videoRange = getRange(brandRatePerVideo);
 
   const postingMultiplier = getPostingMultiplier(profile.postingFrequency);
-  const erMultiplier = getEngagementMultiplier(profile.engagementRate);
+  const er = profile.engagementRate;
+  let erBonus = 1.0;
+  if (er >= 6) erBonus = 1.5;
+  else if (er >= 4) erBonus = 1.3;
 
-  const baseMonthly = profile.followers * nicheCPM / 1000 * nicheMultiplier * platformMultiplier;
-  const conservativeMonthly = Math.round(baseMonthly * 0.3 * postingMultiplier * erMultiplier);
-  const realisticMonthly = Math.round(baseMonthly * 0.8 * postingMultiplier * erMultiplier);
-  const aggressiveMonthly = Math.round(baseMonthly * 1.8 * postingMultiplier * erMultiplier);
+  const baseMonthly = profile.followers * (nicheCPM / 1000) * nicheMultiplier * platformMultiplier;
+  const conservativeMonthly = Math.round(baseMonthly * 0.3 * postingMultiplier * erBonus);
+  const realisticMonthly = Math.round(baseMonthly * 0.8 * postingMultiplier * erBonus);
+  const aggressiveMonthly = Math.round(baseMonthly * 1.8 * postingMultiplier * erBonus);
 
   const lowMonthlyRange = getRange(conservativeMonthly);
   const midMonthlyRange = getRange(realisticMonthly);
